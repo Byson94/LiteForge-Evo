@@ -21,14 +21,14 @@ body {
     align-items: center;
     background-color: #444444; /* Dark grey sidebar */
     width: 200px; /* Sidebar width */
-    transition: width 0.3s, transform 0.3s; /* Smooth transition */
+    transition: transform 0.3s; /* Smooth transition */
 }
 
 .button-container {
-    width: 150px; /* Fixed width for all buttons */
+    width: 150px;
     display: flex;
-    justify-content: center; /* Center button horizontally */
-    margin-bottom: 10px; /* Space between buttons */
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 button {
@@ -38,7 +38,7 @@ button {
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center; /* Center text and icon */
+    justify-content: center;
     width: 100px; /* Smaller width */
     height: 35px; /* Smaller height */
     font-size: 14px; /* Smaller font size */
@@ -46,9 +46,9 @@ button {
 }
 
 button img {
-    width: 15px; /* Adjust icon size */
+    width: 15px;
     height: 15px;
-    margin-right: 5px; /* Space between icon and text */
+    margin-right: 5px;
 }
 
 button:hover {

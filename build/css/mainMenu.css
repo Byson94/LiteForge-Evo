@@ -20,12 +20,12 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: #444444; /* Dark grey sidebar */
-    width: 200px; /* Sidebar width */
+    width: 150px; /* Sidebar width */
     transition: transform 0.3s; /* Smooth transition */
 }
 
 .button-container {
-    width: 150px;
+    width: 100%;
     display: flex;
     justify-content: center;
     margin-bottom: 10px;

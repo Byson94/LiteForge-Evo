@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+#container {
+    display: flex;
+    height: 100vh;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+#sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+button {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+button img {
+    width: 20px; /* Adjust icon size */
+    height: 20px;
+    margin-right: 5px;
+}
+
+button:hover {
+    background-color: #f0f0f0;
+}
+
+#info-btn {
+    display: block;
+}
+
+#create-tab {
+    display: none;
+}
+
+#new-project-btn {
+    background-color: #4CAF50; /* Green background for New Project button */
+    color: white;
+}

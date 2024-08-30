@@ -2,8 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const createBtn = document.getElementById('create-btn');
     const createTab = document.getElementById('create-tab');
     const newProjectBtn = document.getElementById('new-project-btn');
-    const toggleArrow = document.getElementById('toggle-arrow');
     const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggle-btn');
+    const arrowIcon = document.getElementById('arrow-icon');
 
     createBtn.addEventListener('click', () => {
         createTab.style.display = createTab.style.display === 'block' ? 'none' : 'block';
@@ -21,8 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    toggleArrow.addEventListener('click', () => {
-        sidebar.classList.toggle('hidden');
-        toggleArrow.classList.toggle('arrow-left');
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+        if (sidebar.classList.contains('collapsed')) {
+            arrowIcon.src = 'build/icon/left-arrow.png';
+        } else {
+            arrowIcon.src = 'build/icon/right-arrow.png';
+        }
     });
 });

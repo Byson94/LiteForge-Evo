@@ -33,13 +33,14 @@ button {
     background-color: #ffffff;
     border: 1px solid #cccccc;
     padding: 10px;
-    margin: 0; /* Remove margin from button to use container margin */
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center; /* Center text and icon */
     width: 150px; /* Fixed width for consistent sizing */
     height: 50px; /* Fixed height for all buttons */
     font-size: 16px; /* Consistent font size */
+    box-sizing: border-box; /* Include padding and border in the button's width and height */
 }
 
 button img {
@@ -52,10 +53,6 @@ button:hover {
     background-color: #f0f0f0;
 }
 
-#info-btn {
-    /* Specific styles for info button if needed */
-}
-
 #create-tab {
     display: none;
 }
@@ -63,7 +60,4 @@ button:hover {
 #new-project-btn {
     background-color: #4CAF50; /* Green background for New Project button */
     color: white;
-    width: 150px; /* Ensure button size matches others */
-    height: 50px; /* Ensure button size matches others */
-    font-size: 16px; /* Consistent font size */
 }

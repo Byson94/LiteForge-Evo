@@ -14,63 +14,61 @@ body {
     position: fixed;
     right: 0;
     top: 0;
+    bottom: 0;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #444444; /* Light grey background */
-    width: 60px; /* Adjust width for sidebar */
-    height: 100vh; /* Sidebar full height */
-    transition: right 0.3s ease; /* Smooth transition */
+    background-color: #444444; /* Dark grey sidebar */
+    width: 200px; /* Sidebar width */
+    transition: width 0.3s, transform 0.3s; /* Smooth transition */
 }
 
-/* Style for buttons */
+.button-container {
+    width: 150px; /* Fixed width for all buttons */
+    display: flex;
+    justify-content: center; /* Center button horizontally */
+    margin-bottom: 10px; /* Space between buttons */
+}
+
 button {
     background-color: #ffffff;
     border: 1px solid #cccccc;
-    padding: 5px;
+    padding: 5px; /* Reduced padding for smaller buttons */
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 40px; /* Smaller button size */
-    height: 40px;
-    font-size: 12px; /* Smaller font size */
+    justify-content: center; /* Center text and icon */
+    width: 100px; /* Smaller width */
+    height: 35px; /* Smaller height */
+    font-size: 14px; /* Smaller font size */
     box-sizing: border-box;
-    margin-bottom: 10px;
 }
 
 button img {
-    width: 16px; /* Adjust icon size */
-    height: 16px;
-    margin-right: 4px; /* Space between icon and text */
+    width: 15px; /* Adjust icon size */
+    height: 15px;
+    margin-right: 5px; /* Space between icon and text */
 }
 
 button:hover {
     background-color: #f0f0f0;
 }
 
-/* Toggle arrow */
-#toggle-arrow {
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #333;
+#toggle-btn {
     margin-top: auto;
     cursor: pointer;
-    transition: transform 0.3s ease; /* Smooth arrow rotation */
 }
 
-.arrow-left {
-    transform: rotate(180deg); /* Point arrow to the left */
+#arrow-icon {
+    width: 20px;
+    height: 20px;
 }
 
-.hidden {
-    right: -60px; /* Hide sidebar */
+#sidebar.collapsed {
+    transform: translateX(100%); /* Slide sidebar out of view */
 }
 
-/* Create tab content */
 #create-tab {
     display: none;
 }

@@ -1,0 +1,40 @@
+{
+    "name": "my-electron-app",
+    "version": "1.0.0",
+    "description": "An Electron-based application.",
+    "main": "main.js",
+    "scripts": {
+      "start": "electron .",
+      "build": "electron-builder"
+    },
+    "build": {
+      "appId": "com.example.myapp",
+      "productName": "My Electron App",
+      "directories": {
+        "output": "dist"
+      },
+      "files": [
+        "build/**/*",
+        "main.js",
+        "package.json"
+      ],
+      "win": {
+        "target": "nsis",
+        "icon": "build/icon.ico"
+      },
+      "mac": {
+        "target": "dmg",
+        "icon": "build/icon.icns"
+      },
+      "linux": {
+        "target": "AppImage",
+        "icon": "build/icon.png"
+      }
+    },
+    "devDependencies": {
+      "electron": "^25.0.0",
+      "electron-builder": "^24.5.1"
+    }
+    
+  }
+  

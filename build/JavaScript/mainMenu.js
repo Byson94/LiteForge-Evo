@@ -6,10 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('toggle-btn');
     const arrowIcon = document.getElementById('arrow-icon');
 
+    if (!createBtn || !createTab || !newProjectBtn || !sidebar || !toggleBtn || !arrowIcon) {
+        console.error('One or more elements are missing from the DOM.');
+        return;
+    }
+
+    // Toggle create tab visibility
     createBtn.addEventListener('click', () => {
         createTab.style.display = createTab.style.display === 'block' ? 'none' : 'block';
     });
 
+    // Create new project
     newProjectBtn.addEventListener('click', () => {
         const projectName = prompt('Enter project name:');
         if (projectName) {
@@ -22,12 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Toggle sidebar
     toggleBtn.addEventListener('click', () => {
         sidebar.classList.toggle('collapsed');
         if (sidebar.classList.contains('collapsed')) {
-            arrowIcon.src = 'build/icon/left-arrow.png';
+            arrowIcon.src = 'build/icon/left-arrow.png'; // Change to left arrow
         } else {
-            arrowIcon.src = 'build/icon/right-arrow.png';
+            arrowIcon.src = 'build/icon/right-arrow.png'; // Change to right arrow
         }
     });
 });

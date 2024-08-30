@@ -6,7 +6,6 @@ body {
 #container {
     display: flex;
     height: 100vh;
-    justify-content: flex-end;
     align-items: flex-start;
 }
 
@@ -14,59 +13,56 @@ body {
     position: fixed;
     right: 0;
     top: 0;
-    bottom: 0;
-    padding: 20px;
+    height: 100%;
+    width: 200px; /* Adjust width as needed */
+    background-color: #444444; /* Dark grey background */
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #444444; /* Dark grey sidebar */
-    width: 150px; /* Sidebar width */
-    transition: transform 0.3s; /* Smooth transition */
+    transition: transform 0.3s ease; /* Smooth transition for sliding effect */
 }
 
-.button-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
+#sidebar.collapsed {
+    transform: translateX(100%); /* Move sidebar out of view */
+}
+
+#toggle-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    background-color: #444444; /* Same background color as sidebar */
+    border: none;
+    cursor: pointer;
+}
+
+#toggle-btn img {
+    width: 20px; /* Adjust size as needed */
+    height: 20px;
 }
 
 button {
     background-color: #ffffff;
     border: 1px solid #cccccc;
-    padding: 5px; /* Reduced padding for smaller buttons */
+    padding: 5px 10px; /* Smaller padding */
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100px; /* Smaller width */
-    height: 35px; /* Smaller height */
+    justify-content: center; /* Center text and icon */
+    width: 150px; /* Fixed width for consistent sizing */
+    height: 30px; /* Smaller height for all buttons */
     font-size: 14px; /* Smaller font size */
-    box-sizing: border-box;
+    box-sizing: border-box; /* Include padding and border in the button's width and height */
+    margin: 5px 0; /* Adjust margin for spacing */
 }
 
 button img {
-    width: 15px;
+    width: 15px; /* Smaller icon size */
     height: 15px;
-    margin-right: 5px;
+    margin-right: 5px; /* Space between icon and text */
 }
 
 button:hover {
     background-color: #f0f0f0;
-}
-
-#toggle-btn {
-    margin-top: auto;
-    cursor: pointer;
-}
-
-#arrow-icon {
-    width: 20px;
-    height: 20px;
-}
-
-#sidebar.collapsed {
-    transform: translateX(100%); /* Slide sidebar out of view */
 }
 
 #create-tab {

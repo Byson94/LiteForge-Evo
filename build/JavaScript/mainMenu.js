@@ -19,3 +19,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Code for the sidebar toggle feature
+document.getElementById('toggle-arrow').addEventListener('click', function() {
+    const sidebar = document.getElementById('sidebar');
+    const arrow = document.getElementById('toggle-arrow');
+
+    if (sidebar.classList.contains('hidden')) {
+        sidebar.classList.remove('hidden');
+        arrow.classList.remove('arrow-left');
+        arrow.classList.add('arrow-right');
+    } else {
+        sidebar.classList.add('hidden');
+        arrow.classList.remove('arrow-right');
+        arrow.classList.add('arrow-left');
+    }
+});

@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Toggle sidebar
+    // Toggle sidebar and update arrow icon
     arrowIcon.addEventListener('click', () => {
         console.log('button-press successful!');
         sidebar.classList.toggle('collapsed');
@@ -56,9 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             arrowIcon.src = 'build/icon/right-arrow.png'; // Change to right arrow
             console.log("Arrow icon src set to right arrow");
         }
-    });
-    
-    arrowIcon.addEventListener('click', () => {
         console.log('Arrow icon clicked');
         console.log('Current sidebar classes:', sidebar.classList);
+    });
 });

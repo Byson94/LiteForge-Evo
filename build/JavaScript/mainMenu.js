@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check if all elements exist
     if (!createBtn || !createTab || !newProjectBtn || !sidebar || !toggleBtn || !arrowIcon) {
-        console.error('One or more elements are missing from the DOM.');
+        console.error('One or more elements are missing from the DOM. IDK whats the error!');
         return;
     }
 

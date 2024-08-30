@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Toggle sidebar
-    toggleBtn.addEventListener('click', () => {
+    arrowIcon.addEventListener('click', () => {
         console.log('button-press successful!');
         sidebar.classList.toggle('collapsed');
         if (sidebar.classList.contains('collapsed')) {

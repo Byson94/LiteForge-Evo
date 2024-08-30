@@ -1,6 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background-color: #f1f1f1; /* Original background color */
 }
 
 #container {
@@ -14,17 +15,19 @@ body {
     position: fixed;
     right: 0;
     top: 0;
-    padding: 20px;
+    width: 150px; /* Fixed width for the sidebar */
+    height: 100vh; /* Full height of the viewport */
+    background-color: #444444; /* Dark grey background for the sidebar */
     display: flex;
     flex-direction: column;
     align-items: center; /* Center buttons horizontally */
-    background-color: #f7f7f7; /* Light greyish background for the sidebar */
-    border-left: 1px solid #cccccc; /* Border to visually separate the sidebar */
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    padding-top: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+/* Container for each button */
 .button-container {
-    width: 120px; /* Reduce the width of the buttons */
+    width: 100%; /* Full width of the sidebar */
     display: flex;
     justify-content: center; /* Center button horizontally */
     margin-bottom: 10px; /* Space between buttons */
@@ -34,25 +37,25 @@ body {
 button {
     background-color: #ffffff;
     border: 1px solid #cccccc;
-    padding: 8px; /* Reduce padding for smaller buttons */
+    padding: 4px; /* Reduced padding for smaller buttons */
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center; /* Center text and icon */
-    width: 120px; /* Fixed width for consistent sizing */
-    height: 40px; /* Reduced height for smaller buttons */
-    font-size: 14px; /* Smaller font size */
+    width: 100px; /* Reduced width */
+    height: 30px; /* Reduced height */
+    font-size: 12px; /* Smaller font size */
     box-sizing: border-box; /* Include padding and border in the button's width and height */
 }
 
 button img {
-    width: 16px; /* Reduce icon size */
-    height: 16px;
-    margin-right: 5px; /* Adjust space between icon and text */
+    width: 12px; /* Smaller icon size */
+    height: 12px;
+    margin-right: 4px; /* Adjust space between icon and text */
 }
 
 button:hover {
-    background-color: #f0f0f0;
+    background-color: #e0e0e0; /* Slightly darker on hover */
 }
 
 #create-tab {
@@ -62,4 +65,8 @@ button:hover {
 #new-project-btn {
     background-color: #4CAF50; /* Green background for New Project button */
     color: white;
+    font-size: 12px; /* Match font size with other buttons */
+    padding: 4px; /* Match padding with other buttons */
+    width: 100px; /* Match width with other buttons */
+    height: 30px; /* Match height with other buttons */
 }

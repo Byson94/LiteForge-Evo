@@ -36,8 +36,8 @@ body {
 }
 
 #toggle-btn img {
-    width: 20px; /* Adjust size as needed */
-    height: 20px;
+    width: 40px;
+    height: 40px;
 }
 
 button {

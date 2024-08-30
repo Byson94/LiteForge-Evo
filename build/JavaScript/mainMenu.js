@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             arrowIcon.src = 'build/icon/left-arrow.png'; // Change to left arrow
         } else {
             arrowIcon.src = 'build/icon/right-arrow.png'; // Change to right arrow
-            console.log("doesnt exist!")
+            console.log("doesnt exist!");
         }
     });
 });

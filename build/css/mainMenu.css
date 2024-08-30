@@ -1,7 +1,6 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f1f1f1; /* Original background color */
 }
 
 #container {
@@ -15,47 +14,69 @@ body {
     position: fixed;
     right: 0;
     top: 0;
-    width: 150px; /* Fixed width for the sidebar */
-    height: 100vh; /* Full height of the viewport */
-    background-color: #444444; /* Dark grey background for the sidebar */
+    height: 100vh;
+    width: 200px;
+    background-color: #d3d3d3; /* Grey background for the sidebar */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center buttons horizontally */
-    padding-top: 20px;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    align-items: center;
+    padding: 20px;
+    transition: right 0.3s ease; /* Smooth transition for hiding/showing */
 }
 
-/* Container for each button */
 .button-container {
     width: 100%; /* Full width of the sidebar */
     display: flex;
-    justify-content: center; /* Center button horizontally */
+    justify-content: center;
     margin-bottom: 10px; /* Space between buttons */
 }
 
-/* Styling for all buttons */
 button {
     background-color: #ffffff;
     border: 1px solid #cccccc;
-    padding: 4px; /* Reduced padding for smaller buttons */
+    padding: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center; /* Center text and icon */
-    width: 100px; /* Reduced width */
-    height: 30px; /* Reduced height */
-    font-size: 12px; /* Smaller font size */
-    box-sizing: border-box; /* Include padding and border in the button's width and height */
+    justify-content: center;
+    width: 120px; /* Smaller width */
+    height: 40px; /* Smaller height */
+    font-size: 14px; /* Smaller font size */
+    box-sizing: border-box;
 }
 
 button img {
-    width: 12px; /* Smaller icon size */
-    height: 12px;
-    margin-right: 4px; /* Adjust space between icon and text */
+    width: 16px; /* Smaller icon size */
+    height: 16px;
+    margin-right: 5px;
 }
 
 button:hover {
-    background-color: #e0e0e0; /* Slightly darker on hover */
+    background-color: #f0f0f0;
+}
+
+#toggle-arrow {
+    position: absolute;
+    bottom: 20px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    cursor: pointer;
+}
+
+.arrow-right {
+    border-left: 10px solid #000000; /* Black arrow pointing right */
+    right: 10px;
+}
+
+.arrow-left {
+    border-right: 10px solid #000000; /* Black arrow pointing left */
+    left: 10px;
+}
+
+#sidebar.hidden {
+    right: -200px; /* Move sidebar off-screen */
 }
 
 #create-tab {
@@ -63,10 +84,6 @@ button:hover {
 }
 
 #new-project-btn {
-    background-color: #4CAF50; /* Green background for New Project button */
+    background-color: #4CAF50;
     color: white;
-    font-size: 12px; /* Match font size with other buttons */
-    padding: 4px; /* Match padding with other buttons */
-    width: 100px; /* Match width with other buttons */
-    height: 30px; /* Match height with other buttons */
 }

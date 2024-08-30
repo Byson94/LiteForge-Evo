@@ -1,3 +1,5 @@
+// This is a template for renderer.js file, this should be changed
+
 // Wait until the DOM is fully loaded before running the script
 document.addEventListener('DOMContentLoaded', () => {
     // Example: Create and append a canvas element to the #canvasArea

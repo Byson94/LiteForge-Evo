@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiteForge Evo</title>
-    <link rel="stylesheet" href="build/css/styles.css"> <!-- Link to the main CSS file -->
-    <link rel="stylesheet" href="build/css/mainMenu.css"> <!-- Link to additional CSS file -->
-
+    <link rel="stylesheet" href="build/css/styles.css">
+    <link rel="stylesheet" href="build/css/mainMenu.css">
     <style>
         body {
             margin: 0;
             padding: 0;
             background-color: #f1f1f1;
             overflow: hidden;
-            font-family: Arial, sans-serif; /* Optional: for consistent font styling */
+            font-family: Arial, sans-serif;
         }
         #canvasArea {
             margin-left: auto;
@@ -23,28 +22,27 @@
             height: 100vh;
         }
         #mainMenu {
-            display: none; /* Initially hidden */
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div id="canvasArea"></div> <!-- Container for your canvas or main content -->
-    
-    <!-- Container to dynamically load content -->
+    <div id="canvasArea"></div>
     <div id="mainMenu"></div>
 
     <!-- Link to your external JavaScript files -->
     <script src="build/JavaScript/renderer.js"></script>
-    <script src="build/JavaScript/mainMenu.js"></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Load and insert mainMenu.html content
             fetch('build/html/mainMenu.html')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('mainMenu').innerHTML = data;
-                    document.getElementById('mainMenu').style.display = 'block'; // Show content after loading
+                    document.getElementById('mainMenu').style.display = 'block';
+                    // Load the mainMenu.js after mainMenu.html content is inserted
+                    const script = document.createElement('script');
+                    script.src = 'build/JavaScript/mainMenu.js';
+                    document.body.appendChild(script);
                 })
                 .catch(error => console.error('Error loading mainMenu.html:', error));
         });

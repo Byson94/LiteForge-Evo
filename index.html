@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiteForge Evo</title>
-    <link rel="stylesheet" href="build/css/styles.css"> <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="build/css/styles.css"> <!-- Link to the main CSS file -->
+    <link rel="stylesheet" href="build/css/mainMenu.css"> <!-- Link to additional CSS file -->
 
     <style>
         body {
@@ -21,18 +22,32 @@
             width: 100%;
             height: 100vh;
         }
-
+        #mainMenu {
+            display: none; /* Initially hidden */
+        }
     </style>
 </head>
 <body>
     <div id="canvasArea"></div> <!-- Container for your canvas or main content -->
+    
+    <!-- Container to dynamically load content -->
+    <div id="mainMenu"></div>
 
     <!-- Link to your external JavaScript files -->
     <script src="build/JavaScript/renderer.js"></script>
-    <script src="build/html/mainMenu.js"></script>
-    <script src="build/css/mainMenu.css"></script>
     <script src="build/JavaScript/mainMenu.js"></script>
-    <!-- Add more scripts if necessary -->
-    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load and insert mainMenu.html content
+            fetch('build/html/mainMenu.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('mainMenu').innerHTML = data;
+                    document.getElementById('mainMenu').style.display = 'block'; // Show content after loading
+                })
+                .catch(error => console.error('Error loading mainMenu.html:', error));
+        });
+    </script>
 </body>
 </html>

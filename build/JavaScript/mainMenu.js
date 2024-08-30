@@ -6,17 +6,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('toggle-btn');
     const arrowIcon = document.getElementById('arrow-icon');
 
+    // Log all elements to verify their presence
+    console.log('createBtn:', createBtn);
+    console.log('createTab:', createTab);
+    console.log('newProjectBtn:', newProjectBtn);
+    console.log('sidebar:', sidebar);
+    console.log('toggleBtn:', toggleBtn);
+    console.log('arrowIcon:', arrowIcon);
+
     // Check if all elements exist
     if (!createBtn || !createTab || !newProjectBtn || !sidebar || !toggleBtn || !arrowIcon) {
-        console.error('One or more elements are missing from the DOM. IDK whats the error!');
+        console.error('One or more elements are missing from the DOM.');
+        if (!createBtn) console.error('createBtn is missing!');
+        if (!createTab) console.error('createTab is missing!');
+        if (!newProjectBtn) console.error('newProjectBtn is missing!');
+        if (!sidebar) console.error('sidebar is missing!');
+        if (!toggleBtn) console.error('toggleBtn is missing!');
+        if (!arrowIcon) console.error('arrowIcon is missing!');
         return;
     }
-
-    if (!arrowIcon) {
-        console.log('arrowIcon missing!');
-        return;
-    }
-console.log(arrowIcon);
 
     // Toggle create tab visibility
     createBtn.addEventListener('click', () => {
@@ -38,13 +46,13 @@ console.log(arrowIcon);
 
     // Toggle sidebar
     toggleBtn.addEventListener('click', () => {
-        console.log('button-press successfull!');
+        console.log('button-press successful!');
         sidebar.classList.toggle('collapsed');
         if (sidebar.classList.contains('collapsed')) {
             arrowIcon.src = 'build/icon/left-arrow.png'; // Change to left arrow
         } else {
             arrowIcon.src = 'build/icon/right-arrow.png'; // Change to right arrow
-            console.log("doesnt exist!");
+            console.log("arrowIcon src set to right arrow");
         }
     });
 });

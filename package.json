@@ -1,15 +1,15 @@
 {
-    "name": "my-electron-app",
-    "version": "1.0.0",
-    "description": "An Electron-based application.",
+    "name": "LiteForge Evo",
+    "version": "0.1.0",
+    "description": "The remake of LiteForge GD engine from scratch.",
     "main": "main.js",
     "scripts": {
       "start": "electron .",
       "build": "electron-builder"
     },
     "build": {
-      "appId": "com.example.myapp",
-      "productName": "My Electron App",
+      "appId": "com.engine.LiteForgeEvo",
+      "productName": "LiteForge Evo",
       "directories": {
         "output": "dist"
       },
@@ -20,15 +20,15 @@
       ],
       "win": {
         "target": "nsis",
-        "icon": "build/icon.ico"
+        "icon": "build/icon/icon.ico"
       },
       "mac": {
         "target": "dmg",
-        "icon": "build/icon.icns"
+        "icon": "build/icon/icon.icns"
       },
       "linux": {
         "target": "AppImage",
-        "icon": "build/icon.png"
+        "icon": "build/icon/icon.png"
       }
     },
     "devDependencies": {

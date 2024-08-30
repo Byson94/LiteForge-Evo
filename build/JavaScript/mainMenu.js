@@ -12,6 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    if (!arrowIcon) {
+        console.log('arrowIcon missing!');
+        return;
+    }
+
     // Toggle create tab visibility
     createBtn.addEventListener('click', () => {
         createTab.style.display = createTab.style.display === 'block' ? 'none' : 'block';

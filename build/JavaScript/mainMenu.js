@@ -57,4 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Arrow icon src set to right arrow");
         }
     });
+    
+    arrowIcon.addEventListener('click', () => {
+        console.log('Arrow icon clicked');
+        console.log('Current sidebar classes:', sidebar.classList);
 });

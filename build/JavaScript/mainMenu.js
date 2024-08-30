@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Toggle sidebar
-    arrowIcon.addEventListener('click', () => {
+    toggleBtn.addEventListener('click', () => {
         console.log('button-press successfull!');
         sidebar.classList.toggle('collapsed');
         if (sidebar.classList.contains('collapsed')) {

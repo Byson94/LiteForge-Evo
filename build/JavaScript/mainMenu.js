@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('toggle-btn');
     const arrowIcon = document.getElementById('arrow-icon');
 
+    // Check if all elements exist
     if (!createBtn || !createTab || !newProjectBtn || !sidebar || !toggleBtn || !arrowIcon) {
         console.error('One or more elements are missing from the DOM.');
         return;

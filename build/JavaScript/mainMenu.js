@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Toggle sidebar
     arrowIcon.addEventListener('click', () => {
-        console.log('button-press successfull!')
+        console.log('button-press successfull!');
         sidebar.classList.toggle('collapsed');
         if (sidebar.classList.contains('collapsed')) {
             arrowIcon.src = 'build/icon/left-arrow.png'; // Change to left arrow

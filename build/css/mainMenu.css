@@ -17,23 +17,35 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center; /* Center buttons horizontally */
 }
 
+/* Container for each button */
+.button-container {
+    width: 150px; /* Fixed width for all buttons */
+    display: flex;
+    justify-content: center; /* Center button horizontally */
+    margin-bottom: 10px; /* Space between buttons */
+}
+
+/* Styling for all buttons */
 button {
     background-color: #ffffff;
     border: 1px solid #cccccc;
     padding: 10px;
-    margin: 5px;
+    margin: 0; /* Remove margin from button to use container margin */
     cursor: pointer;
     display: flex;
     align-items: center;
+    width: 150px; /* Fixed width for consistent sizing */
+    height: 50px; /* Fixed height for all buttons */
+    font-size: 16px; /* Consistent font size */
 }
 
 button img {
     width: 20px; /* Adjust icon size */
     height: 20px;
-    margin-right: 5px;
+    margin-right: 8px; /* Space between icon and text */
 }
 
 button:hover {
@@ -41,7 +53,7 @@ button:hover {
 }
 
 #info-btn {
-    display: block;
+    /* Specific styles for info button if needed */
 }
 
 #create-tab {
@@ -51,4 +63,7 @@ button:hover {
 #new-project-btn {
     background-color: #4CAF50; /* Green background for New Project button */
     color: white;
+    width: 150px; /* Ensure button size matches others */
+    height: 50px; /* Ensure button size matches others */
+    font-size: 16px; /* Consistent font size */
 }

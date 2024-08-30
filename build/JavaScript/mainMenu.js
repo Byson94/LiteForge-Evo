@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded and parsed');
+
     const createBtn = document.getElementById('create-btn');
     const createTab = document.getElementById('create-tab');
     const newProjectBtn = document.getElementById('new-project-btn');
@@ -6,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('toggle-btn');
     const arrowIcon = document.getElementById('arrow-icon');
 
-    // Log all elements to verify their presence
     console.log('createBtn:', createBtn);
     console.log('createTab:', createTab);
     console.log('newProjectBtn:', newProjectBtn);
@@ -14,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('toggleBtn:', toggleBtn);
     console.log('arrowIcon:', arrowIcon);
 
-    // Check if all elements exist
     if (!createBtn || !createTab || !newProjectBtn || !sidebar || !toggleBtn || !arrowIcon) {
         console.error('One or more elements are missing from the DOM.');
         if (!createBtn) console.error('createBtn is missing!');
@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!arrowIcon) console.error('arrowIcon is missing!');
         return;
     }
+
+    console.log('All elements are present.');
 
     // Toggle create tab visibility
     createBtn.addEventListener('click', () => {
@@ -52,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             arrowIcon.src = 'build/icon/left-arrow.png'; // Change to left arrow
         } else {
             arrowIcon.src = 'build/icon/right-arrow.png'; // Change to right arrow
-            console.log("arrowIcon src set to right arrow");
+            console.log("Arrow icon src set to right arrow");
         }
     });
 });

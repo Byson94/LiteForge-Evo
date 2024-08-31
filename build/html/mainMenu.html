@@ -25,21 +25,34 @@
             </ul>
         </div>
     </label>
+
+    <!-- Layout 1 Content -->
+    <div id="layout-1" style="display: none;">
+        <h2>LiteForge Evo engine</h2>
+        <p>This is the re-make of the "LiteForge GD" engine made with GDevelop from scratch using only pure programming!</p>
+    </div>
+
+    <!-- Layout 2 Content -->
+    <div id="layout-2" style="display: none;">
+        <h2>Layout 2</h2>
+        <p>This is where the "New Project" should be located.</p>
+    </div>
         
     <script>
         function createClicked() {
-            document.body.classList.remove('layout-1');
-            document.body.classList.add('layout-2');
+            document.getElementById('layout-1').style.display = 'none';
+            document.getElementById('layout-2').style.display = 'block';
         }
 
-        function infoClicked() { // Fixed the function name to match the call
-            document.body.classList.remove('layout-2');
-            document.body.classList.add('layout-1');
+        function infoClicked() {
+            document.getElementById('layout-2').style.display = 'none';
+            document.getElementById('layout-1').style.display = 'block';
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            document.body.classList.remove('layout-2');
-            document.body.classList.add('layout-1');
+            // Show Layout 1 by default
+            document.getElementById('layout-1').style.display = 'block';
+            document.getElementById('layout-2').style.display = 'none';
         });
     </script>
         

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM 1 fully loaded and parsed');
+    console.log('DOM fully loaded and parsed');
 
     // Load mainMenu.html and mainMenu.js dynamically
     fetch('build/html/mainMenu.html')
@@ -18,7 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Load the mainMenu.js script
             const script = document.createElement('script');
             script.src = 'build/JavaScript/mainMenu.js';
-            script.onload = () => console.log('mainMenu.js loaded');
+            script.onload = () => {
+                console.log('mainMenu.js loaded');
+                // Add a timeout to ensure everything is set up
+                setTimeout(() => {
+                    console.log('mainMenu.js is running');
+                }, 0);
+            };
             script.onerror = () => console.error('Error loading mainMenu.js');
             document.body.appendChild(script);
         })

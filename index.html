@@ -30,37 +30,20 @@
     <div id="canvasArea"></div>
     <div id="mainMenu"></div>
 
-    <!-- Load renderer.js -->
+    <!-- Ensure renderer.js is loaded first -->
     <script src="build/JavaScript/renderer.js"></script>
-
-    <!-- Load and inject mainMenu.html directly -->
+    <!-- Load the mainMenu.html and mainMenu.js directly -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             fetch('build/html/mainMenu.html')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    const mainMenu = document.getElementById('mainMenu');
-                    if (mainMenu) {
-                        mainMenu.innerHTML = data;
-                        mainMenu.style.display = 'block';
-
-                        // Load mainMenu.js script
-                        const script = document.createElement('script');
-                        script.src = 'build/JavaScript/mainMenu.js';
-                        script.onload = () => console.log('mainMenu.js loaded');
-                        script.onerror = () => console.error('Error loading mainMenu.js');
-                        document.body.appendChild(script);
-                    } else {
-                        console.error('mainMenu element not found');
-                    }
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('mainMenu').innerHTML = html;
+                    document.getElementById('mainMenu').style.display = 'block';
                 })
                 .catch(error => console.error('Error loading mainMenu.html:', error));
         });
     </script>
+    <script src="build/JavaScript/mainMenu.js"></script>
 </body>
 </html>

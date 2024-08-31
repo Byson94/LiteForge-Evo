@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/LiteForge-Evo/build/css/mainMenu.css">
     <title>LiteForge Evo</title>
 </head>
 <body>
@@ -27,6 +26,15 @@
         </div>
     </div>
 
+    <script>
+        // Load CSS dynamically after page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '/LiteForge-Evo/build/css/mainMenu.css';
+            document.head.appendChild(link);
+        });
+    </script>
     <script src="/LiteForge-Evo/build/JavaScript/mainMenu.js"></script>
 </body>
 </html>

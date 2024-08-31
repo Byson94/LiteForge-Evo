@@ -24,12 +24,24 @@
                 <li><a href="#" onclick="handleclick()">Create</a></li>
             </ul>
         </div>
-
-        <script>
-            function handleclick() {
-                return console.log('create clicked')
-            }
-        </script>
     </label>
+        
+    <script>
+        function createClicked() {
+            document.body.classList.remove('layout-1');
+            document.body.classList.add('layout-2');
+        }
+
+        function infoClicked() { // Fixed the function name to match the call
+            document.body.classList.remove('layout-2');
+            document.body.classList.add('layout-1');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.remove('layout-2');
+            document.body.classList.add('layout-1');
+        });
+    </script>
+        
 </body>
 </html>

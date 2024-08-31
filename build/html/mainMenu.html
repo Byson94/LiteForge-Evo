@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiteForge Evo</title>
-    <link rel="stylesheet" href="/LiteForge-Evo/build/css/mainMenu.css">
+    <script>
+        // Function to load CSS after the page has loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '/LiteForge-Evo/build/css/mainMenu.css'; // Path to your CSS file
+            document.head.appendChild(link);
+        });
+    </script>
 </head>
 <body>
     <div id="container">

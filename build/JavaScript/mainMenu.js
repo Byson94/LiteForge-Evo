@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('sidebar:', sidebar);
     console.log('toggleBtn:', toggleBtn);
     console.log('arrowIcon:', arrowIcon);
+        console.log('all ID loaded!');
 
     if (!createBtn || !createTab || !newProjectBtn || !sidebar || !toggleBtn || !arrowIcon) {
         console.error('One or more elements are missing from the DOM.');

@@ -18,6 +18,7 @@ body {
     background-color: #444444;
     transition: 0.3s ease;
     transform: translate(0);
+    z-index: 1;
 }
 
 h1 {

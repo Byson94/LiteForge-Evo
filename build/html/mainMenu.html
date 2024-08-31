@@ -35,8 +35,7 @@
 
     <!-- Layout 2 Content -->
     <div id="layout-2" style="display: none;">
-        <h2 style="text-align: center; color: black;">Layout 2</h2>
-        <p style="text-align: center; color: black;">This is where the "New Project" should be located.</p>
+        <button type="button" onclick="newProject()">New Project</button>
     </div>
         
     <script>
@@ -61,6 +60,10 @@
             document.body.classList.remove('layout-2');
             document.body.classList.add('layout-1');
         });
+
+        function newProject() {
+            window.location.href="Engine.html"
+        }
     </script>
         
 </body>

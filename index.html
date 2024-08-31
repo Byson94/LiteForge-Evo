@@ -32,7 +32,7 @@
 
     <!-- Ensure renderer.js is loaded first -->
     <script src="build/JavaScript/renderer.js"></script>
-    <!-- Load the mainMenu.html and mainMenu.js directly -->
+    <!-- Load mainMenu.html into the mainMenu div -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             fetch('build/html/mainMenu.html')
@@ -44,6 +44,5 @@
                 .catch(error => console.error('Error loading mainMenu.html:', error));
         });
     </script>
-    <script src="build/JavaScript/mainMenu.js"></script>
 </body>
 </html>

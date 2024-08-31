@@ -1,6 +1,4 @@
-// This is a template for renderer.js file, this should be changed
-
-// Wait until the DOM is fully loaded before running the script
+// build/JavaScript/renderer.js
 document.addEventListener('DOMContentLoaded', () => {
     // Example: Create and append a canvas element to the #canvasArea
     const canvasArea = document.getElementById('canvasArea');
@@ -21,4 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(draw);
     }
     draw();
+
+    // Example: Send a message to the main process and listen for a reply
+    document.getElementById('sendButton').addEventListener('click', () => {
+        window.myApi.sendMessage('Hello from renderer');
+    });
+
+    window.myApi.onMessage((response) => {
+        console.log('Received reply:', response);
+    });
 });

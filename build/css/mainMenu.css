@@ -63,7 +63,7 @@ input {
     width: 30px;
     top: 18px;
     left: 8px;
-    z-index: 1;
+    z-index: 2;
     cursor: pointer;
     border-radius: 2px;
     background-color: #666666;

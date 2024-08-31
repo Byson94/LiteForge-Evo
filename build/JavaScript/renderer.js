@@ -20,10 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     draw();
 
-    // Example: Send a message to the main process and listen for a reply
-    document.getElementById('sendButton').addEventListener('click', () => {
-        window.myApi.sendMessage('Hello from renderer');
-    });
 
     window.myApi.onMessage((response) => {
         console.log('Received reply:', response);

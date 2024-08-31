@@ -1,75 +1,120 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
-#container {
-    display: flex;
-    height: 100vh;
-    align-items: flex-start;
-}
-
-#sidebar {
-    position: fixed;
-    right: 0;
-    top: 0;
+.slide {
     height: 100%;
-    width: 200px; /* Adjust width as needed */
-    background-color: #444444; /* Dark grey background */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: 0.5s ease; /* Smooth transition for sliding effect */
-}
-#sidebar.collapsed {
-    transform: translateX(100%); /* Move sidebar out of view */
-    transition: transform 0.3s ease; /* Add a transition for smooth animation */
-}
-
-#toggle-btn {
+    width: 180px;
     position: absolute;
-    bottom: 20px;
-    left: 0;
-    background-color: #444444; /* Same background color as sidebar */
-    border: none;
-    cursor: pointer;
+    background-color: #444444;
+    transition: 0.3s ease;
+    transform: translate(0);
 }
 
-#toggle-btn img {
-    width: 40px;
-    height: 40px;
+h1 {
+    color: blueviolet;
+    font-weight: 800;
+    text-align: right;
+    padding: 10px 0;
+    padding-right: 30px;
+    pointer-events: none;
 }
 
-button {
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    padding: 5px 10px; /* Smaller padding */
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Center text and icon */
-    width: 150px; /* Fixed width for consistent sizing */
-    height: 30px; /* Smaller height for all buttons */
-    font-size: 14px; /* Smaller font size */
-    box-sizing: border-box; /* Include padding and border in the button's width and height */
-    margin: 5px 0; /* Adjust margin for spacing */
+ul li {
+    list-style: none;
 }
 
-button img {
-    width: 15px; /* Smaller icon size */
-    height: 15px;
-    margin-right: 5px; /* Space between icon and text */
+ul li a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 500;
+    padding: 5px 0;
+    display: block;
+    text-transform: capitalize;
+    text-decoration: none;
+    transition: 0.2s ease-out;
 }
 
-button:hover {
-    background-color: #f0f0f0;
+ul li:hover a {
+    color: #fff;
+    background-color: #8000ff;
 }
 
-#create-tab {
+input {
     display: none;
+    visibility: hidden;
 }
 
-#new-project-btn {
-    background-color: #4CAF50; /* Green background for New Project button */
-    color: white;
+.toggle {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    top: 18px;
+    left: 8px;
+    z-index: 1;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: #666666;
+    box-shadow: 0 0 10 rgba(0, 0, 0, 0.3);
+}
+
+.toggle .common {
+    position: absolute;
+    height: 2px;
+    width: 20px;
+    background-color: #8000ff;
+    border-radius: 50px;
+    transition: 0.3s ease;
+}
+
+.toggle .top_line {
+    left: 2px;
+    top: 14px;
+    width: 25px;
+    transform: rotate(45deg);
+}
+
+.toggle .bottom_line {
+    left: 2px;
+    top: 14px;
+    width: 25px;
+    transform: rotate(-45deg);
+}
+
+.toggle .middle_line {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+input:checked ~ .toggle .top_line {
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input:checked ~ .toggle .bottom_line {
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input:checked ~ .toggle .middle_line {
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+input:checked ~ .slide {
+    transform: translateX(-180px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5)
 }

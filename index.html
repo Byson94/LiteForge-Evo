@@ -22,27 +22,15 @@
             height: 100vh;
         }
         #mainMenu {
-            display: none;
+            display: block; /* Display the iframe for testing */
+            width: 100%;
+            height: 100vh;
+            border: none;
         }
     </style>
 </head>
 <body>
     <div id="canvasArea"></div>
-    <div id="mainMenu"></div>
-
-    <!-- Ensure renderer.js is loaded first -->
-    <script src="build/JavaScript/renderer.js"></script>
-    <!-- Load mainMenu.html into the mainMenu div -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('build/html/mainMenu.html')
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('mainMenu').innerHTML = html;
-                    document.getElementById('mainMenu').style.display = 'block';
-                })
-                .catch(error => console.error('Error loading mainMenu.html:', error));
-        });
-    </script>
+    <iframe id="mainMenu" src="build/html/mainMenu.html"></iframe>
 </body>
 </html>

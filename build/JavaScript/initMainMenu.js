@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded and parsed');
+    console.log('DOM 1 fully loaded and parsed');
 
     // Load mainMenu.html and mainMenu.js dynamically
     fetch('build/html/mainMenu.html')

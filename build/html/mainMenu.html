@@ -33,9 +33,13 @@
         <p style="text-align: center; color: #fff;">This is the re-make of the "LiteForge GD" engine made with GDevelop from scratch using only pure programming!</p>
     </div>
 
-    <!-- Layout 2 Content -->
-    <div id="layout-2" style="display: none; background-color: #222222; width: 100%; height: 100px; position: absolute; top: 0;"">
+    <!-- Layout Container 2 -->
+    <div style="display: none; background-color: #222222; width: 100%; height: 100px; position: relative; z-index: 1;">
         <h2 style="text-align: center; color: #000; font-size: 40px; position: absolute; top: 0; left: 38%;">Create New Project</h2>
+    </div>
+
+    <!-- Layout 2 Content -->
+    <div id="layout-2" style="display: none;">
         <button type="button" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: orange; font-size: 20px; padding: 15px 40px;" onclick="newProject()">New Project</button>
     </div>
     

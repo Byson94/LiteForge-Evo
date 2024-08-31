@@ -4,37 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiteForge Evo</title>
-    <script>
-        // Function to load CSS after the page has loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = '/LiteForge-Evo/build/css/mainMenu.css'; // Path to your CSS file
-            document.head.appendChild(link);
-        });
-    </script>
+    <link rel="stylesheet" href="mainMenu.css">
 </head>
+
 <body>
-    <div id="container">
-        <!-- Buttons on the right side -->
-        <div id="sidebar">
-            <button id="info-btn">
-                <img src="/LiteForge-Evo/build/icon/Info.png" alt="Info Icon"> Info
-            </button>
-            <button id="create-btn">
-                <img src="/LiteForge-Evo/build/icon/Create.png" alt="Create Icon"> Create
-            </button>
-            <div id="toggle-btn">
-                <img id="arrow-icon" src="/LiteForge-Evo/build/icon/right-arrow.png" alt="Toggle Sidebar">
-            </div>
+    <label>
+        <input type="checkbox">
+        <div class="toggle">
+            <span class="top_line common"></span>
+            <span class="middle_line common"></span>
+            <span class="bottom_line common"></span>
         </div>
 
-        <!-- Create tab content -->
-        <div id="create-tab" class="tab-content">
-            <button id="new-project-btn">New Project</button>
+        <div class="slide">
+            <h1>MENU</h1>
+            <ul>
+                <li><a href="#">Info</a></li>
+                <li><a href="#">Create</a></li>
+            </ul>
         </div>
-    </div>
-
-    <script src="/LiteForge-Evo/build/JavaScript/mainMenu.js"></script>
+    </label>
 </body>
 </html>

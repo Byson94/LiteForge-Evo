@@ -4,10 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiteForge Evo</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #252525;
+            overflow: hidden;
+        }
+        .banner {
+            height: 60px;
+            width: 100%;
+            background: linear-gradient(135deg, #333333, #444444);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid #222222;
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+        }
+        .banner::after {
+            content: '';
+            display: block;
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(90deg, #8b8a8d, #587681);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .toggleObject {
+            height: 30px;
+            width: 30px;
+            position: absolute;
+            left: 98%;
+            background-color: #666666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        }
+        .toggleObject::before {
+            content: '';
+            display: block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #8000ff;
+            border-radius: 50%;
+        }
+        input:checked + .banner .toggleObject {
+            background-color: #530041;
+        }
+        .slide {
+            height: calc(100% - 60px);
+            width: 250px;
+            position: fixed;
+            right: -250px;
+            top: 60px;
+            background-color: #333333; 
+            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 2;
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+        }
+        .resizer {
+            width: 8px;
+            height: 100%;
+            top: 0;
+            left: -8px;
+            cursor: ew-resize;
+            position: absolute;
+            background: linear-gradient(90deg, #625a72, #666666);
+            z-index: 2;
+        }
+        input[type="checkbox"] {
+            display: none;
+        }
+        input:checked ~ .slide {
+            transform: translateX(-250px);
+            opacity: 1;
+            visibility: visible;
+        }
+        input:not(:checked) ~ .slide {
+            transform: translateX(0);
+            opacity: 0;
+            visibility: hidden;
+        }
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            padding: 20px 0;
+        }
+        button {
+            position: absolute;
+            top: 93%;
+            left: 10px;
+            height: 40px;
+            background-color: #666666;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            width: calc(100% - 18px);
+        }
+        button:hover {
+            background-color: #8000ff;
+        }
+    </style>
 </head>
-
 <body>
-  
+    <input type="checkbox" id="toggleCheckbox">
+    <div class="banner">
+        <label for="toggleCheckbox" class="toggleObject"></label>
+    </div>
+    <div class="slide">
+        <div class="resizer"></div>
+        <h2>Object Panel</h2>
+        <button type="button" onclick="buttonclicked()">NewSprite</button>
+    </div>
+    <script>
+        function buttonclicked() {
+            console.log("NewSprite Button Clicked!");
+        }
+        
+        const resizer = document.querySelector(".resizer");
+        const sidebar = document.querySelector(".slide");
+        const button = document.querySelector("button");
+
+        function initResizer() {
+            let startX, startWidth;
+
+            function onMouseDown(e) {
+                startX = e.clientX;
+                startWidth = sidebar.offsetWidth;
+                document.addEventListener("mousemove", onMouseMove);
+                document.addEventListener("mouseup", onMouseUp);
+            }
+
+            function onMouseMove(e) {
+                const newWidth = startWidth - (e.clientX - startX);
+                if (newWidth > 100 && newWidth < 500) {
+                    sidebar.style.width = `${newWidth}px`;
+                    button.style.width = `calc(${newWidth}px - 18px)`; // Adjust button width to reach till the drag bar
+                }
+            }
+
+            function onMouseUp() {
+                document.removeEventListener("mousemove", onMouseMove);
+                document.removeEventListener("mouseup", onMouseUp);
+            }
+
+            resizer.addEventListener("mousedown", onMouseDown);
+        }
+
+        initResizer();
+    </script>
 </body>
 </html>

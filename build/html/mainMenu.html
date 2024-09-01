@@ -9,24 +9,22 @@
 </head>
 
 <body>
-    <!-- Checkbox for toggling the sidebar -->
-    <input type="checkbox" id="menu-toggle">
+    <label>
+        <input type="checkbox">
+        <div class="toggle">
+            <span class="top_line common"></span>
+            <span class="middle_line common"></span>
+            <span class="bottom_line common"></span>
+        </div>
 
-    <!-- Toggle Button -->
-    <div class="toggle" for="menu-toggle">
-        <span class="top_line common"></span>
-        <span class="middle_line common"></span>
-        <span class="bottom_line common"></span>
-    </div>
-
-    <!-- Sidebar -->
-    <div class="slide">
-        <h1>MENU</h1>
-        <ul>
-            <li><a href="#" onclick="infoClicked()">Info</a></li>
-            <li><a href="#" onclick="createClicked()">Create</a></li>
-        </ul>
-    </div>
+        <div class="slide">
+            <h1>MENU</h1>
+            <ul>
+                <li><a href="#" onclick="infoClicked()">Info</a></li>
+                <li><a href="#" onclick="createClicked()">Create</a></li>
+            </ul>
+        </div>
+    </label>
 
     <!-- Layout 1 Content -->
     <div id="layout-1" style="display: none;">
@@ -60,7 +58,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Ensure layout 1 is shown when the page loads
+            // I am doing this to show layout 1 when page loads
             document.getElementById('layout-1').style.display = 'block';
             document.getElementById('layout-2').style.display = 'none';
             document.body.classList.remove('layout-2');
@@ -68,7 +66,7 @@
         });
 
         function newProject() {
-            window.location.href="Engine.html";
+            window.location.href="Engine.html"
         }
     </script>
         

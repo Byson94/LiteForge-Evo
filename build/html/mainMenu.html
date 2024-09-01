@@ -9,12 +9,17 @@
 </head>
 
 <body>
+    <!-- Checkbox for toggling the sidebar -->
     <input type="checkbox" id="menu-toggle">
-    <div class="toggle">
+
+    <!-- Toggle Button -->
+    <div class="toggle" for="menu-toggle">
         <span class="top_line common"></span>
         <span class="middle_line common"></span>
         <span class="bottom_line common"></span>
     </div>
+
+    <!-- Sidebar -->
     <div class="slide">
         <h1>MENU</h1>
         <ul>
@@ -55,7 +60,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // I am doing this to show layout 1 when page loads
+            // Ensure layout 1 is shown when the page loads
             document.getElementById('layout-1').style.display = 'block';
             document.getElementById('layout-2').style.display = 'none';
             document.body.classList.remove('layout-2');
@@ -63,7 +68,7 @@
         });
 
         function newProject() {
-            window.location.href="Engine.html"
+            window.location.href="Engine.html";
         }
     </script>
         

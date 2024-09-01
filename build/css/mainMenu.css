@@ -17,7 +17,7 @@ body {
     position: absolute;
     background-color: #444444;
     transition: 0.3s ease;
-    transform: translateX(-180px);
+    transform: translateX(-180px); /* Start hidden */
     z-index: 1;
 }
 
@@ -52,7 +52,7 @@ ul li:hover a {
 }
 
 #menu-toggle {
-    display: none;
+    display: none; /* Hide the checkbox */
 }
 
 .toggle {

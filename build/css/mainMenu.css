@@ -1,6 +1,6 @@
 /* SideBar */
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -11,13 +11,17 @@ body {
     font-family: Arial, sans-serif;
 }
 
+#sidebar-container {
+    position: relative;
+}
+
 .slide {
     height: 100%;
     width: 180px;
     position: absolute;
     background-color: #444444;
     transition: 0.3s ease;
-    transform: translate(0);
+    transform: translateX(0);
     z-index: 1;
 }
 
@@ -54,7 +58,6 @@ ul li:hover a {
 
 input {
     display: none;
-    visibility: hidden;
 }
 
 .toggle {

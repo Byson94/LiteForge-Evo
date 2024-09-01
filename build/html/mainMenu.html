@@ -9,21 +9,22 @@
 </head>
 
 <body>
-    <div id="sidebar-container">
-        <div class="toggle" id="sidebar-toggle">
+    <label>
+        <input type="checkbox">
+        <div class="toggle">
             <span class="top_line common"></span>
             <span class="middle_line common"></span>
             <span class="bottom_line common"></span>
         </div>
 
-        <div class="slide" id="sidebar">
+        <div class="slide">
             <h1>MENU</h1>
             <ul>
                 <li><a href="#" onclick="infoClicked()">Info</a></li>
                 <li><a href="#" onclick="createClicked()">Create</a></li>
             </ul>
         </div>
-    </div>
+    </label>
 
     <!-- Layout 1 Content -->
     <div id="layout-1" style="display: none;">
@@ -42,24 +43,6 @@
     </div>
     
     <script>
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sidebar = document.getElementById('sidebar');
-
-        let sidebarOpen = false;
-
-        sidebarToggle.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent click event from propagating to the document
-            sidebarOpen = !sidebarOpen;
-            sidebar.style.transform = sidebarOpen ? 'translateX(0)' : 'translateX(-180px)';
-        });
-
-        document.addEventListener('click', (event) => {
-            if (sidebarOpen && !sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
-                sidebarOpen = false;
-                sidebar.style.transform = 'translateX(-180px)';
-            }
-        });
-
         function createClicked() {
             document.getElementById('layout-1').style.display = 'none';
             document.getElementById('layout-2').style.display = 'block';
@@ -75,7 +58,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Show layout 1 when the page loads
+            // I am doing this to show layout 1 when page loads
             document.getElementById('layout-1').style.display = 'block';
             document.getElementById('layout-2').style.display = 'none';
             document.body.classList.remove('layout-2');
@@ -83,8 +66,9 @@
         });
 
         function newProject() {
-            window.location.href = "Engine.html";
+            window.location.href="Engine.html"
         }
     </script>
+        
 </body>
 </html>

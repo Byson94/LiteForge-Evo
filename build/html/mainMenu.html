@@ -10,22 +10,19 @@
 
 <body>
     <div id="sidebar-container">
-        <label>
-            <input type="checkbox" id="sidebar-toggle">
-            <div class="toggle">
-                <span class="top_line common"></span>
-                <span class="middle_line common"></span>
-                <span class="bottom_line common"></span>
-            </div>
+        <div class="toggle" id="sidebar-toggle">
+            <span class="top_line common"></span>
+            <span class="middle_line common"></span>
+            <span class="bottom_line common"></span>
+        </div>
 
-            <div class="slide">
-                <h1>MENU</h1>
-                <ul>
-                    <li><a href="#" onclick="infoClicked()">Info</a></li>
-                    <li><a href="#" onclick="createClicked()">Create</a></li>
-                </ul>
-            </div>
-        </label>
+        <div class="slide" id="sidebar">
+            <h1>MENU</h1>
+            <ul>
+                <li><a href="#" onclick="infoClicked()">Info</a></li>
+                <li><a href="#" onclick="createClicked()">Create</a></li>
+            </ul>
+        </div>
     </div>
 
     <!-- Layout 1 Content -->
@@ -45,6 +42,24 @@
     </div>
     
     <script>
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        let sidebarOpen = false;
+
+        sidebarToggle.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent click event from propagating to the document
+            sidebarOpen = !sidebarOpen;
+            sidebar.style.transform = sidebarOpen ? 'translateX(0)' : 'translateX(-180px)';
+        });
+
+        document.addEventListener('click', (event) => {
+            if (sidebarOpen && !sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                sidebarOpen = false;
+                sidebar.style.transform = 'translateX(-180px)';
+            }
+        });
+
         function createClicked() {
             document.getElementById('layout-1').style.display = 'none';
             document.getElementById('layout-2').style.display = 'block';
@@ -60,7 +75,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // I am doing this to show layout 1 when page loads
+            // Show layout 1 when the page loads
             document.getElementById('layout-1').style.display = 'block';
             document.getElementById('layout-2').style.display = 'none';
             document.body.classList.remove('layout-2');
@@ -68,18 +83,8 @@
         });
 
         function newProject() {
-            window.location.href="Engine.html"
+            window.location.href = "Engine.html";
         }
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.slide');
-            const toggle = document.getElementById('sidebar-toggle');
-            if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
-                toggle.checked = false;
-            }
-        });
     </script>
-        
 </body>
 </html>

@@ -1,1 +1,93 @@
+/* object panel*/
 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.slide {
+    height: 100%;
+    width: 180px;
+    position: absolute;
+    background-color: #444444;
+    transition: 0.3s ease;
+    transform: translate(0);
+    z-index: 1;
+}
+
+input {
+    display: none;
+    visibility: hidden;
+}
+
+.toggle {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    top: 18px;
+    left: 8px;
+    z-index: 2;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: #666666;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.toggle .common {
+    position: absolute;
+    height: 2px;
+    width: 20px;
+    background-color: #000000;
+    border-radius: 50px;
+    transition: 0.3s ease;
+    z-index: 2;
+}
+
+.toggle .top_line {
+    left: 2px;
+    top: 14px;
+    width: 25px;
+    transform: rotate(45deg);
+}
+
+.toggle .bottom_line {
+    left: 2px;
+    top: 14px;
+    width: 25px;
+    transform: rotate(-45deg);
+}
+
+.toggle .middle_line {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+input:checked ~ .toggle .top_line {
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input:checked ~ .toggle .bottom_line {
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input:checked ~ .toggle .middle_line {
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+input:checked ~ .slide {
+    transform: translateX(-180px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5)
+}

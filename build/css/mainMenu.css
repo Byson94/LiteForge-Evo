@@ -1,6 +1,6 @@
-/* Sidebar */
+/* SideBar */
 
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -17,7 +17,7 @@ body {
     position: absolute;
     background-color: #444444;
     transition: 0.3s ease;
-    transform: translateX(-180px); /* Start hidden */
+    transform: translate(0);
     z-index: 1;
 }
 
@@ -41,6 +41,7 @@ ul li a {
     color: #ffffff;
     font-weight: 500;
     padding: 5px 0;
+    display: block;
     text-transform: capitalize;
     text-decoration: none;
     transition: 0.2s ease-out;
@@ -51,8 +52,9 @@ ul li:hover a {
     background-color: #8000ff;
 }
 
-#menu-toggle {
-    display: none; /* Hide the checkbox */
+input {
+    display: none;
+    visibility: hidden;
 }
 
 .toggle {
@@ -97,27 +99,28 @@ ul li:hover a {
     transform: translateX(20px);
 }
 
-#menu-toggle:checked ~ .slide {
-    transform: translateX(0);
-}
-
-#menu-toggle:checked ~ .toggle .top_line {
+input:checked ~ .toggle .top_line {
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-#menu-toggle:checked ~ .toggle .bottom_line {
+input:checked ~ .toggle .bottom_line {
     top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-#menu-toggle:checked ~ .toggle .middle_line {
+input:checked ~ .toggle .middle_line {
     top: 50%;
     left: 50%;
     opacity: 1;
     transform: translate(-50%, -50%);
+}
+
+input:checked ~ .slide {
+    transform: translateX(-180px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5)
 }
 
 /* Layouts */

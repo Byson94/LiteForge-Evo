@@ -66,7 +66,7 @@
             border: 2px solid #8000ff;
             border-radius: 50%;
         }
-        input:checked + .banner .toggleObject {
+        #toggleObjectpanel:checked + .banner .toggleObject {
             background-color: #530041;
         }
         .slide {
@@ -92,15 +92,12 @@
             background: linear-gradient(90deg, #625a72, #666666);
             z-index: 2;
         }
-        input[type="checkbox"] {
-            display: none;
-        }
-        input:checked ~ .slide {
+        #toggleObjectpanel:checked ~ .slide {
             transform: translateX(-250px);
             opacity: 1;
             visibility: visible;
         }
-        input:not(:checked) ~ .slide {
+        #toggleObjectpanel:not(:checked) ~ .slide {
             transform: translateX(0);
             opacity: 0;
             visibility: hidden;
@@ -127,15 +124,16 @@
     </style>
 </head>
 <body>
-    <input type="checkbox" id="toggleCheckbox">
+    <input type="checkbox" id="toggleObjectpanel">
     <div class="banner">
-        <label for="toggleCheckbox" class="toggleObject"></label>
+        <label for="toggleObjectpanel" class="toggleObject"></label>
     </div>
     <div class="slide">
         <div class="resizer"></div>
         <h2>Object Panel</h2>
         <button type="button" onclick="buttonclicked()">NewSprite</button>
     </div>
+
     <script>
         function buttonclicked() {
             console.log("NewSprite Button Clicked!");

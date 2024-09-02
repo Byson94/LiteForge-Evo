@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiteForge Evo</title>
-    <link rel="stylesheet" href="build/css/styles.css"
+    <link rel="stylesheet" href="build/css/styles.css">
     <style>
         body {
             margin: 0;
@@ -12,13 +12,38 @@
             background-color: #f1f1f1;
             font-family: Arial, sans-serif;
         }
+
+        /* Loading background overlay */
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.8);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
+    <!-- Text in the grey background -->
+    <div id="loadingOverlay">Loading...</div>
+
     <script src="build/JavaScript/renderer.js"></script> <!-- Load renderer.js -->
     <script>
-        // Redirect to mainMenu.html in the build/html directory
+        // Going to the engines mainmenu
         window.location.href = 'build/html/mainMenu.html';
+        
+        // Removing the loading scene background
+        window.addEventListener('load', function () {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        });
     </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
-    "name": "LiteForge Evo",
+    "name": "liteforge-evo",
     "version": "0.1.0",
     "description": "The remake of LiteForge GD engine from scratch.",
     "main": "main.js",

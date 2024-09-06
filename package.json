@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "The remake of LiteForge GD engine from scratch.",
     "main": "main.js",
-    "author": "Byson94"
+    "author": "Byson94",
     "scripts": {
       "start": "electron .",
       "build": "electron-builder"

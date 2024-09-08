@@ -13,12 +13,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/3024-night.min.css">
 </head>
 <body>
+    <!-- The menu sidebar -->
+    <div class="menuSlide">
+        <h2 style="color: rgb(194, 104, 247); text-align: center;">MENU</h2>
+        <button type="button" onclick="MenuExportButtonClicked()" id="MenuExportButton" style="position: absolute; width: 100%; top: 13%;">Export</button>
+        <button type="button" onclick="MenuImportButtonClicked()" id="MenuImportButton" style="position: absolute; width: 100%; top: 20%;">Import</button>
+        <button type="button" onclick="QuitButtonClicked()" id="MenuEngineQuitButton" style="position: absolute; width: 100%; top: 27%;">Quit The Engine</button>
+    </div>
+
     <div id="layout-1">
         <div class="banner">
             <label for="toggleObjectpanel" class="toggleObject"></label>
             <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">Preview</button>
             <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
             <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
+            <button type="button" onclick="MenuButtonClicked()" id="MenuButton">☰</button>
         </div>
         <input type="checkbox" id="toggleObjectpanel">
         <div class="slide">
@@ -35,6 +44,7 @@
         <div class="banner">
             <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
             <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
+            <button type="button" onclick="MenuClicked()" id="MenuButton">☰</button>
         </div>
         <div class="header">
             <button class="run-btn">RUN</button>
@@ -88,7 +98,7 @@
     </script>
 
     <script src="../../JavaScript/Engine/engineFunction.js"></script>
-    <script src="../../JavaScript/Engine/Engine-layouts.js"></script>
+    <script src="../../JavaScript/Engine/EngineButtonClicks.js"></script>
     <script src="../../JavaScript/Engine/PreviewGame.js"></script>
 </body>
 </html>

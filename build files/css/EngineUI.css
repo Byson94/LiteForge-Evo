@@ -183,7 +183,7 @@ img {
 #PreviewGameButton {
     position: fixed;
     top: 20%;
-    left: 10px;
+    left: 47%;
     height: 30px;
     background-color: #666666;
     color: #ffffff;
@@ -201,7 +201,7 @@ img {
 #SceneEditorButton {
     position: fixed;
     top: 20%;
-    left: 100px;
+    left: 50px;
     height: 30px;
     background-color: #666666;
     color: #ffffff;
@@ -219,7 +219,7 @@ img {
 #ScriptEditorButton {
     position: fixed;
     top: 20%;
-    left: 190px;
+    left: 140px;
     height: 30px;
     background-color: #666666;
     color: #ffffff;
@@ -233,6 +233,65 @@ img {
     background-color: #1a1a1a;
 }
 
+/* Style for game Exporter */
+#MenuButton {
+    position: fixed;
+    top: 20%;
+    left: 10px;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    z-index: 4;
+    font-size: larger;
+    padding-bottom: 2px;
+}
+
+#MenuButton:hover {
+    background-color: #9959be;
+}
+
+.menuSlide {
+    height: calc(100% - 60px);
+    width: 300px;
+    position: fixed;
+    top: 60px;
+    background-color: #333333;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    overflow-y: auto;
+    transform: translateX(-300px);
+}
+
+/* Export button */
+.menuSlide button{
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    height: 30px;
+    z-index: 4;
+    font-size: 16px;
+}
+
+.menuSlide #MenuExportButton:hover {
+    background-color: #9959be;
+}
+
+.menuSlide #MenuImportButton:hover {
+    background-color: #9959be;
+}
+
+.menuSlide #MenuEngineQuitButton:hover {
+    background-color: #be5959;
+}
 
 
 /* CodeMirror Styles */

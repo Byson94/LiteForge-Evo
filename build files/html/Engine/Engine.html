@@ -13,28 +13,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/3024-night.min.css">
 </head>
 <body>
-    <div class="banner">
-        <label for="toggleObjectpanel" class="toggleObject"></label>
-        <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">Preview</button>
-        <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
-        <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
-    </div>
-
     <div id="layout-1">
+        <div class="banner">
+            <label for="toggleObjectpanel" class="toggleObject"></label>
+            <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">Preview</button>
+            <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
+            <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
+        </div>
         <input type="checkbox" id="toggleObjectpanel">
-    
         <div class="slide">
             <div class="resizer"></div>
             <h2>Object Panel</h2>
             <button type="button" onclick="buttonclicked()" id="NewSpriteButton">NewSprite</button>
         </div>
-    
         <div class="gameCanvas">
             <!-- Sprites will be added here -->
         </div>
     </div>
 
     <div id="layout-2" style="display: none;">
+        <div class="banner">
+            <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
+            <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
+        </div>
         <div class="header">
             <button class="run-btn">RUN</button>
         </div>
@@ -53,37 +54,37 @@
     
     <script>
         // Initialize CodeMirror editor only when Script Editor is clicked
-            let codeMirrorEditor = null;
-            let editorInitialized = false;
+        let codeMirrorEditor = null;
+        let editorInitialized = false;
 
-            function initializeEditor() {
-                if (!editorInitialized) {
-                    codeMirrorEditor = CodeMirror(document.getElementById('editor'), {
-                        mode: 'javascript',
-                        lineNumbers: true,
-                        theme: '3024-night',
-                        indentUnit: 4,
-                        tabSize: 4,
-                        autofocus: true
-                    });
+        function initializeEditor() {
+            if (!editorInitialized) {
+                codeMirrorEditor = CodeMirror(document.getElementById('editor'), {
+                    mode: 'javascript',
+                    lineNumbers: true,
+                    theme: '3024-night',
+                    indentUnit: 4,
+                    tabSize: 4,
+                    autofocus: true
+                });
 
-                    // Set the height dynamically
-                    codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
+                // Set the height dynamically
+                codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
 
-                    // Optionally, set some default content
-                    codeMirrorEditor.setValue(`// Write your JavaScript code here\nconsole.log('Hello, world!');`);
-                    editorInitialized = true;
-                }
+                // Optionally, set some default content
+                codeMirrorEditor.setValue(`// Write your JavaScript code here\nconsole.log('Hello, world!');`);
+                editorInitialized = true;
             }
+        }
 
-            function getEditorCode() {
-                if (codeMirrorEditor) {
-                    return codeMirrorEditor.getValue();
-                } else {
-                    console.error('CodeMirror editor instance is not initialized.');
-                    return '';
-                }
+        function getEditorCode() {
+            if (codeMirrorEditor) {
+                return codeMirrorEditor.getValue();
+            } else {
+                console.error('CodeMirror editor instance is not initialized.');
+                return '';
             }
+        }
     </script>
 
     <script src="../../JavaScript/Engine/engineFunction.js"></script>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiteForge Evo</title>
+    <link rel="stylesheet" href="../css/EngineUI.css">
+    <!-- CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/monokai.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/material.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/3024-night.min.css">
+</head>
+<body>
+    <div class="banner">
+        <label for="toggleObjectpanel" class="toggleObject"></label>
+        <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">Preview</button>
+        <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
+        <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
+    </div>
+
+    <div id="layout-1">
+        <input type="checkbox" id="toggleObjectpanel">
+    
+        <div class="slide">
+            <div class="resizer"></div>
+            <h2>Object Panel</h2>
+            <button type="button" onclick="buttonclicked()" id="NewSpriteButton">NewSprite</button>
+        </div>
+    
+        <div class="gameCanvas">
+            <!-- Sprites will be added here -->
+        </div>
+    </div>
+
+    <div id="layout-2" style="display: none;">
+        <div class="header">
+            <button class="run-btn">RUN</button>
+        </div>
+        <div class="editor">
+            <!-- CodeMirror editor container -->
+            <div id="editor" class="editor-container" style="height: 800px;"></div>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" style="display: none;" multiple accept="image/png, image/jpeg, image/jpg">
+
+    <!-- CodeMirror JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/codemirror.min.js"></script>
+    <!-- JavaScript mode for CodeMirror -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/mode/javascript/javascript.min.js"></script>
+    
+    <script>
+        // Initialize CodeMirror editor only when Script Editor is clicked
+        let editorInitialized = false;
+        function initializeEditor() {
+            if (!editorInitialized) {
+                const editor = CodeMirror(document.getElementById('editor'), {
+                    mode: 'javascript',
+                    lineNumbers: true,
+                    theme: '3024-night',
+                    indentUnit: 4,
+                    tabSize: 4,
+                    autofocus: true
+                });
+
+                // Set the height dynamically
+                editor.getWrapperElement().style.height = '550px'; // Set desired height here
+
+                // Optionally, set some default content
+                editor.setValue(`// Write your JavaScript code here\nconsole.log('Hello, world!');`);
+                editorInitialized = true;
+            }
+        }
+
+        // Layout switching functions
+        function ScriptEditorClicked() {
+            document.getElementById('layout-1').style.display = 'none';
+            document.getElementById('layout-2').style.display = 'block';
+            initializeEditor(); // Initialize the CodeMirror editor
+        }
+
+        function SceneEditorClicked() {
+            document.getElementById('layout-2').style.display = 'none';
+            document.getElementById('layout-1').style.display = 'block';
+        }
+
+        function previewGameClicked() {
+            alert('Game preview is not implemented yet.');
+        }
+
+        function buttonclicked() {
+            alert('New Sprite logic goes here.');
+        }
+
+        function newProject() {
+            window.location.href = "Engine.html";
+        }
+
+        // Ensure the Scene Editor is visible on page load
+        document.getElementById('layout-1').style.display = 'block';
+        document.getElementById('layout-2').style.display = 'none';
+    </script>
+
+    <script src="../JavaScript/engineFunction.js"></script>
+</body>
+</html>

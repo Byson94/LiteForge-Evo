@@ -1,0 +1,270 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #252525;
+    overflow: hidden;
+}
+
+.gameCanvas {
+    background-color: #b6b6b6;
+    width: 550px;
+    height: 550px;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 5px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.draggable {
+    width: 100px;
+    height: 100px;
+    background-color: #ff0000;
+    position: absolute;
+    cursor: move;
+}
+
+.banner {
+    height: 60px;
+    width: 100%;
+    background: linear-gradient(135deg, #333333, #444444);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid #222222;
+    backdrop-filter: blur(8px);
+    color: #ffffff;
+}
+
+.banner::after {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #8b8a8d, #587681);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.toggleObject {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    left: 98%;
+    background-color: #666666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.toggleObject::before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #8000ff;
+    border-radius: 50%;
+}
+
+#toggleObjectpanel:checked + .banner .toggleObject {
+    background-color: #530041;
+}
+
+.slide {
+    height: calc(100% - 60px);
+    width: 300px;
+    position: fixed;
+    right: -300px; /* Adjust based on the width of the slide */
+    top: 60px;
+    background-color: #333333;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    overflow-y: auto;
+}
+
+.slide #NewSpriteButton {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    height: 40px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: calc(100% - 20px);
+}
+
+.slide #NewSpriteButton:hover {
+    background-color: #8000ff;
+}
+
+.resizer {
+    width: 8px;
+    height: 100%;
+    top: 0;
+    left: -8px;
+    cursor: ew-resize;
+    position: absolute;
+    background: linear-gradient(90deg, #625a72, #666666);
+    z-index: 2;
+}
+
+#toggleObjectpanel:checked ~ .slide {
+    transform: translateX(-300px);
+    opacity: 1;
+    visibility: visible;
+}
+
+#toggleObjectpanel:not(:checked) ~ .slide {
+    transform: translateX(0);
+    opacity: 0;
+    visibility: hidden;
+}
+
+h2 {
+    text-align: center;
+    color: #ffffff;
+    padding: 20px 0;
+}
+
+img:focus {
+    outline: none;
+}
+
+img {
+    display: block;
+    border: none;
+}
+
+.rectangle-box {
+    border: 2px solid #000;
+    padding: 10px;
+    margin: 10px 0;
+    width: calc(100% - 20px);
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7f97c4;
+    position: relative;
+}
+
+.rectangle-box span {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-size: 12px;
+    color: #333;
+}
+
+/* Style for PreviewGameButton */
+#PreviewGameButton {
+    position: fixed;
+    top: 20%;
+    left: 10px;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    z-index: 4;
+}
+
+#PreviewGameButton:hover {
+    background-color: #f77f7f75;
+}
+
+/* Style for Scene Editor */
+#SceneEditorButton {
+    position: fixed;
+    top: 20%;
+    left: 100px;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    z-index: 4;
+}
+
+#SceneEditorButton:hover {
+    background-color: #1a1a1a;
+}
+
+/* Style for Script Editor */
+#ScriptEditorButton {
+    position: fixed;
+    top: 20%;
+    left: 190px;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    z-index: 4;
+}
+
+#ScriptEditorButton:hover {
+    background-color: #1a1a1a;
+}
+
+/* CodeMirror Styles */
+.CodeMirror {
+    border: 1px solid #ddd;
+    height: 500px; /* Ensure it takes the full height of its parent */
+    width: 100%; /* Ensure it takes the full width of its parent */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Remove position: absolute */
+}
+
+/* Layout 2 Styles */
+#layout-2 .editor {
+    position: absolute;
+    top: 10%; /* Adjust as needed to give more vertical space */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+#layout-2 .code {
+    flex-grow: 1; /* Allow the code section to grow and take available space */
+    display: flex;
+}
+
+#layout-2 .editor-container {
+    flex-grow: 1; /* Ensure the editor container stretches to fill the height */
+    height: 800px; /* Make sure it takes full height */
+}
+
+

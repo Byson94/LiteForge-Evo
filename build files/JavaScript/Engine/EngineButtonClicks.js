@@ -40,5 +40,5 @@ function MenuButtonClicked() {
 
 // Quitting the engine
 function QuitButtonClicked() {
-    window.location.href = 'LiteForge-Evo/build files/html/mainMenu.html';
+    window.location.href = '/build files/html/mainMenu.html';
 }

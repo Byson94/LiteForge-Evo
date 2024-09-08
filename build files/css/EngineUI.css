@@ -150,7 +150,7 @@ h2 {
 }
 
 img:focus {
-    outline: none;
+    outline: #ff0000;
 }
 
 img {
@@ -266,5 +266,3 @@ img {
     flex-grow: 1; /* Ensure the editor container stretches to fill the height */
     height: 800px; /* Make sure it takes full height */
 }
-
-

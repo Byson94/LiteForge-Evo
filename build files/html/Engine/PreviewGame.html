@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevents body from scrolling */
+        }
+        .gameCanvas {
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            left: 5%;
+            top: 10%;
+            background-color: #b6b6b6;
+            border: 2px solid #222;
+            overflow: hidden; /* Prevents scrolling */
+            z-index: 100; /* Ensure canvas is above other elements */
+        }
+
+        .console {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background-color: #222;
+            color: #fff;
+            border-left: 1px solid #111;
+            overflow-y: auto; /* Allows vertical scrolling */
+            top: 0;
+            right: 0;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch; /* Ensures log boxes stretch to fill the width */
+            white-space: pre-wrap; /* Ensures text wraps properly */
+            box-sizing: border-box; /* Includes padding and border in dimensions */
+        }
+
+        .console .log-box {
+            background-color: #444;
+            border: 1px solid #333;
+            margin: 5px 0; 
+            padding: 20px;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            max-height: 150px;
+            padding-left: 15px;
+            overflow: hidden;
+            word-wrap: break-word; /* Ensure long words wrap to the next line */
+            white-space: pre-wrap; /* Ensures text wraps properly */
+        }
+
+        .console .log-box-big {
+            background-color: #555; /* Different background color for visibility */
+            border: 1px solid #333;
+            margin: 5px 0;
+            padding: 50px 10px 50px 15px;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            max-height: 150px;
+            overflow: hidden;
+            overflow-y: auto;
+            word-wrap: break-word; /* Ensure long words wrap to the next line */
+            white-space: pre-wrap; /* Ensures text wraps properly */
+            /* Hide scrollbar in WebKit browsers (Chrome, Safari, Edge) */
+            -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+            -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer and Edge */
+            scrollbar-width: none; /* Hide scrollbar in Firefox */
+        }
+
+        /* Hide scrollbar in WebKit browsers (Chrome, Safari, Edge) */
+        .console .log-box-big::-webkit-scrollbar {
+            display: none;
+        }
+
+        h3 {
+            color: #fff;
+            text-align: center;
+            font-size: 30px;
+            height: 35px;
+            line-height: 35px; /* Centers text vertically */
+        }
+    </style>
+</head>
+<body>
+    <!-- Add a canvas element to your preview HTML -->
+    <div class="gameCanvas"></div>
+    <div class="console" id="consoleOutput">
+        <h3>Console</h3>
+    </div>
+
+    <script>
+        // Override console methods to redirect output to the custom console
+        (function() {
+            const consoleOutput = document.getElementById('consoleOutput');
+
+            function appendLog(message, type) {
+                const logBox = document.createElement('div');
+                logBox.className = message.length >= 20 ? 'log-box-big' : 'log-box';
+                logBox.style.color = type === 'error' ? 'red' : 'inherit';
+
+                const logContent = document.createElement('div');
+                logContent.textContent = message;
+
+                logBox.appendChild(logContent);
+                consoleOutput.appendChild(logBox);
+
+                // Automatically scroll to the bottom to show the latest message
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            }
+
+            // Override console.log
+            console.log = function(message) {
+                appendLog(message, 'log');
+            };
+
+            // Override console.error
+            console.error = function(message) {
+                appendLog(message, 'error');
+            };
+
+            // Override console.warn if needed
+            console.warn = function(message) {
+                appendLog(message, 'warn');
+            };
+        })();
+
+        // Function to retrieve and use the stored game data
+        function loadGameData() {
+            // Retrieve data from local storage
+            const gameDataJSON = localStorage.getItem('gameData');
+            if (!gameDataJSON) {
+                console.error('No game data found in local storage.');
+                return;
+            }
+
+            // Parse the JSON data
+            const gameData = JSON.parse(gameDataJSON);
+
+            // Retrieve image data and recreate images
+            const images = gameData.imageData;
+            const canvas = document.querySelector('.gameCanvas');
+            if (!canvas) {
+                console.error('Canvas element not found.');
+                return;
+            }
+
+            // Clear any existing images
+            canvas.innerHTML = '';
+
+            images.forEach(image => {
+                const img = new Image();
+                img.src = image.src;
+                img.style.position = 'absolute';
+                img.style.left = `${image.left}px`;
+                img.style.top = `${image.top}px`;
+                img.style.width = `${image.width}px`;
+                img.style.height = `${image.height}px`;
+                img.id = image.id; // Set the ID of the image
+                canvas.appendChild(img);
+            });
+
+            // Retrieve JavaScript code and execute it
+            const jsCode = gameData.jsCode;
+            if (jsCode) {
+                try {
+                    // Using eval to execute the JavaScript code
+                    eval(jsCode);
+                } catch (error) {
+                    console.error('Error executing JavaScript code:', error);
+                }
+            }
+        }
+
+        // Call the function to load and use the data
+        loadGameData();
+    </script>
+</body>
+</html>

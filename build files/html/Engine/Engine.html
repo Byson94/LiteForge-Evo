@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiteForge Evo</title>
-    <link rel="stylesheet" href="../css/EngineUI.css">
+    <link rel="stylesheet" href="../../css/EngineUI.css">
     <!-- CodeMirror CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/monokai.min.css">
@@ -53,56 +53,41 @@
     
     <script>
         // Initialize CodeMirror editor only when Script Editor is clicked
-        let editorInitialized = false;
-        function initializeEditor() {
-            if (!editorInitialized) {
-                const editor = CodeMirror(document.getElementById('editor'), {
-                    mode: 'javascript',
-                    lineNumbers: true,
-                    theme: '3024-night',
-                    indentUnit: 4,
-                    tabSize: 4,
-                    autofocus: true
-                });
+            let codeMirrorEditor = null;
+            let editorInitialized = false;
 
-                // Set the height dynamically
-                editor.getWrapperElement().style.height = '550px'; // Set desired height here
+            function initializeEditor() {
+                if (!editorInitialized) {
+                    codeMirrorEditor = CodeMirror(document.getElementById('editor'), {
+                        mode: 'javascript',
+                        lineNumbers: true,
+                        theme: '3024-night',
+                        indentUnit: 4,
+                        tabSize: 4,
+                        autofocus: true
+                    });
 
-                // Optionally, set some default content
-                editor.setValue(`// Write your JavaScript code here\nconsole.log('Hello, world!');`);
-                editorInitialized = true;
+                    // Set the height dynamically
+                    codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
+
+                    // Optionally, set some default content
+                    codeMirrorEditor.setValue(`// Write your JavaScript code here\nconsole.log('Hello, world!');`);
+                    editorInitialized = true;
+                }
             }
-        }
 
-        // Layout switching functions
-        function ScriptEditorClicked() {
-            document.getElementById('layout-1').style.display = 'none';
-            document.getElementById('layout-2').style.display = 'block';
-            initializeEditor(); // Initialize the CodeMirror editor
-        }
-
-        function SceneEditorClicked() {
-            document.getElementById('layout-2').style.display = 'none';
-            document.getElementById('layout-1').style.display = 'block';
-        }
-
-        function previewGameClicked() {
-            alert('Game preview is not implemented yet.');
-        }
-
-        function buttonclicked() {
-            alert('New Sprite logic goes here.');
-        }
-
-        function newProject() {
-            window.location.href = "Engine.html";
-        }
-
-        // Ensure the Scene Editor is visible on page load
-        document.getElementById('layout-1').style.display = 'block';
-        document.getElementById('layout-2').style.display = 'none';
+            function getEditorCode() {
+                if (codeMirrorEditor) {
+                    return codeMirrorEditor.getValue();
+                } else {
+                    console.error('CodeMirror editor instance is not initialized.');
+                    return '';
+                }
+            }
     </script>
 
-    <script src="../JavaScript/engineFunction.js"></script>
+    <script src="../../JavaScript/Engine/engineFunction.js"></script>
+    <script src="../../JavaScript/Engine/Engine-layouts.js"></script>
+    <script src="../../JavaScript/Engine/PreviewGame.js"></script>
 </body>
 </html>

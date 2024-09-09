@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="../../css/EngineUI.css">
     <!-- CodeMirror CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/monokai.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/material.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/dracula.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/3024-night.min.css">
 </head>
 <body>
@@ -20,6 +17,12 @@
         <button type="button" onclick="MenuImportButtonClicked()" id="MenuImportButton" style="position: absolute; width: 100%; top: 20%;">Import</button>
         <button type="button" onclick="QuitButtonClicked()" id="MenuEngineQuitButton" style="position: absolute; width: 100%; top: 27%;">Quit The Engine</button>
     </div>
+
+    <!-- The exporting/importing panel -->
+    <div class="ExportingTheGame" style="display: none;">
+        <h1>Exporting... Please wait...</h1>
+    </div>
+    <div class="ImportingTheGame" style="display: none;"></div>
 
     <div id="layout-1">
         <div class="banner">
@@ -33,7 +36,7 @@
         <div class="slide">
             <div class="resizer"></div>
             <h2>Object Panel</h2>
-            <button type="button" onclick="buttonclicked()" id="NewSpriteButton">NewSprite</button>
+            <button type="button" onclick="NewSpritebuttonclicked()" id="NewSpriteButton">NewSprite</button>
         </div>
         <div class="gameCanvas">
             <!-- Sprites will be added here -->
@@ -44,13 +47,9 @@
         <div class="banner">
             <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
             <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
-            <button type="button" onclick="MenuClicked()" id="MenuButton">☰</button>
-        </div>
-        <div class="header">
-            <button class="run-btn">RUN</button>
+            <button type="button" onclick="MenuButtonClicked()" id="MenuButton">☰</button>
         </div>
         <div class="editor">
-            <!-- CodeMirror editor container -->
             <div id="editor" class="editor-container" style="height: 800px;"></div>
         </div>
     </div>
@@ -59,10 +58,21 @@
 
     <!-- CodeMirror JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/codemirror.min.js"></script>
-    <!-- JavaScript mode for CodeMirror -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/mode/javascript/javascript.min.js"></script>
-    
+
+    <!-- Ensure script files are included in the correct order -->
+    <script src="../../JavaScript/Engine/engineFunction.js"></script>
+    <script src="../../JavaScript/Engine/EngineButtonClicks.js"></script>
+    <script src="../../JavaScript/Engine/ImportGameLFG.js"></script>
+    <script src="../../JavaScript/Engine/PreviewGame.js"></script>
+    <script src="../../JavaScript/Engine/ExportGameLFE.js"></script>
+
     <script>
+        // Initialize CodeMirror editor when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEditor(); // Call the function to initialize CodeMirror
+        });
+
         // Initialize CodeMirror editor only when Script Editor is clicked
         let codeMirrorEditor = null;
         let editorInitialized = false;
@@ -78,10 +88,8 @@
                     autofocus: true
                 });
 
-                // Set the height dynamically
                 codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
 
-                // Optionally, set some default content
                 codeMirrorEditor.setValue(`// Write your JavaScript code here\nconsole.log('Hello, world!');`);
                 editorInitialized = true;
             }
@@ -96,9 +104,5 @@
             }
         }
     </script>
-
-    <script src="../../JavaScript/Engine/engineFunction.js"></script>
-    <script src="../../JavaScript/Engine/EngineButtonClicks.js"></script>
-    <script src="../../JavaScript/Engine/PreviewGame.js"></script>
 </body>
 </html>

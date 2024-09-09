@@ -40,5 +40,16 @@ function MenuButtonClicked() {
 
 // Quitting the engine
 function QuitButtonClicked() {
-    window.location.href = '/build files/html/mainMenu.html';
+    window.location.href = '../../html/mainMenu.html';
+}
+
+// Exporting the game to the users computer
+function MenuExportButtonClicked() {
+    SceneEditorClicked()
+    ExportTheGame()
+}
+
+// Importing the game from the users computer
+function MenuImportButtonClicked() {
+    ImportTheGameClicked()
 }

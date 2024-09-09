@@ -269,7 +269,7 @@ img {
     transform: translateX(-300px);
 }
 
-/* Export button */
+/* Buttons */
 .menuSlide button{
     height: 30px;
     background-color: #666666;
@@ -292,6 +292,27 @@ img {
 .menuSlide #MenuEngineQuitButton:hover {
     background-color: #be5959;
 }
+
+/* Export panel */
+.ExportingTheGame {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 200px;
+    width: 400px;
+    background-color: #73ad8b;
+    z-index: 6;
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 1.5em;
+    padding: 20px; /* Padding inside the box */
+}
+
 
 
 /* CodeMirror Styles */

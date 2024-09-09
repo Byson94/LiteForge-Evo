@@ -1,42 +1,71 @@
-// Function to handle the button click
-function buttonclicked() {
-    const fileInput = document.getElementById('fileInput');
-    fileInput.click();
-    console.log("NewSprite Button Clicked!");
-}
+function NewSpritebuttonclicked() {
+    if (typeof window.require !== 'undefined') {
+        // Electron environment
+        const { dialog } = require('@electron/remote');
 
-// Opening the file explorer
-document.getElementById('fileInput').addEventListener('change', function(event) {
-    const fileInput = event.target;
-    const files = fileInput.files;
-    if (files.length > 0) {
-        console.log(`Selected files: ${files.length}`);
-        for (const file of files) {
-            if (file.type.startsWith('image/')) {
-                // Get the file name and remove the extension
-                const fileName = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
-                console.log(`Original file name (without extension): ${fileName}`);
-                
-                // Generate a unique name
-                const uniqueName = getUniqueName(fileName);
-                
-                // Log the unique name
-                console.log(`Generated unique file name: ${uniqueName}`);
-                
-                // Create and add a rectangle box with the unique name
-                addRectangleBox(uniqueName);
-                
-                // Create and add the sprite to the game canvas
-                addSpriteToCanvas(file, uniqueName);
+        dialog.showOpenDialog({
+            filters: [
+                { name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif', 'bmp'] }
+            ],
+            properties: ['openFile']
+        }).then(result => {
+            if (!result.canceled && result.filePaths.length > 0) {
+                const filePath = result.filePaths[0];
+                console.log('Selected file in Electron:', filePath);
+                // Process the selected file
+                // You might need to handle file content or other operations here
             } else {
-                console.log(`Skipped non-image file: ${file.name}`);
+                console.log('No file selected or cancelled in Electron.');
             }
-        }
+        }).catch(err => {
+            console.error('Error opening file in Electron:', err);
+        });
+    } else {
+        // Web environment
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*'; // Accept only image files
+        fileInput.style.display = 'none'; // Hide the file input
+
+        // Append the file input to the body
+        document.body.appendChild(fileInput);
+
+        fileInput.addEventListener('change', function(event) {
+            const fileInput = event.target;
+            const files = fileInput.files;
+            if (files.length > 0) {
+                console.log(`Selected files: ${files.length}`);
+                for (const file of files) {
+                    if (file.type.startsWith('image/')) {
+                        // Get the file name and remove the extension
+                        const fileName = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
+                        console.log(`Original file name (without extension): ${fileName}`);
+                        
+                        // Generate a unique name
+                        const uniqueName = getUniqueName(fileName);
+                        
+                        // Log the unique name
+                        console.log(`Generated unique file name: ${uniqueName}`);
+                        
+                        // Create and add a rectangle box with the unique name
+                        addRectangleBox(uniqueName);
+                        
+                        // Create and add the sprite to the game canvas
+                        addSpriteToCanvas(file, uniqueName);
+                    } else {
+                        console.log(`Skipped non-image file: ${file.name}`);
+                    }
+                }
+            }
+            
+            // Remove the file input element after use
+            fileInput.remove();
+        });
+
+        // Trigger a click on the file input to open the file dialog
+        fileInput.click();
     }
-    
-    // Reset the file input value to forget previously selected files
-    fileInput.value = '';
-});
+}
 
 // Function to generate a unique name for new objects
 function getUniqueName(baseName) {

@@ -1,26 +1,28 @@
-/* SideBar */
-
-*{
+/* General Reset and Box Model */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Body */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
+/* Sidebar */
 .slide {
     height: 100%;
     width: 180px;
     position: absolute;
     background-color: #444444;
     transition: 0.3s ease;
-    transform: translate(0);
+    transform: translateX(0);
     z-index: 1;
 }
 
+/* Sidebar Header */
 h1 {
     color: blueviolet;
     font-weight: 800;
@@ -30,6 +32,7 @@ h1 {
     pointer-events: none;
 }
 
+/* Navigation Links */
 ul li {
     list-style: none;
 }
@@ -41,7 +44,6 @@ ul li a {
     color: #ffffff;
     font-weight: 500;
     padding: 5px 0;
-    display: block;
     text-transform: capitalize;
     text-decoration: none;
     transition: 0.2s ease-out;
@@ -52,6 +54,7 @@ ul li:hover a {
     background-color: #8000ff;
 }
 
+/* Toggle Button */
 input {
     display: none;
     visibility: hidden;
@@ -120,15 +123,69 @@ input:checked ~ .toggle .middle_line {
 
 input:checked ~ .slide {
     transform: translateX(-180px);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5)
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 /* Layouts */
-
 .layout-1 {
     background-color: #252525;
 }
 
 .layout-2 {
     background-color: #252525;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .slide {
+        width: 150px; /* Adjust width for smaller screens */
+    }
+
+    .toggle {
+        height: 25px; /* Adjust toggle size */
+        width: 25px;
+        top: 10px; /* Adjust position */
+        left: 5px;
+    }
+
+    .toggle .common {
+        width: 18px; /* Adjust line width */
+    }
+
+    h1 {
+        font-size: 18px; /* Adjust font size */
+        padding-right: 20px; /* Adjust padding */
+    }
+
+    ul li a {
+        font-size: 14px; /* Adjust font size */
+        padding: 10px 0; /* Adjust padding */
+    }
+}
+
+@media (max-width: 480px) {
+    .slide {
+        width: 120px; /* Further adjust width for very small screens */
+    }
+
+    .toggle {
+        height: 20px; /* Adjust toggle size */
+        width: 20px;
+        top: 5px; /* Adjust position */
+        left: 3px;
+    }
+
+    .toggle .common {
+        width: 16px; /* Adjust line width */
+    }
+
+    h1 {
+        font-size: 16px; /* Adjust font size */
+        padding-right: 10px; /* Adjust padding */
+    }
+
+    ul li a {
+        font-size: 12px; /* Adjust font size */
+        padding: 8px 0; /* Adjust padding */
+    }
 }

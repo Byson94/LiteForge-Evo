@@ -105,10 +105,11 @@
         // Override console methods to redirect output to the custom console
         (function() {
             const consoleOutput = document.getElementById('consoleOutput');
-
+            const gameCanvas = document.querySelector('.gameCanvas');
+            
             function appendLog(message, type) {
                 const logBox = document.createElement('div');
-                logBox.className = message.length >= 20 ? 'log-box-big' : 'log-box';
+                logBox.className = message.length >= 30 ? 'log-box-big' : 'log-box';
                 logBox.style.color = type === 'error' ? 'red' : 'inherit';
 
                 const logContent = document.createElement('div');
@@ -186,6 +187,27 @@
 
         // Call the function to load and use the data
         loadGameData();
+
+        // Function to check if the console should be visible
+        function checkConsoleVisibility() {
+            const consoleElement = document.getElementById('consoleOutput');
+            const canvasElement = document.querySelector('.gameCanvas');
+            
+            // Calculate total width needed for console and canvas
+            const totalWidth = (consoleElement.offsetWidth + canvasElement.offsetWidth) / window.innerWidth;
+            
+            if (totalWidth > 1) {
+                consoleElement.style.display = 'none';
+            } else {
+                consoleElement.style.display = 'flex'; // Show console if width is sufficient
+            }
+        }
+
+        // Run the check on initial load
+        checkConsoleVisibility();
+
+        // Add an event listener to check on resize
+        window.addEventListener('resize', checkConsoleVisibility);
     </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 // ImportTheGameClicked function
 function ImportTheGameClicked() {
-    ScriptEditorClicked() 
-    SceneEditorClicked()
+    ScriptEditorClicked(); 
+    SceneEditorClicked(); 
     if (typeof window.require !== 'undefined') {
         // Running in Electron
         const { dialog } = require('@electron/remote'); // Use @electron/remote for newer Electron versions
@@ -38,7 +38,7 @@ function ImportTheGameClicked() {
                     const fileContent = e.target.result;
                     processLFEFileContent(fileContent); // Call the function here
                 };
-                reader.readAsText(file);
+                reader.readAsArrayBuffer(file); // Read as ArrayBuffer for ZIP extraction
             } else {
                 alert('Please select a .LFE file.');
             }
@@ -49,25 +49,29 @@ function ImportTheGameClicked() {
 }
 
 // Function to process LFE file content
-function processLFEFileContent(fileContent) {
+async function processLFEFileContent(fileContent) {
     try {
         // Parse LFE content to JSON
-        const jsonData = parseLFEToJSON(fileContent);
+        const zip = await JSZip.loadAsync(fileContent);
 
-        // Debugging: Check the parsed JSON data
-        console.log('Parsed JSON Data:', jsonData);
+        // Extract gameData.json and script.js
+        const gameDataFile = zip.file('gameData.json');
+        const scriptFile = zip.file('script.js');
 
-        // Check if jsCode is defined and a string
-        if (typeof jsonData.jsCode === 'string') {
-            // Set CodeMirror content
-            setEditorContent(jsonData.jsCode);
-        } else {
-            console.error('Invalid JavaScript code content in JSON data.');
+        if (!gameDataFile || !scriptFile) {
+            throw new Error('Missing gameData.json or script.js in the ZIP file.');
         }
 
-        // Create images on the canvas
-        if (Array.isArray(jsonData.images)) {
-            createImagesFromJSON(jsonData.images);
+        const gameData = JSON.parse(await gameDataFile.async('text'));
+        const jsCode = await scriptFile.async('text');
+
+        // Set CodeMirror content
+        setEditorContent(jsCode);
+
+        // Create images and rectangle boxes on the canvas
+        if (Array.isArray(gameData.images)) {
+            await createImagesFromJSON(zip, gameData.images); // Pass the zip object
+            createRectangleBoxes(gameData.images); // Create rectangle boxes
         } else {
             console.error('Invalid images array in JSON data.');
         }
@@ -79,7 +83,7 @@ function processLFEFileContent(fileContent) {
 // Function to process LFE file path (for Electron)
 function processLFEFile(filePath) {
     const fs = require('fs');
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    fs.readFile(filePath, (err, data) => {
         if (err) {
             console.error('Error reading file:', err);
             return;
@@ -88,19 +92,9 @@ function processLFEFile(filePath) {
     });
 }
 
-// Function to parse LFE content to JSON
-function parseLFEToJSON(lfeContent) {
-    try {
-        return JSON.parse(lfeContent);
-    } catch (error) {
-        throw new Error('Failed to parse LFE content to JSON.');
-    }
-}
-
 // Function to set CodeMirror editor content
 function setEditorContent(jsCode) {
     if (codeMirrorEditor) {
-        // Check if jsCode is a string
         if (typeof jsCode === 'string') {
             codeMirrorEditor.setValue(jsCode);
         } else {
@@ -111,33 +105,66 @@ function setEditorContent(jsCode) {
     }
 }
 
-// Function to create images from JSON
-function createImagesFromJSON(images) {
+// Function to create images and add rectangle boxes from JSON
+async function createImagesFromJSON(zip, images) {
     const canvas = document.querySelector('.gameCanvas');
     if (canvas) {
-        images.forEach(image => {
-            if (image.dataURL) {
-                const img = document.createElement('img');
-                img.src = image.dataURL; // Assuming the image data is a Data URL
-                img.id = image.name;
-                img.style.width = '50px'; // Adjust size as needed
-                img.style.height = '50px'; // Adjust size as needed
-                img.style.position = 'absolute';
-                img.style.left = `${image.x}px`;
-                img.style.top = `${image.y}px`;
-                img.style.transform = 'translate(-50%, -50%)';
-                img.style.outline = 'none';
-                
-                canvas.appendChild(img);
-                
-                img.addEventListener('dragstart', (e) => e.preventDefault());
-                img.addEventListener('mousedown', onMouseDown);
+        for (const image of images) {
+            if (image.id) {
+                try {
+                    const imageFile = zip.file(`sprites/${image.id}.png`);
+                    if (imageFile) {
+                        const blob = await imageFile.async('blob');
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(blob); // Use URL.createObjectURL for image blob
+                        img.id = image.id; // Set image ID from gameData
+                        img.style.width = `${image.width}px`;
+                        img.style.height = `${image.height}px`;
+                        img.style.position = 'absolute';
+                        img.style.left = `${image.left}px`;
+                        img.style.top = `${image.top}px`;
+                        img.style.transform = 'translate(-50%, -50%)';
+                        img.style.outline = 'none';
+                        
+                        canvas.appendChild(img);
+                        
+                        img.addEventListener('dragstart', (e) => e.preventDefault());
+                        img.addEventListener('mousedown', onMouseDown);
+                    } else {
+                        console.error(`Image file for ID ${image.id} not found in ZIP.`);
+                    }
+                } catch (error) {
+                    console.error(`Error processing image with ID ${image.id}:`, error);
+                }
             } else {
                 console.error('Invalid image data in JSON.');
             }
-        });
+        }
     } else {
         console.error('Canvas element not found.');
+    }
+}
+
+// Function to create rectangle boxes from image data
+function createRectangleBoxes(images) {
+    const objectPanel = document.querySelector('.slide');
+    if (objectPanel) {
+        for (const image of images) {
+            if (image.id) {
+                const box = document.createElement('div');
+                box.classList.add('rectangle-box');
+                
+                const label = document.createElement('span');
+                label.textContent = image.id;
+                box.appendChild(label);
+                
+                objectPanel.appendChild(box);
+            } else {
+                console.error('Invalid image data in JSON.');
+            }
+        }
+    } else {
+        console.error('Object panel element not found.');
     }
 }
 

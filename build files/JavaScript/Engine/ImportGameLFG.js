@@ -158,6 +158,11 @@ function createRectangleBoxes(images) {
                 label.textContent = image.id;
                 box.appendChild(label);
                 
+                // Add event listener to link box to corresponding image
+                box.addEventListener('click', () => {
+                    selectImageById(image.id);
+                });
+                
                 objectPanel.appendChild(box);
             } else {
                 console.error('Invalid image data in JSON.');
@@ -165,6 +170,21 @@ function createRectangleBoxes(images) {
         }
     } else {
         console.error('Object panel element not found.');
+    }
+}
+
+// Function to select an image by ID
+function selectImageById(imageId) {
+    const canvas = document.querySelector('.gameCanvas');
+    if (canvas) {
+        const img = document.getElementById(imageId);
+        if (img) {
+            img.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            console.error(`Image with ID ${imageId} not found.`);
+        }
+    } else {
+        console.error('Canvas element not found.');
     }
 }
 

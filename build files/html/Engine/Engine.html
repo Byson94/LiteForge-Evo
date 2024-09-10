@@ -6,9 +6,10 @@
     <title>LiteForge Evo</title>
     <link rel="stylesheet" href="../../css/EngineUI.css">
     <!-- CodeMirror CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/theme/3024-night.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <link rel="stylesheet" href="../../../libraries/codemirror/codemirror.min.css">
+    <link rel="stylesheet" href="../../../libraries/codemirror/theme/3024-night.css">
+    <link rel="stylesheet" href="../../../libraries/codemirror/theme/3024-day.css">
+    <link rel="stylesheet" href="../../../libraries/codemirror/theme/dracula.css">
 </head>
 <body>
     <!-- The menu sidebar -->
@@ -60,10 +61,14 @@
     <input type="file" id="fileInput" style="display: none;" multiple accept="image/png, image/jpeg, image/jpg">
 
     <!-- CodeMirror JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/mode/javascript/javascript.min.js"></script>
+    <script src="../../../libraries/codemirror/codemirror.min.js"></script>
+    <script src="../../../libraries/codemirror/javascript.min.js"></script>
+
+    <!-- CodeMirror Addons -->
+    <script src="../../../libraries/codemirror/addons/closebrackets.js"></script>
 
     <!-- Ensure script files are included in the correct order -->
+    <script src="../../../libraries/jszip/jszip.min.js"></script>
     <script src="../../JavaScript/Engine/ExportGameLFE.js"></script>
     <script src="../../JavaScript/Engine/ImportGameLFG.js"></script>
     <script src="../../JavaScript/Engine/engineFunction.js"></script>
@@ -72,11 +77,6 @@
     <script src="../../JavaScript/Engine/EngineButtonClicks.js"></script>
 
     <script>
-        // Initialize CodeMirror editor when the page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeEditor(); // Call the function to initialize CodeMirror
-        });
-
         // Initialize CodeMirror editor only when Script Editor is clicked
         let codeMirrorEditor = null;
         let editorInitialized = false;
@@ -89,7 +89,8 @@
                     theme: '3024-night',
                     indentUnit: 4,
                     tabSize: 4,
-                    autofocus: true
+                    autofocus: true,
+                    autoCloseBrackets: true // this is an addon!!!
                 });
 
                 codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
@@ -107,6 +108,11 @@
                 return '';
             }
         }
+
+        // Initialize CodeMirror editor when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEditor(); // Call the function to initialize CodeMirror
+        });
     </script>
 </body>
 </html>

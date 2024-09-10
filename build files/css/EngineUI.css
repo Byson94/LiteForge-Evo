@@ -169,6 +169,7 @@ img {
     justify-content: center;
     background-color: #7f97c4;
     position: relative;
+    left: 10px;
 }
 
 .rectangle-box span {

@@ -13,7 +13,6 @@ function NewSpritebuttonclicked() {
                 const filePath = result.filePaths[0];
                 console.log('Selected file in Electron:', filePath);
                 // Process the selected file
-                // You might need to handle file content or other operations here
             } else {
                 console.log('No file selected or cancelled in Electron.');
             }
@@ -48,7 +47,7 @@ function NewSpritebuttonclicked() {
                         console.log(`Generated unique file name: ${uniqueName}`);
                         
                         // Create and add a rectangle box with the unique name
-                        addRectangleBox(uniqueName);
+                        addRectangleBox(uniqueName, file.name);
                         
                         // Create and add the sprite to the game canvas
                         addSpriteToCanvas(file, uniqueName);
@@ -94,12 +93,13 @@ function getUniqueName(baseName) {
 }
 
 // Function to create and add a rectangle box to the sidebar
-function addRectangleBox(name) {
+function addRectangleBox(name, spriteId) {
     const objectPanel = document.querySelector('.slide');
     
     // Create a new div element for the rectangle box
     const box = document.createElement('div');
     box.classList.add('rectangle-box');
+    box.dataset.spriteId = spriteId; // Store the sprite ID in a data attribute
     
     // Add the name of the sprite as text
     const label = document.createElement('span');

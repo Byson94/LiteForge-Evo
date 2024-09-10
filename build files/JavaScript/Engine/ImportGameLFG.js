@@ -8,7 +8,7 @@ function ImportTheGameClicked() {
 
         dialog.showOpenDialog({
             filters: [
-                { name: 'LFE Files', extensions: ['LFE'] }
+                { name: 'LFE or ZIP Files', extensions: ['LFE', 'zip'] }
             ],
             properties: ['openFile']
         }).then(result => {
@@ -27,11 +27,11 @@ function ImportTheGameClicked() {
         // Running in a web browser
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
-        fileInput.accept = '.LFE';
+        fileInput.accept = '.LFE, .zip';
         
         fileInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
-            if (file && file.name.endsWith('.LFE')) {
+            if (file && (file.name.endsWith('.LFE') || file.name.endsWith('.zip'))) {
                 initializeEditor(); // Ensure CodeMirror is initialized
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -40,7 +40,7 @@ function ImportTheGameClicked() {
                 };
                 reader.readAsArrayBuffer(file); // Read as ArrayBuffer for ZIP extraction
             } else {
-                alert('Please select a .LFE file.');
+                alert('Please select a .LFE or a .zip file.');
             }
         });
 

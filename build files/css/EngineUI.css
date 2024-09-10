@@ -309,11 +309,42 @@ img {
     border-radius: 10px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     color: white;
-    font-size: 1.5em;
+    font-size: 20px;
     padding: 20px; /* Padding inside the box */
+    text-align: center;
 }
 
+.ExportingTheGame #ExportToHTMLButton{
+    position: absolute;
+    bottom: 20%;
+    right: 12%;
+    height: 40px;
+    width: 120px;
+    cursor: pointer;
+    background-color: #666666;
+    border: #507552;
+    color: #fff;
+}
 
+.ExportingTheGame #ExportToPCButton{
+    position: absolute;
+    bottom: 20%;
+    left: 12%;
+    height: 40px;
+    width: 120px;
+    cursor: pointer;
+    background-color: #666666;
+    border: #507552;
+    color: #fff;
+}
+
+.ExportingTheGame #ExportToPCButton:hover{
+    background-color: #9959be;
+}
+
+.ExportingTheGame #ExportToHTMLButton:hover{
+    background-color: #9959be;
+}
 
 /* CodeMirror Styles */
 .CodeMirror {

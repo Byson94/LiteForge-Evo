@@ -87,26 +87,6 @@ async function ExportTheGame() {
         console.log('Game data exported as Game.LFE.');
     }
 
-    function showLoadingIndicator() {
-        const exportingElement = document.querySelector('.ExportingTheGame');
-        if (exportingElement) {
-            exportingElement.style.display = 'block';
-        }
-    }
-
-    function hideLoadingIndicator() {
-        const exportingElement = document.querySelector('.ExportingTheGame');
-        if (exportingElement) {
-            exportingElement.style.display = 'none';
-        }
-    }
-
-    // Show the loading indicator before starting the packaging process
-    showLoadingIndicator();
-
     // Trigger the file creation and download
     await createDownloadableFile();
-
-    // Hide the loading indicator after a short delay
-    setTimeout(hideLoadingIndicator, 500); // Adjust the delay as needed
 }

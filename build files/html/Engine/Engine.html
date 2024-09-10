@@ -21,7 +21,9 @@
 
     <!-- The exporting/importing panel -->
     <div class="ExportingTheGame" style="display: none;">
-        <h1>Exporting... Please wait...</h1>
+        <h1>Choose a method</h1>
+        <button type="button" id="ExportToPCButton" onclick="ExportToPCButtonClicked()">Export To PC</button>
+        <button type="button" id="ExportToHTMLButton" onclick="ExportToHTMLButtonClicked()">Export As HTML</button>
     </div>
     <div class="ImportingTheGame" style="display: none;"></div>
 
@@ -66,6 +68,7 @@
     <script src="../../JavaScript/Engine/ImportGameLFG.js"></script>
     <script src="../../JavaScript/Engine/engineFunction.js"></script>
     <script src="../../JavaScript/Engine/PreviewGame.js"></script>
+    <script src="../../JavaScript/Engine/ExportAsHTML.js"></script>
     <script src="../../JavaScript/Engine/EngineButtonClicks.js"></script>
 
     <script>

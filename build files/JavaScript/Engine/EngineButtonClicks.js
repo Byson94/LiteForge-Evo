@@ -21,7 +21,7 @@ document.getElementById('layout-2').style.display = 'none';
 // Menu Sidebar switching
 
 function MenuButtonClicked() {
-    const menu = document.querySelector('.menuSlide');
+    menu = document.querySelector('.menuSlide');
     if (menu) {
         console.log('Menu found');
         if (menu.style.transform === 'translateX(0px)') {
@@ -43,10 +43,30 @@ function QuitButtonClicked() {
     window.location.href = '../../html/mainMenu.html';
 }
 
-// Exporting the game to the users computer
+// Clicked export button
 function MenuExportButtonClicked() {
+    exportButton = document.querySelector('.ExportingTheGame')
+    if (exportButton) {
+        if (exportButton.style.display === 'none') {
+            exportButton.style.display = 'block';
+            console.log('done!')
+        } else {
+            exportButton.style.display = 'none';
+        }
+    } else {
+        console.error('ExportButton element in Menu Bar is not found')
+    }
+}
+
+// Exporting the game to the users computer
+function ExportToPCButtonClicked() {
     SceneEditorClicked()
     ExportTheGame()
+}
+
+// Exporting the game to HTML
+function ExportToHTMLButtonClicked() {
+    ExportAsHTML()
 }
 
 // Importing the game from the users computer

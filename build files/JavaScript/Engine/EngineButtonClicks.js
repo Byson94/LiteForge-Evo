@@ -1,13 +1,23 @@
 // Layout switching functions
 function ScriptEditorClicked() {
     document.getElementById('layout-1').style.display = 'none';
+    document.getElementById('layout-3').style.display = 'none';
     document.getElementById('layout-2').style.display = 'block';
-    initializeEditor(); // Initialize the CodeMirror editor
+    initializeEditor();
 }
 
 function SceneEditorClicked() {
     document.getElementById('layout-2').style.display = 'none';
+    document.getElementById('layout-3').style.display = 'none';
     document.getElementById('layout-1').style.display = 'block';
+}
+
+function VisualScriptEditorClicked() {
+    document.getElementById('layout-1').style.display = 'none';
+    document.getElementById('layout-2').style.display = 'none';
+    document.getElementById('layout-3').style.display = 'block';
+    // window.location.href="../../html/Engine/BlockyEditor.html"
+    initializeBlockyEditor()
 }
 
 function newProject() {
@@ -16,7 +26,7 @@ function newProject() {
 
 // Ensure the Scene Editor is visible on page load
 document.getElementById('layout-1').style.display = 'block';
-document.getElementById('layout-2').style.display = 'none';
+document.getElementById('layout-2', 'layout-3').style.display = 'none';
 
 // Menu Sidebar switching
 
@@ -60,6 +70,7 @@ function MenuExportButtonClicked() {
 
 // Exporting the game to the users computer
 function ExportToPCButtonClicked() {
+    SaveToLocalStorage()
     SceneEditorClicked()
     ExportTheGame()
 }

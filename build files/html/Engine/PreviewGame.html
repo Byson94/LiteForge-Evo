@@ -1,3 +1,8 @@
+<!--
+This file uses the library "Blockly" developed by Google
+More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE"
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,39 +110,38 @@
         // Override console methods to redirect output to the custom console
         (function() {
             const consoleOutput = document.getElementById('consoleOutput');
-            const gameCanvas = document.querySelector('.gameCanvas');
             
             function appendLog(message, type) {
                 const logBox = document.createElement('div');
                 logBox.className = message.length >= 30 ? 'log-box-big' : 'log-box';
                 logBox.style.color = type === 'error' ? 'red' : 'inherit';
-
+    
                 const logContent = document.createElement('div');
                 logContent.textContent = message;
-
+    
                 logBox.appendChild(logContent);
                 consoleOutput.appendChild(logBox);
-
+    
                 // Automatically scroll to the bottom to show the latest message
                 consoleOutput.scrollTop = consoleOutput.scrollHeight;
             }
-
+    
             // Override console.log
             console.log = function(message) {
                 appendLog(message, 'log');
             };
-
+    
             // Override console.error
             console.error = function(message) {
                 appendLog(message, 'error');
             };
-
+    
             // Override console.warn if needed
             console.warn = function(message) {
                 appendLog(message, 'warn');
             };
         })();
-
+    
         // Function to retrieve and use the stored game data
         function loadGameData() {
             // Retrieve data from local storage
@@ -146,10 +150,10 @@
                 console.error('No game data found in local storage.');
                 return;
             }
-
+    
             // Parse the JSON data
             const gameData = JSON.parse(gameDataJSON);
-
+    
             // Retrieve image data and recreate images
             const images = gameData.imageData;
             const canvas = document.querySelector('.gameCanvas');
@@ -157,10 +161,10 @@
                 console.error('Canvas element not found.');
                 return;
             }
-
+    
             // Clear any existing images
             canvas.innerHTML = '';
-
+    
             images.forEach(image => {
                 const img = new Image();
                 img.src = image.src;
@@ -172,22 +176,35 @@
                 img.id = image.id; // Set the ID of the image
                 canvas.appendChild(img);
             });
-
-            // Retrieve JavaScript code and execute it
+    
+            // Retrieve and execute JavaScript code and Blockly code separately
             const jsCode = gameData.jsCode;
+            const blocklyCode = gameData.blocklyCode;
+    
+            // Execute Blockly-generated code
+            if (blocklyCode) {
+                try {
+                    console.log('Running Blockly code:', blocklyCode);
+                    eval(blocklyCode); // Execute Blockly code separately
+                } catch (error) {
+                    console.error('Error executing Blockly code:', error);
+                }
+            }
+
+            // Execute CodeMirror-generated code
             if (jsCode) {
                 try {
-                    // Using eval to execute the JavaScript code
-                    eval(jsCode);
+                    console.log('Running CodeMirror code:', jsCode);
+                    eval(jsCode); // Execute CodeMirror code separately
                 } catch (error) {
-                    console.error('Error executing JavaScript code:', error);
+                    console.error('Error executing CodeMirror code:', error);
                 }
             }
         }
-
+    
         // Call the function to load and use the data
         loadGameData();
-
+    
         // Function to check if the console should be visible
         function checkConsoleVisibility() {
             const consoleElement = document.getElementById('consoleOutput');
@@ -202,12 +219,12 @@
                 consoleElement.style.display = 'flex'; // Show console if width is sufficient
             }
         }
-
+    
         // Run the check on initial load
         checkConsoleVisibility();
-
+    
         // Add an event listener to check on resize
         window.addEventListener('resize', checkConsoleVisibility);
-    </script>
+    </script>    
 </body>
 </html>

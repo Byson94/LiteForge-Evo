@@ -1,3 +1,8 @@
+<!--
+This file uses the library "Blocky" developed by Google
+More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE"
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiteForge Evo</title>
     <link rel="stylesheet" href="../../css/EngineUI.css">
+
     <!-- CodeMirror CSS -->
     <link rel="stylesheet" href="../../../libraries/codemirror/codemirror.min.css">
     <link rel="stylesheet" href="../../../libraries/codemirror/theme/3024-night.css">
     <link rel="stylesheet" href="../../../libraries/codemirror/theme/3024-day.css">
     <link rel="stylesheet" href="../../../libraries/codemirror/theme/dracula.css">
+    <link rel="stylesheet" href="../../../libraries/codemirror/addons/show-hint.css">
+
+    <!-- Blocky -->
+    <script src="../../../libraries/blockly/blockly.min.js"></script>
 </head>
 <body>
     <!-- The menu sidebar -->
@@ -35,6 +45,7 @@
             <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
             <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
             <button type="button" onclick="MenuButtonClicked()" id="MenuButton">☰</button>
+            <button type="button" onclick="VisualScriptEditorClicked()" id="VisualScriptEditorButton">VS Editor</button>
         </div>
         <input type="checkbox" id="toggleObjectpanel">
         <div class="slide">
@@ -52,10 +63,21 @@
             <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
             <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
             <button type="button" onclick="MenuButtonClicked()" id="MenuButton">☰</button>
+            <button type="button" onclick="VisualScriptEditorClicked()" id="VisualScriptEditorButton">VS Editor</button>
         </div>
         <div class="editor">
             <div id="editor" class="editor-container" style="height: 800px;"></div>
         </div>
+    </div>
+
+    <div id="layout-3" style="display: none;">
+        <div class="banner">
+            <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
+            <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
+            <button type="button" onclick="MenuButtonClicked()" id="MenuButton">☰</button>
+            <button type="button" onclick="VisualScriptEditorClicked()" id="VisualScriptEditorButton">VS Editor</button>
+        </div>
+        <div id="blocklyDiv"></div>
     </div>
 
     <input type="file" id="fileInput" style="display: none;" multiple accept="image/png, image/jpeg, image/jpg">
@@ -66,8 +88,13 @@
 
     <!-- CodeMirror Addons -->
     <script src="../../../libraries/codemirror/addons/closebrackets.js"></script>
+    <script src="../../../libraries/codemirror/addons/show-hint.js"></script>
+    <script src="../../../libraries/codemirror/addons/javascript-hint.js"></script>
+    <script src="../../../libraries/codemirror/addons/active-line.js"></script>
+    <script src="../../../libraries/codemirror/addons/mark-selection.js"></script>
 
     <!-- Ensure script files are included in the correct order -->
+    <script src="../../JavaScript/Engine/BlocklyEditor.js"></script>
     <script src="../../../libraries/jszip/jszip.min.js"></script>
     <script src="../../JavaScript/Engine/ExportGameLFE.js"></script>
     <script src="../../JavaScript/Engine/ImportGameLFG.js"></script>
@@ -90,12 +117,18 @@
                     indentUnit: 4,
                     tabSize: 4,
                     autofocus: true,
-                    autoCloseBrackets: true // this is an addon!!!
+                    extraKeys: {"Ctrl-Space": "autocomplete"}, // Autocomplete shortcut
+                    autoCloseBrackets: true, // Enable auto-closing of brackets
+                    hintOptions: {
+                        // Configure hint options if needed (not yet)
+                    },
+                    styleActiveLine: true,
+                    matchBrackets: true
                 });
 
                 codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
 
-                codeMirrorEditor.setValue(`// Write your JavaScript code here\nconsole.log('Hello, world!');`);
+                codeMirrorEditor.setValue(`// Write your JavaScript code here`);
                 editorInitialized = true;
             }
         }
@@ -108,11 +141,6 @@
                 return '';
             }
         }
-
-        // Initialize CodeMirror editor when the page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeEditor(); // Call the function to initialize CodeMirror
-        });
     </script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 async function ExportAsHTML() {
+    VisualScriptEditorClicked()
     // Function to extract image data from the canvas
     function getAllImagesData() {
         const canvas = document.querySelector('.gameCanvas');
@@ -39,12 +40,15 @@ async function ExportAsHTML() {
     const imageData = getAllImagesData(); // Extract image data
     const editorCode = getEditorCode(); // Extract editor code
 
-    // Add script.js and gameData.json
+    // Add script.js
     zip.file("script.js", editorCode);
+
+    // Add scriptBlockly.js with the current code from Blockly
+    zip.file("scriptBlockly.js", currentCode); // currentCode is the Blockly-generated JS code
 
     const gameData = {
         images: imageData,
-        jsCode: "Stored in script.js"
+        jsCode: "Stored in script.js and scriptBlockly.js"
     };
     zip.file("gameData.json", JSON.stringify(gameData, null, 2));
 
@@ -80,6 +84,7 @@ async function ExportAsHTML() {
     <body>
         <div class="gameCanvas"></div>
         <script src="script.js"></script>
+        <script src="scriptBlockly.js"></script>
         <script>
             fetch('gameData.json')
                 .then(response => response.json())
@@ -146,4 +151,5 @@ async function ExportAsHTML() {
     });
 
     console.log('Game exported as GameHTML.zip.');
+    SceneEditorClicked()
 }

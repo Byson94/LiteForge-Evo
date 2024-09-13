@@ -1,7 +1,8 @@
-// ImportTheGameClicked function
+// Function to handle importing game data
 function ImportTheGameClicked() {
     ScriptEditorClicked(); 
     SceneEditorClicked(); 
+
     if (typeof window.require !== 'undefined') {
         // Running in Electron
         const { dialog } = require('@electron/remote'); // Use @electron/remote for newer Electron versions
@@ -54,16 +55,26 @@ async function processLFEFileContent(fileContent) {
         // Parse LFE content to JSON
         const zip = await JSZip.loadAsync(fileContent);
 
-        // Extract gameData.json and script.js
+        // Extract gameData.json, script.js, and blocklyWorkspace.xml
         const gameDataFile = zip.file('gameData.json');
         const scriptFile = zip.file('script.js');
+        const blocklyFile = zip.file('blocklyWorkspace.xml'); // Extract blocklyWorkspace.xml
 
-        if (!gameDataFile || !scriptFile) {
-            throw new Error('Missing gameData.json or script.js in the ZIP file.');
+        if (!gameDataFile || !scriptFile || !blocklyFile) {
+            throw new Error('Missing gameData.json, script.js, or blocklyWorkspace.xml in the ZIP file.');
         }
 
         const gameData = JSON.parse(await gameDataFile.async('text'));
         const jsCode = await scriptFile.async('text');
+        const blocklyXml = await blocklyFile.async('text'); // Get XML text
+
+        // Store the blocklyWorkspace XML to localStorage
+        localStorage.setItem('blocklyWorkspace', blocklyXml);
+        console.log('Blockly workspace loaded and saved to localStorage.');
+
+        // Call VisualScriptEditorClicked and then load from localStorage
+        loadFromLocalStorage(); // Load Blockly workspace from localStorage
+        SceneEditorClicked()
 
         // Set CodeMirror content
         setEditorContent(jsCode);
@@ -185,29 +196,5 @@ function selectImageById(imageId) {
         }
     } else {
         console.error('Canvas element not found.');
-    }
-}
-
-// Initialize CodeMirror editor only when Script Editor is clicked
-let codeMirrorEditor = null;
-let editorInitialized = false;
-
-function initializeEditor() {
-    if (!editorInitialized) {
-        codeMirrorEditor = CodeMirror(document.getElementById('editor'), {
-            mode: 'javascript',
-            lineNumbers: true,
-            theme: '3024-night',
-            indentUnit: 4,
-            tabSize: 4,
-            autofocus: true
-        });
-
-        // Set the height dynamically
-        codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
-
-        // Optionally, set some default content
-        codeMirrorEditor.setValue(`// Write your JavaScript code here\nconsole.log('Hello, world!');`);
-        editorInitialized = true;
     }
 }

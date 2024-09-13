@@ -72,6 +72,15 @@ async function ExportTheGame() {
         // Add game data JSON to the ZIP
         zip.file("gameData.json", JSON.stringify(gameData, null, 2));
 
+        // Retrieve Blockly workspace XML from local storage
+        const blocklyXml = localStorage.getItem('blocklyWorkspace');
+        if (blocklyXml) {
+            zip.file("blocklyWorkspace.xml", blocklyXml);
+            localStorage.removeItem('blocklyWorkspace');
+        } else {
+            console.warn('No Blockly workspace data found in local storage.');
+        }
+
         // Generate the ZIP file and trigger download
         zip.generateAsync({ type: "blob" }).then(function(content) {
             const downloadLink = document.createElement('a');

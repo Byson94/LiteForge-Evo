@@ -1,3 +1,8 @@
+/*
+This file uses the library "Blockly" developed by Google
+More detials can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE"
+*/
+
 /* General Styles */
 * {
     margin: 0;
@@ -234,6 +239,24 @@ img {
     background-color: #1a1a1a;
 }
 
+/* Style for Visual Script Editor */
+#VisualScriptEditorButton {
+    position: fixed;
+    top: 20%;
+    left: 230px;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    z-index: 4;
+}
+
+#VisualScriptEditorButton:hover {
+    background-color: #1a1a1a;
+}
+
 /* Style for game Exporter */
 #MenuButton {
     position: fixed;
@@ -355,7 +378,6 @@ img {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Remove position: absolute */
 }
 
 /* Layout 2 Styles */
@@ -379,4 +401,42 @@ img {
 #layout-2 .editor-container {
     flex-grow: 1; /* Ensure the editor container stretches to fill the height */
     height: 800px; /* Make sure it takes full height */
+}
+
+#layout-3 .banner {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0; /* Optional: Add background color to the banner */
+    z-index: 1000; /* Ensure the banner is on top */
+}
+
+#layout-3 {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+}
+
+#blocklyDiv {
+    height: 92%;
+    width: 100%; 
+    border: 2px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    line-height: 1.2;
+    top: 60px;
+    bottom: 60px;
+    z-index: 100;
 }

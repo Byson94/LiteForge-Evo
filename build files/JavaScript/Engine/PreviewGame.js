@@ -46,12 +46,14 @@ function previewGameClicked() {
 
     // Function to save image data and editor code to local storage
     function saveToLocalStorage() {
+        initializeBlockyEditor();
         const imageData = getAllImagesData();
         const editorCode = getEditorCode();
 
         const data = {
             imageData: imageData,
-            jsCode: editorCode
+            jsCode: editorCode,
+            blocklyCode: currentCode // Include Blocky code
         };
 
         localStorage.setItem('gameData', JSON.stringify(data));

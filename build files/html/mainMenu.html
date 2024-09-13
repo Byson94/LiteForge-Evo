@@ -6,6 +6,30 @@
     <title>LiteForge Evo</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/mainMenu.css">
+    <style>
+        .settings-button {
+            position: fixed;
+            top: 10px;
+            right: 10px; 
+            background-color: rgb(51, 0, 99);
+            color: white;
+            border: none;
+            border-radius: 5px; 
+            padding: 8px 8px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+        .settings-button:hover {
+            background-color: rgb(75, 0, 129);
+            transform: scale(1.05);
+        }
+        .settings-button:focus {
+            outline: none; 
+        }
+    </style>
 </head>
 
 <body>
@@ -25,6 +49,9 @@
             </ul>
         </div>
     </label>
+
+    <!-- Settings Button -->
+    <button class="settings-button" onclick="SettingsButtonClicked()">⚙️</button>
 
     <!-- Layout 1 Content -->
     <div id="layout-1" style="display: none;">
@@ -58,7 +85,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // I am doing this to show layout 1 when page loads
+            // Show layout 1 when page loads
             document.getElementById('layout-1').style.display = 'block';
             document.getElementById('layout-2').style.display = 'none';
             document.body.classList.remove('layout-2');
@@ -66,9 +93,12 @@
         });
 
         function newProject() {
-            window.location.href="Engine/Engine.html"
+            window.location.href = "Engine/Engine.html";
+        }
+
+        function SettingsButtonClicked() {
+            window.location.href = "Settings.html";
         }
     </script>
-        
 </body>
 </html>

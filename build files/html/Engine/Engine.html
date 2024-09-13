@@ -108,12 +108,22 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         let codeMirrorEditor = null;
         let editorInitialized = false;
 
+        function loadCodeEditorTheme() {
+        CodeEditorTheme = localStorage.getItem('editorTheme');
+
+        if (!CodeEditorTheme) {
+            CodeEditorTheme = 'Default';
+        }
+    }
+
+        loadCodeEditorTheme()
+
         function initializeEditor() {
             if (editorInitialized === false) {
                 codeMirrorEditor = CodeMirror(document.getElementById('editor'), {
                     mode: 'javascript',
                     lineNumbers: true,
-                    theme: '3024-night',
+                    theme: CodeEditorTheme,
                     indentUnit: 4,
                     tabSize: 4,
                     autofocus: true,

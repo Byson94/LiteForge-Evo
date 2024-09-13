@@ -178,26 +178,18 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
             });
     
             // Retrieve and execute JavaScript code and Blockly code separately
-            const jsCode = gameData.jsCode;
-            const blocklyCode = gameData.blocklyCode;
+            const jsCode = gameData.jsCode || '';
+            const blocklyCode = gameData.blocklyCode || '';
+            const comboCode = `${blocklyCode}\n\n${jsCode}`;
     
-            // Execute Blockly-generated code
+            // Execute Both Functions Using "new Function()""
             if (blocklyCode) {
                 try {
-                    console.log('Running Blockly code:', blocklyCode);
-                    eval(blocklyCode); // Execute Blockly code separately
+                    console.log('Running the Codes...');
+                    const runBlocklyCode = new Function(comboCode);
+                    runBlocklyCode();
                 } catch (error) {
-                    console.error('Error executing Blockly code:', error);
-                }
-            }
-
-            // Execute CodeMirror-generated code
-            if (jsCode) {
-                try {
-                    console.log('Running CodeMirror code:', jsCode);
-                    eval(jsCode); // Execute CodeMirror code separately
-                } catch (error) {
-                    console.error('Error executing CodeMirror code:', error);
+                    console.error('Error executing the codes:' + error);
                 }
             }
         }

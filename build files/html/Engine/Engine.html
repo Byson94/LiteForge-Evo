@@ -109,7 +109,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         let editorInitialized = false;
 
         function initializeEditor() {
-            if (!editorInitialized) {
+            if (editorInitialized === false) {
                 codeMirrorEditor = CodeMirror(document.getElementById('editor'), {
                     mode: 'javascript',
                     lineNumbers: true,

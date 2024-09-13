@@ -5,7 +5,7 @@ function openInNewWindow(url) {
 
 function previewGameClicked() {
     // Initialize CodeMirror editor if not already initialized
-    initializeEditor();
+    ScriptEditorClicked();
 
     // Function to gather all images on the canvas and store their data in an array
     function getAllImagesData() {
@@ -46,7 +46,7 @@ function previewGameClicked() {
 
     // Function to save image data and editor code to local storage
     function saveToLocalStorage() {
-        initializeBlockyEditor();
+        VisualScriptEditorClicked();
         const imageData = getAllImagesData();
         const editorCode = getEditorCode();
 
@@ -65,4 +65,5 @@ function previewGameClicked() {
 
     // Open the specified HTML file in a new window
     openInNewWindow('../../html/Engine/PreviewGame.html');
+    SceneEditorClicked()
 }

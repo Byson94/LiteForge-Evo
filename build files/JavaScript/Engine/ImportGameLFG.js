@@ -18,8 +18,6 @@ function ImportTheGameClicked() {
                 console.log('Selected file in Electron:', filePath);
                 initializeEditor(); // Ensure CodeMirror is initialized
                 processLFEFile(filePath);
-            } else {
-                console.log('No file selected or cancelled in Electron.');
             }
         }).catch(err => {
             console.error('Error opening file in Electron:', err);

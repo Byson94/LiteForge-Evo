@@ -7,6 +7,61 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/mainMenu.css">
     <style>
+        #header {
+            background-color: #222222;
+            width: 100%;
+            height: 100px;
+            position: relative;
+            z-index: 0;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #header h2 {
+            color: #fff;
+            font-size: 2rem; /* Responsive font size */
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        #new-project-button {
+            background-color: orange;
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: fixed;
+            top: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #layout-1 {
+            display: none;
+            background-color: #333; /* Adjust background color */
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 800px; /* Adjust max-width as needed */
+            text-align: center;
+            color: #fff;
+        }
+
+        #layout-1 h2 {
+            font-size: 2rem; /* Responsive font size */
+            margin-bottom: 1rem; /* Space below heading */
+        }
+
+        #layout-1 p {
+            font-size: 1rem; /* Responsive font size */
+            line-height: 1.5; /* Line height for better readability */
+            margin: 0 auto;
+            max-width: 90%; /* Responsive width */
+        }
+
         .settings-button {
             position: fixed;
             top: 10px;
@@ -29,6 +84,92 @@
         .settings-button:focus {
             outline: none; 
         }
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    #header h2 {
+        font-size: 1.5rem;
+    }
+
+    #new-project-button {
+        font-size: 1rem;
+        padding: 8px 20px;
+        top: 140px;
+    }
+
+    .settings-button {
+        all: initial;
+        position: fixed;
+        bottom: 10px; 
+        right: 10px;
+        background-color: rgb(51, 0, 99);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 8px;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: background-color 0.3s, transform 0.3s;
+        z-index: 1000;
+    }
+
+    .settings-button:hover {
+        background-color: rgb(75, 0, 129);
+        transform: scale(1.05);
+    }
+
+    .settings-button:focus {
+        outline: none;
+    }
+
+    .toggle {
+        all: initial;
+        position: fixed; 
+        bottom: 70px;
+        right: 15px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        z-index: 1001;
+        height: 30px;
+        width: 30px;
+        z-index: 2;
+        cursor: pointer;
+        border-radius: 2px;
+        background-color: #666666;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .toggle .common {
+        position: absolute;
+        height: 2px;
+        width: 20px;
+        background-color: #8000ff;
+        border-radius: 50px;
+        transition: 0.3s ease;
+        z-index: 2;
+    }
+
+    .toggle .top_line {
+        left: 2px;
+        top: 14px;
+        width: 25px;
+        transform: rotate(45deg);
+    }
+
+    .toggle .bottom_line {
+        left: 2px;
+        top: 14px;
+        width: 25px;
+        transform: rotate(-45deg);
+    }
+
+    .toggle .middle_line {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
     </style>
 </head>
 
@@ -41,7 +182,7 @@
             <span class="bottom_line common"></span>
         </div>
 
-        <div class="slide">
+        <div class="slide menu">
             <h1>MENU</h1>
             <ul>
                 <li><a href="#" onclick="infoClicked()">Info</a></li>
@@ -55,18 +196,16 @@
 
     <!-- Layout 1 Content -->
     <div id="layout-1" style="display: none;">
-        <h2 style="text-align: center; color: #fff;">LiteForge Evo engine</h2>
-        <br>
-        <p style="text-align: center; color: #fff;">This is the re-make of the "LiteForge GD" engine made with GDevelop from scratch using only pure programming!</p>
+        <h2>LiteForge Evo engine</h2>
+        <p>This is the re-make of the "LiteForge GD" engine made with GDevelop from scratch using only pure programming!</p>
     </div>
 
     <!-- Layout 2 Content -->
     <div id="layout-2" style="display: none;">
-        <!-- Dark Grey Container -->
-        <div style="background-color: #222222; width: 100%; height: 100px; position: relative; z-index: 0; box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);">
-            <h2 style="text-align: center; color: #fff; font-size: 40px; margin: 0; line-height: 100px;">Create New Project</h2>
+        <div id="header">
+            <h2>Create New Project</h2>
         </div>
-        <button type="button" style="position: absolute; left: 50%; top: 25%; transform: translate(-50%, -50%); background-color: orange; font-size: 20px; padding: 15px 60px;" onclick="newProject()">New Project</button>
+        <button id="new-project-button" type="button" onclick="newProject()">New Project</button>
     </div>
     
     <script>
@@ -85,7 +224,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Show layout 1 when page loads
             document.getElementById('layout-1').style.display = 'block';
             document.getElementById('layout-2').style.display = 'none';
             document.body.classList.remove('layout-2');

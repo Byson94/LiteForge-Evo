@@ -18,6 +18,7 @@ function VisualScriptEditorClicked() {
     document.getElementById('layout-3').style.display = 'block';
     // window.location.href="../../html/Engine/BlockyEditor.html"
     initializeBlockyEditor()
+    
 }
 
 function newProject() {
@@ -33,7 +34,6 @@ document.getElementById('layout-2', 'layout-3').style.display = 'none';
 function MenuButtonClicked() {
     menu = document.querySelector('.menuSlide');
     if (menu) {
-        console.log('Menu found');
         if (menu.style.transform === 'translateX(0px)') {
             menu.style.transform = 'translateX(-300px)';
             menu.style.opacity = '0';
@@ -59,7 +59,6 @@ function MenuExportButtonClicked() {
     if (exportButton) {
         if (exportButton.style.display === 'none') {
             exportButton.style.display = 'block';
-            console.log('done!')
         } else {
             exportButton.style.display = 'none';
         }

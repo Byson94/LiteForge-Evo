@@ -5,7 +5,7 @@ function openInNewWindow(url) {
 
 function previewGameClicked() {
     // Initialize CodeMirror editor if not already initialized
-    ScriptEditorClicked();
+    initializeEditor();
 
     // Function to gather all images on the canvas and store their data in an array
     function getAllImagesData() {
@@ -46,14 +46,13 @@ function previewGameClicked() {
 
     // Function to save image data and editor code to local storage
     function saveToLocalStorage() {
-        VisualScriptEditorClicked();
         const imageData = getAllImagesData();
         const editorCode = getEditorCode();
 
         const data = {
             imageData: imageData,
             jsCode: editorCode,
-            blocklyCode: currentCode // Include Blocky code
+            blocklyCode: currentCode // Blocklys saved code
         };
 
         localStorage.setItem('gameData', JSON.stringify(data));
@@ -65,5 +64,4 @@ function previewGameClicked() {
 
     // Open the specified HTML file in a new window
     openInNewWindow('../../html/Engine/PreviewGame.html');
-    SceneEditorClicked()
 }

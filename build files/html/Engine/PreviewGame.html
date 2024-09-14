@@ -10,51 +10,56 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preview Game</title>
     <style>
+        /* General styling */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             margin: 0;
             overflow: hidden; /* Prevents body from scrolling */
         }
+
+        /* Game canvas styling */
         .gameCanvas {
             position: absolute;
-            width: 550px;
-            height: 550px;
-            left: 5%;
-            top: 10%;
             background-color: #b6b6b6;
             border: 2px solid #222;
-            overflow: hidden; /* Prevents scrolling */
-            z-index: 100; /* Ensure canvas is above other elements */
+            overflow: hidden;
+            z-index: 100;
+            transform-origin: top left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            left: calc(50vh - 40vh);
+            top: 10vh;
         }
 
+        /* Console styling */
         .console {
             position: absolute;
-            width: 50%;
-            height: 100%;
             background-color: #222;
             color: #fff;
             border-left: 1px solid #111;
             overflow-y: auto; /* Allows vertical scrolling */
-            top: 0;
-            right: 0;
             padding: 10px;
             font-family: monospace;
             font-size: 14px;
             display: flex;
             flex-direction: column;
-            align-items: stretch; /* Ensures log boxes stretch to fill the width */
-            white-space: pre-wrap; /* Ensures text wraps properly */
-            box-sizing: border-box; /* Includes padding and border in dimensions */
+            align-items: stretch;
+            white-space: pre-wrap;
+            box-sizing: border-box;
         }
 
-        .console .log-box {
+        /* Log box styling */
+        .console .log-box,
+        .console .log-box-big {
             background-color: #444;
             border: 1px solid #333;
-            margin: 5px 0; 
+            margin: 5px 0;
             padding: 20px;
             border-radius: 5px;
             width: 100%;
@@ -62,40 +67,68 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
             max-height: 150px;
             padding-left: 15px;
             overflow: hidden;
-            word-wrap: break-word; /* Ensure long words wrap to the next line */
-            white-space: pre-wrap; /* Ensures text wraps properly */
+            word-wrap: break-word;
+            white-space: pre-wrap;
         }
 
         .console .log-box-big {
-            background-color: #555; /* Different background color for visibility */
-            border: 1px solid #333;
-            margin: 5px 0;
+            background-color: #555;
             padding: 50px 10px 50px 15px;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-            max-height: 150px;
-            overflow: hidden;
             overflow-y: auto;
-            word-wrap: break-word; /* Ensure long words wrap to the next line */
-            white-space: pre-wrap; /* Ensures text wraps properly */
-            /* Hide scrollbar in WebKit browsers (Chrome, Safari, Edge) */
-            -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
-            -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer and Edge */
-            scrollbar-width: none; /* Hide scrollbar in Firefox */
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
-        /* Hide scrollbar in WebKit browsers (Chrome, Safari, Edge) */
         .console .log-box-big::-webkit-scrollbar {
             display: none;
         }
 
-        h3 {
-            color: #fff;
-            text-align: center;
-            font-size: 30px;
-            height: 35px;
-            line-height: 35px; /* Centers text vertically */
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .gameCanvas {
+                width: 100vw;
+                height: calc(100vh - 50px);
+                position: absolute;
+                left: calc(50vh - 41vh);
+                top: 25vh;
+            }
+
+            .console {
+                width: 100vw;
+                height: 50px; /* Height for the console on smaller screens */
+                bottom: 0;
+                right: 0;
+                font-size: 12px; /* Smaller font size */
+                display: flex;
+                flex-direction: column;
+            }
+
+            .console .log-box,
+            .console .log-box-big {
+                padding: 10px;
+            }
+
+            .console .log-box-big {
+                padding: 30px 10px;
+            }
+        }
+
+        @media (min-width: 601px) {
+            .gameCanvas {
+                width: 550px;
+                height: 550px;
+            }
+
+            .console {
+                width: 50vw; /* Adjust console width for larger screens */
+                height: 100vh; /* Full viewport height */
+                top: 0;
+                right: 0;
+                font-size: 14px; /* Default font size */
+                display: flex;
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -107,41 +140,77 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
     </div>
 
     <script>
-        // Override console methods to redirect output to the custom console
+        // Function to resize canvas and manage console visibility
+        function resizeElements() {
+            const consoleElement = document.getElementById('consoleOutput');
+            const canvasElement = document.querySelector('.gameCanvas');
+
+            let newWidth, newHeight;
+            if (window.innerWidth <= 600) {
+                newWidth = window.innerWidth;
+                newHeight = window.innerHeight - 50; // Height minus console height
+                consoleElement.style.display = 'flex';
+            } else {
+                newWidth = 550;
+                newHeight = 550;
+                consoleElement.style.display = 'flex';
+            }
+
+            // Apply the new dimensions to the canvas
+            canvasElement.style.width = `${newWidth}px`;
+            canvasElement.style.height = `${newHeight}px`;
+
+            // Scale canvas content
+            scaleCanvasContent(newWidth, newHeight);
+        }
+
+        // Function to scale canvas content based on new canvas size
+        function scaleCanvasContent(newWidth, newHeight) {
+            const canvasElement = document.querySelector('.gameCanvas');
+            const scaleX = newWidth / 550; // Original width
+            const scaleY = newHeight / 550; // Original height
+            const scale = Math.min(scaleX, scaleY); // Maintain aspect ratio
+
+            // Apply scaling to the canvas content
+            canvasElement.style.transform = `scale(${scale})`;
+            canvasElement.style.transformOrigin = 'top left'; // Ensure scaling happens from the top-left corner
+            canvasElement.style.width = `${550 * scale}px`; // Adjust width after scaling
+            canvasElement.style.height = `${550 * scale}px`; // Adjust height after scaling
+        }
+
+        // Function to append logs to the console
         (function() {
             const consoleOutput = document.getElementById('consoleOutput');
-            
+
             function appendLog(message, type) {
                 const logBox = document.createElement('div');
                 logBox.className = message.length >= 30 ? 'log-box-big' : 'log-box';
                 logBox.style.color = type === 'error' ? 'red' : 'inherit';
-    
+
                 const logContent = document.createElement('div');
                 logContent.textContent = message;
-    
+
                 logBox.appendChild(logContent);
                 consoleOutput.appendChild(logBox);
-    
+
                 // Automatically scroll to the bottom to show the latest message
                 consoleOutput.scrollTop = consoleOutput.scrollHeight;
             }
-    
-            // Override console.log
+
+            // Override console methods
             console.log = function(message) {
                 appendLog(message, 'log');
             };
-    
-            // Override console.error
+
             console.error = function(message) {
                 appendLog(message, 'error');
             };
-    
-            // Override console.warn if needed
+
             console.warn = function(message) {
                 appendLog(message, 'warn');
             };
         })();
-    
+
         // Function to retrieve and use the stored game data
         function loadGameData() {
             // Retrieve data from local storage
@@ -150,10 +219,10 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
                 console.error('No game data found in local storage.');
                 return;
             }
-    
+
             // Parse the JSON data
             const gameData = JSON.parse(gameDataJSON);
-    
+
             // Retrieve image data and recreate images
             const images = gameData.imageData;
             const canvas = document.querySelector('.gameCanvas');
@@ -161,62 +230,52 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
                 console.error('Canvas element not found.');
                 return;
             }
-    
+
             // Clear any existing images
             canvas.innerHTML = '';
-    
+
+            // Get canvas dimensions
+            const canvasWidth = canvas.offsetWidth;
+            const canvasHeight = canvas.offsetHeight;
+
             images.forEach(image => {
                 const img = new Image();
                 img.src = image.src;
+
+                // Ensure images are positioned relative to the canvas
                 img.style.position = 'absolute';
-                img.style.left = `${image.left}px`;
-                img.style.top = `${image.top}px`;
-                img.style.width = `${image.width}px`;
-                img.style.height = `${image.height}px`;
+                img.style.left = `${(image.left / 550) * canvasWidth}px`; // Scale positioning
+                img.style.top = `${(image.top / 550) * canvasHeight}px`; // Scale positioning
+                img.style.width = `${(image.width / 550) * canvasWidth}px`; // Scale size
+                img.style.height = `${(image.height / 550) * canvasHeight}px`; // Scale size
                 img.id = image.id; // Set the ID of the image
+                
                 canvas.appendChild(img);
             });
-    
+
             // Retrieve and execute JavaScript code and Blockly code separately
             const jsCode = gameData.jsCode || '';
             const blocklyCode = gameData.blocklyCode || '';
             const comboCode = `${blocklyCode}\n\n${jsCode}`;
-    
-            // Execute Both Functions Using "new Function()""
+
+            // Execute Both Functions Using "new Function()"
             if (comboCode) {
                 try {
                     console.log('Running the Codes...');
                     const runBlocklyCode = new Function(comboCode);
                     runBlocklyCode();
                 } catch (error) {
-                    console.error('Error executing the codes:' + error);
+                    console.error('Error executing the codes:', error);
                 }
             }
         }
-    
+
         // Call the function to load and use the data
         loadGameData();
-    
-        // Function to check if the console should be visible
-        function checkConsoleVisibility() {
-            const consoleElement = document.getElementById('consoleOutput');
-            const canvasElement = document.querySelector('.gameCanvas');
-            
-            // Calculate total width needed for console and canvas
-            const totalWidth = (consoleElement.offsetWidth + canvasElement.offsetWidth) / window.innerWidth;
-            
-            if (totalWidth > 1) {
-                consoleElement.style.display = 'none';
-            } else {
-                consoleElement.style.display = 'flex'; // Show console if width is sufficient
-            }
-        }
-    
-        // Run the check on initial load
-        checkConsoleVisibility();
-    
-        // Add an event listener to check on resize
-        window.addEventListener('resize', checkConsoleVisibility);
+
+        // Run the resize function on initial load and on resize
+        resizeElements();
+        window.addEventListener('resize', resizeElements);
     </script>    
 </body>
 </html>

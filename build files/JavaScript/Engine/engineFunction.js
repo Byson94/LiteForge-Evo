@@ -11,8 +11,6 @@ function NewSpritebuttonclicked() {
         }).then(result => {
             if (!result.canceled && result.filePaths.length > 0) {
                 const filePath = result.filePaths[0];
-                console.log('Selected file in Electron:', filePath);
-                // Process the selected file
             } else {
                 console.log('No file selected or cancelled in Electron.');
             }
@@ -33,26 +31,19 @@ function NewSpritebuttonclicked() {
             const fileInput = event.target;
             const files = fileInput.files;
             if (files.length > 0) {
-                console.log(`Selected files: ${files.length}`);
                 for (const file of files) {
                     if (file.type.startsWith('image/')) {
                         // Get the file name and remove the extension
-                        const fileName = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
-                        console.log(`Original file name (without extension): ${fileName}`);
+                        const fileName = file.name.replace(/\.[^/.]+$/, "");
                         
                         // Generate a unique name
                         const uniqueName = getUniqueName(fileName);
-                        
-                        // Log the unique name
-                        console.log(`Generated unique file name: ${uniqueName}`);
                         
                         // Create and add a rectangle box with the unique name
                         addRectangleBox(uniqueName, file.name);
                         
                         // Create and add the sprite to the game canvas
                         addSpriteToCanvas(file, uniqueName);
-                    } else {
-                        console.log(`Skipped non-image file: ${file.name}`);
                     }
                 }
             }
@@ -92,6 +83,30 @@ function getUniqueName(baseName) {
     return newName;
 }
 
+// Function to remove the sprite from the canvas
+function removeImageFromParent(spriteId, parentSelector) {
+    const parent = document.querySelector(parentSelector);
+
+    if (!parent) {
+        console.error('Parent element not found.');
+        return;
+    }
+
+    // Strip the file extension from spriteId
+    const idWithoutExtension = spriteId.replace(/\.[^/.]+$/, '');
+
+    // Find the sprite with the matching ID
+    const sprite = parent.querySelector(`#${idWithoutExtension}`);
+    if (sprite) {
+        // Remove the image element from the DOM
+        sprite.remove();
+    } else {
+        console.error(`Sprite with ID: ${idWithoutExtension} not found in the parent.`);
+    }
+}
+
+
+// IMPORTANT (FOR ME) (ABOVE AND BELOW)
 // Function to create and add a rectangle box to the sidebar
 function addRectangleBox(name, spriteId) {
     const objectPanel = document.querySelector('.slide');
@@ -101,10 +116,28 @@ function addRectangleBox(name, spriteId) {
     box.classList.add('rectangle-box');
     box.dataset.spriteId = spriteId; // Store the sprite ID in a data attribute
     
-    // Add the name of the sprite as text
+    // Create and add the name of the sprite
     const label = document.createElement('span');
     label.textContent = name;
+    
+    // Create and add the delete button
+    const deleteButton = document.createElement('span');
+    deleteButton.textContent = "x";
+    deleteButton.classList.add('delete-button'); // Add a class for styling
+    deleteButton.addEventListener('click', () => {
+        // Show a confirmation dialog
+        if (confirm('Are you sure you want to delete this sprite?')) {
+            // Remove the box
+            box.remove();
+            
+            // Remove the associated sprite from the canvas
+            removeImageFromParent(spriteId, '.gameCanvas');
+        }
+    });
+    
+    // Append the label and delete button to the box
     box.appendChild(label);
+    box.appendChild(deleteButton);
     
     // Append the rectangle box to the object panel
     objectPanel.appendChild(box);
@@ -113,6 +146,11 @@ function addRectangleBox(name, spriteId) {
 // Function to create and add a sprite to the game canvas
 function addSpriteToCanvas(file, name) {
     const canvas = document.querySelector('.gameCanvas');
+    
+    if (!canvas) {
+        console.error('Canvas element not found.');
+        return;
+    }
     
     // Create an image element
     const img = document.createElement('img');
@@ -130,10 +168,11 @@ function addSpriteToCanvas(file, name) {
     canvas.appendChild(img);
     
     // Enable the default drag behavior for images
-    img.addEventListener('dragstart', (e) => e.preventDefault()); // Prevent default image dragging behavior
+    img.addEventListener('dragstart', (e) => e.preventDefault(),); // Prevent default image dragging behavior
     
     // Make the image draggable with custom functionality
-    img.addEventListener('mousedown', onMouseDown);
+    img.addEventListener('mousedown', onStart,);
+    img.addEventListener('touchstart', onStart,);
 }
 
 // Variables for dragging
@@ -156,11 +195,12 @@ function onStart(e) {
     document.body.style.cursor = 'move';
     
     // Add mousemove and mouseup/touchmove and touchend event listeners
-    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mousemove', onMove,);
     document.addEventListener('mouseup', onEnd);
-    document.addEventListener('touchmove', onMove);
+    document.addEventListener('touchmove', onMove,);
     document.addEventListener('touchend', onEnd);
 }
+
 
 // Event handler for mouse move and touch move
 function onMove(e) {
@@ -201,31 +241,6 @@ function onEnd() {
 }
 
 // Initialize draggable images
-function addSpriteToCanvas(file, name) {
-    const canvas = document.querySelector('.gameCanvas');
-    
-    // Create an image element
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(file); // Set the image source to the file
-    img.id = name; // Set the ID to the unique name
-    img.style.width = '50px'; // Set the width to 50px
-    img.style.height = '50px'; // Set the height to 50px
-    img.style.position = 'absolute'; // Position it absolutely for centering
-    img.style.left = '50%'; // Center horizontally
-    img.style.top = '50%'; // Center vertically
-    img.style.transform = 'translate(-50%, -50%)'; // Center the image based on its own size
-    img.style.outline = 'none'; // Remove default outline
-    
-    // Append the image to the canvas
-    canvas.appendChild(img);
-    
-    // Enable the default drag behavior for images
-    img.addEventListener('dragstart', (e) => e.preventDefault()); // Prevent default image dragging behavior
-    
-    // Make the image draggable with custom functionality
-    img.addEventListener('mousedown', onStart);
-    img.addEventListener('touchstart', onStart);
-}
-
-
-initResizer();
+document.addEventListener('DOMContentLoaded', () => {
+    // No additional initialization needed here unless there are other setup tasks
+});

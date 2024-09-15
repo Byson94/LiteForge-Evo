@@ -83,25 +83,20 @@ function getUniqueName(baseName) {
     return newName;
 }
 
-// Function to remove the sprite from the canvas
-function removeImageFromParent(spriteId, parentSelector) {
-    const parent = document.querySelector(parentSelector);
-
-    if (!parent) {
-        console.error('Parent element not found.');
+// Function to remove a sprite from the canvas by its ID
+function removeSpriteById(spriteId) {
+    const canvas = document.querySelector('.gameCanvas');
+    const image = spriteId.replace(/\.[^/.]+$/, "");
+    
+    if (!canvas) {
+        console.error('Canvas element not found.');
         return;
     }
-
-    // Strip the file extension from spriteId
-    const idWithoutExtension = spriteId.replace(/\.[^/.]+$/, '');
-
-    // Find the sprite with the matching ID
-    const sprite = parent.querySelector(`#${idWithoutExtension}`);
+    
+    // Find the image with the matching ID and remove it
+    const sprite = document.getElementById(image);
     if (sprite) {
-        // Remove the image element from the DOM
         sprite.remove();
-    } else {
-        console.error(`Sprite with ID: ${idWithoutExtension} not found in the parent.`);
     }
 }
 
@@ -122,7 +117,7 @@ function addRectangleBox(name, spriteId) {
     
     // Create and add the delete button
     const deleteButton = document.createElement('span');
-    deleteButton.textContent = "x";
+    deleteButton.textContent = 'x';
     deleteButton.classList.add('delete-button'); // Add a class for styling
     deleteButton.addEventListener('click', () => {
         // Show a confirmation dialog
@@ -131,7 +126,7 @@ function addRectangleBox(name, spriteId) {
             box.remove();
             
             // Remove the associated sprite from the canvas
-            removeImageFromParent(spriteId, '.gameCanvas');
+            removeSpriteById(spriteId);
         }
     });
     

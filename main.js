@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
 let mainWindow;
@@ -8,14 +8,17 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, '/preload.js'),
-      nodeIntegration: false, // Disable nodeIntegration for security
-      contextIsolation: true, // Keep context isolation enabled for security
-      enableRemoteModule: false // Disable the remote module for security
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
+      enableRemoteModule: false
     }
   });
 
   mainWindow.loadFile('index.html');
+
+  // Hide the menu bar
+  mainWindow.setMenu(null);
 
   // Optional: Open DevTools for debugging
   // mainWindow.webContents.openDevTools();
@@ -37,11 +40,4 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
   }
-});
-
-// Handle messages from the renderer process
-ipcMain.on('message-channel', (event, message) => {
-  console.log('Message from renderer:', message);
-  // Send a reply to the renderer process
-  event.reply('message-channel-reply', `Received your message: ${message}`);
 });

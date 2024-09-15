@@ -1,41 +1,48 @@
 {
-    "name": "liteforge-evo",
-    "version": "0.1.0",
-    "description": "The remake of LiteForge GD engine from scratch.",
-    "main": "main.js",
-    "author": "Byson94",
-    "scripts": {
-      "start": "electron .",
-      "build": "electron-builder"
+  "name": "liteforge-evo",
+  "main": "main.js",
+  "productName": "LiteForge-Evo",
+  "description": "Game engine",
+  "author": "Byson",
+  "version": "0.1.0",
+  "dependencies": {
+    "@electron/remote": "^2.0.8"
+  },
+  "scripts": {
+    "start": "electron main.js",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "18.2.2",
+    "electron-builder": "22.11.11"
+  },
+  "build": {
+    "appId": "com.Byson94.LiteforgeEvoEngine",
+    "directories": {
+      "buildResources": "build_files"
     },
-    "build": {
-      "appId": "com.engine.LiteForgeEvo",
-      "productName": "LiteForge Evo",
-      "directories": {
-        "output": "dist"
-      },
-      "files": [
-        "build/**/*",
-        "main.js",
-        "package.json"
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
       ],
-      "win": {
-        "target": "nsis",
-        "icon": "build/icon/icon.ico"
-      },
-      "mac": {
-        "target": "dmg",
-        "icon": "build/icon/icon.icns"
-      },
-      "linux": {
-        "target": "AppImage",
-        "icon": "build/icon/icon.png"
-      }
+      "icon": "/Thumbnail win.ico"
     },
-    "devDependencies": {
-      "electron": "^25.0.0",
-      "electron-builder": "^24.5.1"
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "zip"
+      ],
+      "icon": "/Thumbnail.png"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "/Thumbnail.icns"
     }
-    
-  }
-  
+  },
+  "license": "MIT"
+}

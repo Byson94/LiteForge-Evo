@@ -69,7 +69,7 @@ body {
 .toggleObject {
     height: 30px;
     width: 30px;
-    position: absolute;
+    position: relative;
     left: 97%;
     background-color: #666666;
     display: flex;
@@ -196,97 +196,208 @@ img {
 }
 
 /* Style for PreviewGameButton */
-#PreviewGameButton {
-    position: fixed;
-    top: 20%;
-    left: 47%;
-    height: 30px;
-    background-color: #666666;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    width: 80px;
-    z-index: 4;
-}
-
-#PreviewGameButton:hover {
-    background-color: #f77f7f75;
-}
-
-/* Style for Scene Editor */
-#SceneEditorButton {
-    position: fixed;
-    top: 20%;
-    left: 50px;
-    height: 30px;
-    background-color: #666666;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    width: 80px;
-    z-index: 4;
-}
-
-#SceneEditorButton:hover {
-    background-color: #1a1a1a;
-}
-
-/* Style for Script Editor */
-#ScriptEditorButton {
-    position: fixed;
-    top: 20%;
-    left: 140px;
-    height: 30px;
-    background-color: #666666;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    width: 80px;
-    z-index: 4;
-}
-
-#ScriptEditorButton:hover {
-    background-color: #1a1a1a;
-}
-
-/* Style for Visual Script Editor */
-#VisualScriptEditorButton {
-    position: fixed;
-    top: 20%;
-    left: 230px;
-    height: 30px;
-    background-color: #666666;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    width: 80px;
-    z-index: 4;
-}
-
-#VisualScriptEditorButton:hover {
-    background-color: #1a1a1a;
-}
-
-/* Style for game Exporter */
-#MenuButton {
-    position: fixed;
-    top: 20%;
-    left: 10px;
+#layout-1 #PreviewGameButton {
+    position: relative;
+    font-size: 20px;
+    top: 0;
+    left: 24.7rcap;
     height: 30px;
     background-color: #666666;
     color: #ffffff;
     border: none;
     cursor: pointer;
     width: 30px;
-    height: 30px;
     z-index: 4;
-    font-size: larger;
-    padding-bottom: 2px;
 }
 
-#MenuButton:hover {
+#layout-1, #layout-2, #layout-3 #PreviewGameButton:hover {
+    background-color: #f77f7f75;
+}
+
+/* Style for Scene Editor */
+#layout-1 #SceneEditorButton {
+    position: relative;
+    top: 0;
+    left: -3.2rcap;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    z-index: 4;
+}
+
+#layout-2 #SceneEditorButton {
+    position: relative;
+    top: 0;
+    left: -5.1rcap;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    z-index: 4;
+}
+
+#layout-1, #layout-2, #layout-3 #SceneEditorButton:hover {
+    background-color: #1a1a1a;
+}
+
+/* Style for PreviewGameButton */
+#layout-1 #PreviewGameButton {
+    position: relative;
+    font-size: 20px;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    z-index: 4;
+}
+
+#layout-1 #PreviewGameButton {
+    left: 253px; /* Adjust as needed */
+}
+
+#layout-1 #PreviewGameButton:hover,
+#layout-2 #PreviewGameButton:hover,
+#layout-3 #PreviewGameButton:hover {
+    background-color: #f77f7f75;
+}
+
+/* Style for Scene Editor */
+#layout-1 #SceneEditorButton,
+#layout-2 #SceneEditorButton,
+#layout-3 #SceneEditorButton {
+    position: relative;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    z-index: 4;
+}
+
+#layout-1 #SceneEditorButton {
+    left: -38px; /* Adjust as needed */
+}
+
+#layout-2 #SceneEditorButton {
+    left: -58px; /* Adjust as needed */
+}
+
+#layout-3 #SceneEditorButton {
+    left: -58px; /* Adjust as needed */
+}
+
+#layout-1 #SceneEditorButton:hover,
+#layout-2 #SceneEditorButton:hover,
+#layout-3 #SceneEditorButton:hover {
+    background-color: #1a1a1a;
+}
+
+/* Style for Script Editor */
+#layout-1 #ScriptEditorButton,
+#layout-2 #ScriptEditorButton,
+#layout-3 #ScriptEditorButton {
+    position: relative;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    z-index: 4;
+}
+
+#layout-1 #ScriptEditorButton {
+    left: -31px; /* Adjust as needed */
+}
+
+#layout-2 #ScriptEditorButton {
+    left: 109px; /* Adjust as needed */
+}
+
+#layout-3 #ScriptEditorButton {
+    left: 109px; /* Adjust as needed */
+}
+
+#layout-1 #ScriptEditorButton:hover,
+#layout-2 #ScriptEditorButton:hover,
+#layout-3 #ScriptEditorButton:hover {
+    background-color: #1a1a1a;
+}
+
+/* Style for Visual Script Editor */
+#layout-1 #VisualScriptEditorButton,
+#layout-2 #VisualScriptEditorButton,
+#layout-3 #VisualScriptEditorButton {
+    position: relative;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    z-index: 4;
+}
+
+#layout-1 #VisualScriptEditorButton {
+    left: -54px; /* Adjust as needed */
+}
+
+#layout-2 #VisualScriptEditorButton {
+    left: 6px; /* Adjust as needed */
+}
+
+#layout-3 #VisualScriptEditorButton {
+    left: 6px; /* Adjust as needed */
+}
+
+#layout-1 #VisualScriptEditorButton:hover,
+#layout-2 #VisualScriptEditorButton:hover,
+#layout-3 #VisualScriptEditorButton:hover {
+    background-color: #1a1a1a;
+}
+
+/* Style for game Exporter */
+#layout-1 #MenuButton,
+#layout-2 #MenuButton,
+#layout-3 #MenuButton {
+    position: relative;
+    height: 30px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    font-size: larger;
+    padding-bottom: 2px;
+    z-index: 4;
+}
+
+#layout-1 #MenuButton {
+    left: -235px; /* Adjust as needed */
+}
+
+#layout-2 #MenuButton {
+    left: -175px; /* Adjust as needed */
+}
+
+#layout-3 #MenuButton {
+    left: -175px; /* Adjust as needed */
+}
+
+#layout-1 #MenuButton:hover,
+#layout-2 #MenuButton:hover,
+#layout-3 #MenuButton:hover {
     background-color: #9959be;
 }
+
 
 .menuSlide {
     height: calc(100% - 60px);

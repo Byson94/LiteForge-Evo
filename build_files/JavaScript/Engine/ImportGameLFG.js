@@ -1,7 +1,6 @@
 // Function to handle importing game data
 function ImportTheGameClicked() {
-    openScriptEditor(); 
-    openSceneEditor(); 
+    ScriptEditorClicked(); 
 
     if (typeof window.require !== 'undefined') {
         // Running in Electron
@@ -72,7 +71,6 @@ async function processLFEFileContent(fileContent) {
 
         // Call VisualScriptEditorClicked and then load from localStorage
         loadFromLocalStorage();
-        openSceneEditor();
 
         // Set CodeMirror content
         setEditorContent(jsCode);
@@ -106,6 +104,7 @@ function setEditorContent(jsCode) {
     if (codeMirrorEditor) {
         if (typeof jsCode === 'string') {
             codeMirrorEditor.setValue(jsCode);
+            SceneEditorClicked();
         } else {
             console.error('Invalid code content for CodeMirror.');
         }
@@ -127,6 +126,8 @@ async function createImagesFromJSON(zip, images) {
                         const imgElement = document.createElement('img');
                         imgElement.src = URL.createObjectURL(blob);
                         imgElement.id = image.id;
+                        objectArray.push([image.id, image.id + arraycounter]);
+                        arraycounter++
                         imgElement.style.width = `${image.width}px`;
                         imgElement.style.height = `${image.height}px`;
                         imgElement.style.position = 'absolute';
@@ -215,6 +216,7 @@ function createRectangleBoxes(images) {
         console.error('Object panel element not found.');
     }
 }
+
 
 // Variables for dragging
 let currentlyDraggedElement = null;
@@ -316,21 +318,4 @@ function onElementTouchEnd(e) {
         document.removeEventListener('touchmove', onElementTouchMove);
         document.removeEventListener('touchend', onElementTouchEnd);
     }
-}
-
-// Placeholder functions
-function openScriptEditor() {
-    // Your implementation here
-}
-
-function openSceneEditor() {
-    // Your implementation here
-}
-
-function initializeEditor() {
-    // Your implementation here
-}
-
-function loadFromLocalStorage() {
-    // Your implementation here
 }

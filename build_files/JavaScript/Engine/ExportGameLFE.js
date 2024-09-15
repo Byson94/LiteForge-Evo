@@ -1,6 +1,6 @@
 async function ExportTheGame() {
     // Initialize CodeMirror editor if not already initialized
-    initializeEditor();
+    ScriptEditorClicked();
 
     function getAllImagesData() {
         const canvas = document.querySelector('.gameCanvas');
@@ -98,4 +98,5 @@ async function ExportTheGame() {
 
     // Trigger the file creation and download
     await createDownloadableFile();
+    SceneEditorClicked()
 }

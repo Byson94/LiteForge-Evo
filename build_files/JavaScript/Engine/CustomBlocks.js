@@ -110,31 +110,66 @@ Blockly.common.defineBlocksWithJsonArray([
   },
 
   {
-    "type": "Move_Object_To",
-    "tooltip": "Move object to a position",
-    "helpUrl": "",
-    "message0": "Move %1 To %2",
+    "type": "Object_Will",
+    "message0": "%1 Object Will %2",
     "args0": [
       {
         "type": "field_dropdown",
-        "name": "Object_ID",
-        "options": [
-          ["Object 1", "object1"],
-          ["Object 2", "object2"],
-          ["Object 3", "object3"]
-        ]
+        "name": "Options",
+        "options": objectArray
       },
       {
-        "type": "input_value",
-        "name": "Position",
-        "check": "String"
+        "type": "input_statement",
+        "name": "ObjectWillAction"
       }
     ],
-    "colour": 15,
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 225,
     "inputsInline": false
   },
+
+  {
+    "type": "delete_object",
+    "tooltip": "",
+    "helpUrl": "",
+    "message0": "Delete %1",
+    "args0": [
+      {
+        "type": "input_dummy",
+        "name": "OBJECT",
+        "align": "CENTRE"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 0
+  }        
 ]);
 
+function redefineBlockWithArray(array) {
+  Blockly.common.defineBlocksWithJsonArray([
+    {
+      "type": "Object_Will",
+      "message0": "%1 Object Will %2",
+      "args0": [
+        {
+          "type": "field_dropdown",
+          "name": "Options",
+          "options": array,
+        },
+        {
+          "type": "input_statement",
+          "name": "ObjectWillAction"
+        }
+      ],
+      "previousStatement": null,
+      "nextStatement": null,
+      "colour": 225,
+      "inputsInline": false
+    }
+  ]);
+}
 
 /* JavaScript to run the blocks (below) */
 // Custom block. "Repeat Forever Block".
@@ -233,5 +268,28 @@ javascript.javascriptGenerator.forBlock['specific_key_pressed'] = function(block
       }
     });
   `;
+  return code;
+};
+
+// "Object will"
+javascript.javascriptGenerator.forBlock['Object_Will'] = function(block) {
+  var objectId = block.getFieldValue('Options'); // Get the selected object ID
+  var statements = Blockly.JavaScript.statementToCode(block, 'ObjectWillAction');
+  
+  // Generate code to store the object ID and handle the nested statements
+  var code = `${objectId}\n`;
+  code += `var object_${objectId} = {}; \n`;
+  code += statements;
+  
+  return code;
+};
+
+javascript.javascriptGenerator.forBlock['delete_object'] = function(block) {
+  var object = Blockly.JavaScript.valueToCode(block, 'OBJECT', Blockly.JavaScript.ORDER_ATOMIC);
+  
+  // Generate code to delete the object
+  var code = `\n`;
+  code += `delete object_${object};\n`;
+  
   return code;
 };

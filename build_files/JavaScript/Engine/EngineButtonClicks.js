@@ -17,8 +17,7 @@ function VisualScriptEditorClicked() {
     document.getElementById('layout-2').style.display = 'none';
     document.getElementById('layout-3').style.display = 'block';
     // window.location.href="../../html/Engine/BlockyEditor.html"
-    initializeBlockyEditor()
-    
+    initializeBlockyEditor();
 }
 
 function newProject() {

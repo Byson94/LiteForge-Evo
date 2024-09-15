@@ -34,7 +34,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
             display: flex;
             align-items: center;
             justify-content: center;
-            left: calc(50vh - 40vh);
+            left: calc(50vh);
             top: 10vh;
         }
 
@@ -136,7 +136,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
 <body>
     <!-- Add a canvas element to your preview HTML -->
     <div class="gameCanvas"></div>
-    <div class="console" id="consoleOutput">
+    <div class="console" id="consoleOutput" style="visibility: hidden; z-index: 8000;">
         <h3>Console</h3>
     </div>
 
@@ -277,6 +277,20 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         // Run the resize function on initial load and on resize
         resizeElements();
         window.addEventListener('resize', resizeElements);
+
+        document.addEventListener('keydown', function(event) {
+        // Check if the Control key is pressed along with the "C" key
+        const layoutElement = document.getElementById('consoleOutput');
+        
+        if (event.ctrlKey && event.key === 'c') { 
+            // Toggle visibility between 'visible' and 'hidden'
+            if (layoutElement.style.visibility === 'hidden') {
+            layoutElement.style.visibility = 'visible';
+            } else {
+            layoutElement.style.visibility = 'hidden';
+            }
+        }
+        });
     </script>    
 </body>
 </html>

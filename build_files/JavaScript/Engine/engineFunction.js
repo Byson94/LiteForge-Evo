@@ -150,7 +150,9 @@ function addSpriteToCanvas(file, name) {
     // Create an image element
     const img = document.createElement('img');
     img.src = URL.createObjectURL(file); // Set the image source to the file
-    img.id = name; // Set the ID to the unique name
+    img.id = name;
+    objectArray.push([name, name + arraycounter]);
+    arraycounter++
     img.style.width = '50px'; // Set the width to 50px
     img.style.height = '50px'; // Set the height to 50px
     img.style.position = 'absolute'; // Position it absolutely for centering

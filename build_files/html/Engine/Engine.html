@@ -14,8 +14,12 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
 
     <!-- Creating variables -->
     <script>
+        // for the custom blocks
         let objectArray = [["none.", "none1"]];
         let arraycounter = 2
+
+        // For storing selected sprites
+        let selectedId = null;
     </script>
 
     <!-- CodeMirror CSS -->
@@ -26,8 +30,11 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
     <link rel="stylesheet" href="../../../libraries/codemirror/addons/show-hint.css">
 
     <!-- Blocky -->
-    <script src="../../../libraries/blockly/blockly.min.js"></script> >
+    <script src="../../../libraries/blockly/blockly.min.js"></script>
     <script src="../../JavaScript/Engine/CustomBlocks.js"></script>
+
+    <!-- Konva -->
+     <script src="../../../libraries/konva/konva.min.js"></script>
 
     <style>
         .gameCanvas img {
@@ -50,9 +57,15 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         <button type="button" id="ExportToPCButton" onclick="ExportToPCButtonClicked()">Export To PC</button>
         <button type="button" id="ExportToHTMLButton" onclick="ExportToHTMLButtonClicked()">Export As HTML</button>
     </div>
+
     <div class="ImportingTheGame" style="display: none;"></div>
 
     <div id="layout-1">
+        <div id="EditSprites" style="display: none;">
+            <h2 style="text-align: center; padding-top: 20px;">Edit sprites</h2>
+            <p id="selectedSpriteShower" style="color: red; text-align: center;">No object selected. Please select one to continue!</p>
+            <button type="button" onclick="CloseTheSpriteEditorClicked()" id="CloseSpriteEditor">Close</button>
+        </div>
         <div class="banner">
             <label for="toggleObjectpanel" class="toggleObject"></label>
             <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">⯈</button>
@@ -65,6 +78,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         <div class="slide">
             <div class="resizer"></div>
             <h2>Object Panel</h2>
+            <button type="button" onclick="SpriteEditorClicked()" id="SpriteEditButton">E</button>
             <button type="button" onclick="NewSpritebuttonclicked()" id="NewSpriteButton">NewSprite</button>
         </div>
         <div class="gameCanvas">
@@ -74,6 +88,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
 
     <div id="layout-2" style="display: none;">
         <div class="banner">
+            <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">⯈</button>
             <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
             <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
             <button type="button" onclick="MenuButtonClicked()" id="MenuButton">☰</button>
@@ -86,6 +101,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
 
     <div id="layout-3" style="display: none;">
         <div class="banner">
+            <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">⯈</button>
             <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
             <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
             <button type="button" onclick="MenuButtonClicked()" id="MenuButton">☰</button>
@@ -111,60 +127,94 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
     <script src="../../JavaScript/Engine/BlocklyEditor.js"></script>
     <script src="../../../libraries/jszip/jszip.min.js"></script>
     <script src="../../JavaScript/Engine/ExportGameLFE.js"></script>
-    <script src="../../JavaScript/Engine/ImportGameLFG.js"></script>
-    <script src="../../JavaScript/Engine/engineFunction.js"></script>
-    <script src="../../JavaScript/Engine/PreviewGame.js"></script>
     <script src="../../JavaScript/Engine/ExportAsHTML.js"></script>
     <script src="../../JavaScript/Engine/EngineButtonClicks.js"></script>
 
-    <script>
-        // Initialize CodeMirror editor only when Script Editor is clicked
-        let codeMirrorEditor = null;
-        let editorInitialized = false;
+        <script>
+            // Initialize CodeMirror editor only when Script Editor is clicked
+            let codeMirrorEditor = null;
+            let editorInitialized = false;
 
-        function loadCodeEditorTheme() {
-        CodeEditorTheme = localStorage.getItem('editorTheme');
+            function loadCodeEditorTheme() {
+            CodeEditorTheme = localStorage.getItem('editorTheme');
 
-        if (!CodeEditorTheme) {
-            CodeEditorTheme = 'Default';
+            if (!CodeEditorTheme) {
+                CodeEditorTheme = '3024-night';
+            }
         }
-    }
 
-        loadCodeEditorTheme()
+            loadCodeEditorTheme()
 
-        function initializeEditor() {
-            if (editorInitialized === false) {
-                codeMirrorEditor = CodeMirror(document.getElementById('editor'), {
-                    mode: 'javascript',
-                    lineNumbers: true,
-                    theme: CodeEditorTheme,
-                    indentUnit: 4,
-                    tabSize: 4,
-                    autofocus: true,
-                    extraKeys: {"Ctrl-Space": "autocomplete"}, // Autocomplete shortcut
-                    autoCloseBrackets: true, // Enable auto-closing of brackets
-                    hintOptions: {
-                        // Configure hint options if needed (not yet)
-                    },
-                    styleActiveLine: true,
-                    matchBrackets: true
+            function initializeEditor() {
+                if (editorInitialized === false) {
+                    codeMirrorEditor = CodeMirror(document.getElementById('editor'), {
+                        mode: 'javascript',
+                        lineNumbers: true,
+                        theme: CodeEditorTheme,
+                        indentUnit: 4,
+                        tabSize: 4,
+                        autofocus: true,
+                        extraKeys: {"Ctrl-Space": "autocomplete"}, // Autocomplete shortcut
+                        autoCloseBrackets: true, // Enable auto-closing of brackets
+                        hintOptions: {
+                            // Configure hint options if needed (not yet)
+                        },
+                        styleActiveLine: true,
+                        matchBrackets: true
+                    });
+
+                    codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
+
+                    codeMirrorEditor.setValue(`// Write your JavaScript code here`);
+                    editorInitialized = true;
+                }
+            }
+
+            function getEditorCode() {
+                if (codeMirrorEditor) {
+                    return codeMirrorEditor.getValue();
+                } else {
+                    console.error('CodeMirror editor instance is not initialized.');
+                    return '';
+                }
+            }
+        </script>
+        
+        <script>
+            function changeSelectedObjectText() {
+                const selectedImageShowerText = document.getElementById('selectedSpriteShower');
+                
+                if (selectedId !== null) {
+                    document.getElementById('selectedSpriteShower').style.color = 'green';
+                    selectedImageShowerText.textContent = 'Object selected: ' + selectedId;
+                } else {
+                    document.getElementById('selectedSpriteShower').style.color = 'red';
+                    selectedImageShowerText.textContent = 'No object selected. Please select one to continue!';
+                };
+            };
+        </script>
+
+        <!-- Konva 2d renderer... -->
+        <script>
+            function initializeKonva() {
+                const canvas = document.querySelector('.gameCanvas');
+                const stage = new Konva.Stage({
+                    container: canvas,
+                    width: canvas.clientWidth,
+                    height: canvas.clientHeight
                 });
 
-                codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
+                // Create a layer (you may have multiple layers, this is just an example)
+                const layer = new Konva.Layer();
+                stage.add(layer);
 
-                codeMirrorEditor.setValue(`// Write your JavaScript code here`);
-                editorInitialized = true;
+                // Make sure to store the stage in the canvas element
+                canvas.__konvaStage = stage;
             }
-        }
+        </script>   
 
-        function getEditorCode() {
-            if (codeMirrorEditor) {
-                return codeMirrorEditor.getValue();
-            } else {
-                console.error('CodeMirror editor instance is not initialized.');
-                return '';
-            }
-        }
-    </script>
+        <script src="../../JavaScript/Engine/PreviewGame.js"></script>
+        <script src="../../JavaScript/Engine/ImportGameLFG.js"></script>   
+        <script src="../../JavaScript/Engine/engineFunction.js"></script>
 </body>
 </html>

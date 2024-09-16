@@ -11,6 +11,7 @@ function NewSpritebuttonclicked() {
         }).then(result => {
             if (!result.canceled && result.filePaths.length > 0) {
                 const filePath = result.filePaths[0];
+                // You may want to handle filePath here if needed
             } else {
                 console.log('No file selected or cancelled in Electron.');
             }
@@ -35,19 +36,16 @@ function NewSpritebuttonclicked() {
                     if (file.type.startsWith('image/')) {
                         // Get the file name and remove the extension
                         const fileName = file.name.replace(/\.[^/.]+$/, "");
-                        
+
                         // Generate a unique name
                         const uniqueName = getUniqueName(fileName);
-                        
-                        // Create and add a rectangle box with the unique name
-                        addRectangleBox(uniqueName, file.name);
-                        
+
                         // Create and add the sprite to the game canvas
                         addSpriteToCanvas(file, uniqueName);
                     }
                 }
             }
-            
+
             // Remove the file input element after use
             fileInput.remove();
         });
@@ -57,11 +55,13 @@ function NewSpritebuttonclicked() {
     }
 }
 
+// Counter to handle unique name generation
+let nameCounter = 1;
+
 // Function to generate a unique name for new objects
 function getUniqueName(baseName) {
     const objectPanel = document.querySelector('.slide');
     let newName = baseName;
-    let counter = 1;
 
     // Function to check if the name already exists
     function nameExists(name) {
@@ -76,45 +76,26 @@ function getUniqueName(baseName) {
 
     // Check if the name already exists and append a number if it does
     while (nameExists(newName)) {
-        newName = `${baseName}${counter}`; // Append counter
-        counter++;
+        newName = `${baseName}_${nameCounter}`; // Append counter
+        nameCounter++;
     }
 
     return newName;
 }
 
-// Function to remove a sprite from the canvas by its ID
-function removeSpriteById(spriteId) {
-    const canvas = document.querySelector('.gameCanvas');
-    const image = spriteId.replace(/\.[^/.]+$/, "");
-    
-    if (!canvas) {
-        console.error('Canvas element not found.');
-        return;
-    }
-    
-    // Find the image with the matching ID and remove it
-    const sprite = document.getElementById(image);
-    if (sprite) {
-        sprite.remove();
-    }
-}
-
-
-// IMPORTANT (FOR ME) (ABOVE AND BELOW)
 // Function to create and add a rectangle box to the sidebar
 function addRectangleBox(name, spriteId) {
     const objectPanel = document.querySelector('.slide');
-    
+
     // Create a new div element for the rectangle box
     const box = document.createElement('div');
     box.classList.add('rectangle-box');
-    box.dataset.spriteId = spriteId; // Store the sprite ID in a data attribute
-    
+    box.dataset.spriteId = `${spriteId}.`; // Append a dot to the sprite ID
+
     // Create and add the name of the sprite
     const label = document.createElement('span');
     label.textContent = name;
-    
+
     // Create and add the delete button
     const deleteButton = document.createElement('span');
     deleteButton.textContent = 'x';
@@ -124,120 +105,159 @@ function addRectangleBox(name, spriteId) {
         if (confirm('Are you sure you want to delete this sprite?')) {
             // Remove the box
             box.remove();
-            
+
             // Remove the associated sprite from the canvas
             removeSpriteById(spriteId);
         }
     });
-    
+
     // Append the label and delete button to the box
     box.appendChild(label);
     box.appendChild(deleteButton);
-    
+
     // Append the rectangle box to the object panel
     objectPanel.appendChild(box);
+}
+
+// Function to update cursor styles and outline
+function updateCursorAndOutline(image, isDragging) {
+    changeSelectedObjectText()
+    if (isDragging) {
+        document.body.style.cursor = 'grabbing'; // Change cursor to 'grabbing' during drag
+    } else if (selectedId === image.id()) {
+        document.body.style.cursor = 'auto'; // Change cursor to 'auto' when hovering over selected image
+    } else {
+        document.body.style.cursor = 'grab'; // Change cursor to 'grab' when hovering over unselected image
+    }
+
+    // Update outline for the selected image
+    if (selectedId === image.id()) {
+        image.stroke('red');
+        image.strokeWidth(5); // Adjust the thickness of the outline here
+    } else {
+        image.stroke(null); // Remove outline from other images
+    }
+    image.getLayer().batchDraw(); // Redraw the layer to apply changes
+}
+
+// Function to reset cursor style
+function resetCursor() {
+    document.body.style.cursor = 'auto'; // Reset cursor to default
+}
+
+// Function to handle deselection of an image
+function deselectImage() {
+    if (selectedId) {
+        const stage = document.querySelector('.gameCanvas').__konvaStage;
+        const layer = stage.findOne('Layer');
+        if (layer) {
+            const selectedImage = layer.findOne(`#${selectedId}`);
+            if (selectedImage) {
+                selectedImage.stroke(null); // Remove the red outline
+                selectedImage.getLayer().batchDraw(); // Redraw the layer to apply changes
+            }
+        }
+        selectedId = null; // Clear the selected ID
+        resetCursor(); // Reset cursor when deselecting
+    }
 }
 
 // Function to create and add a sprite to the game canvas
 function addSpriteToCanvas(file, name) {
     const canvas = document.querySelector('.gameCanvas');
-    
-    if (!canvas) {
-        console.error('Canvas element not found.');
+    const stage = canvas.__konvaStage; // Retrieve the Konva stage from the canvas element
+
+    if (!stage) {
+        console.error('Konva stage not found.');
         return;
     }
-    
-    // Create an image element
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(file); // Set the image source to the file
-    img.id = name;
-    objectArray.push([name, name + arraycounter]);
-    arraycounter++
-    img.style.width = '50px'; // Set the width to 50px
-    img.style.height = '50px'; // Set the height to 50px
-    img.style.position = 'absolute'; // Position it absolutely for centering
-    img.style.left = '50%'; // Center horizontally
-    img.style.top = '50%'; // Center vertically
-    img.style.transform = 'translate(-50%, -50%)'; // Center the image based on its own size
-    img.style.outline = 'none'; // Remove default outline
-    
-    // Append the image to the canvas
-    canvas.appendChild(img);
-    
-    // Enable the default drag behavior for images
-    img.addEventListener('dragstart', (e) => e.preventDefault(),); // Prevent default image dragging behavior
-    
-    // Make the image draggable with custom functionality
-    img.addEventListener('mousedown', onStart,);
-    img.addEventListener('touchstart', onStart,);
-}
 
-// Variables for dragging
-let draggedElement = null;
-let offsetX = 0;
-let offsetY = 0;
-
-// Event handler for mouse down and touch start
-function onStart(e) {
-    e.preventDefault(); // Prevent the default action (e.g., scrolling on touch devices)
-    
-    draggedElement = e.target;
-    const rect = draggedElement.getBoundingClientRect();
-    
-    // Calculate the offset from the center of the image to the cursor or touch point
-    offsetX = (e.type === 'mousedown' ? e.clientX : e.touches[0].clientX) - (rect.left + rect.width / 2);
-    offsetY = (e.type === 'mousedown' ? e.clientY : e.touches[0].clientY) - (rect.top + rect.height / 2);
-    
-    // Change cursor style
-    document.body.style.cursor = 'move';
-    
-    // Add mousemove and mouseup/touchmove and touchend event listeners
-    document.addEventListener('mousemove', onMove,);
-    document.addEventListener('mouseup', onEnd);
-    document.addEventListener('touchmove', onMove,);
-    document.addEventListener('touchend', onEnd);
-}
-
-
-// Event handler for mouse move and touch move
-function onMove(e) {
-    if (draggedElement) {
-        const canvas = document.querySelector('.gameCanvas');
-        const canvasRect = canvas.getBoundingClientRect();
-        
-        // Calculate new position
-        const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-        const clientY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
-        let newLeft = clientX - canvasRect.left - offsetX;
-        let newTop = clientY - canvasRect.top - offsetY;
-
-        // Constrain the new position within the canvas boundaries
-        newLeft = Math.max(25, Math.min(newLeft, canvasRect.width - draggedElement.offsetWidth));
-        newTop = Math.max(25, Math.min(newTop, canvasRect.height - draggedElement.offsetHeight));
-
-        // Update image position
-        draggedElement.style.left = `${newLeft}px`;
-        draggedElement.style.top = `${newTop}px`;
+    const layer = stage.findOne('Layer');
+    if (!layer) {
+        console.error('Konva layer not found.');
+        return;
     }
+
+    // Generate a unique name for the sprite
+    const spriteId = getUniqueName(name.replace(/\.[^/.]+$/, "").trim().replace(/\s+/g, '_'));
+
+    // Create a new Konva Image node
+    const image = new Image();
+    image.src = URL.createObjectURL(file);
+
+    image.onload = function() {
+        const konvaImage = new Konva.Image({
+            image: image,
+            id: spriteId, // Use sanitized ID
+            x: stage.width() / 2,
+            y: stage.height() / 2,
+            width: 50,
+            height: 50,
+            offsetX: 25,
+            offsetY: 25,
+            draggable: true
+        });
+
+        // Add the Konva image to the layer
+        layer.add(konvaImage);
+        layer.draw();
+
+        // Handle mouseover
+        konvaImage.on('mouseover', function() {
+            if (selectedId === null || selectedId === konvaImage.id()) {
+                updateCursorAndOutline(konvaImage, false);
+            }
+        });
+
+        // Handle mouseout
+        konvaImage.on('mouseout', function() {
+            if (selectedId !== konvaImage.id()) {
+                resetCursor();
+            }
+        });
+
+        // Handle dragstart
+        konvaImage.on('dragstart', function() {
+            updateCursorAndOutline(konvaImage, true);
+        });
+
+        // Handle dragend
+        konvaImage.on('dragend', function() {
+            resetCursor();
+            updateCursorAndOutline(konvaImage, false);
+        });
+
+        // Handle click event to select the image
+        konvaImage.on('click', function(e) {
+            // Prevent the click event from propagating to the stage
+            e.cancelBubble = true;
+
+            // Deselect previous selection
+            deselectImage();
+
+            // Select the clicked image
+            selectedId = konvaImage.id(); // Save the selected item's ID
+            updateCursorAndOutline(konvaImage, false); // Update the outline
+        });
+    };
+
+    // Add the rectangle box with the unique name to the sidebar
+    addRectangleBox(spriteId, spriteId);
 }
 
-// Event handler for mouse up and touch end
-function onEnd() {
-    draggedElement = null;
-    offsetX = 0;
-    offsetY = 0;
-    
-    // Reset cursor style
-    document.body.style.cursor = 'auto';
-    
-    // Remove mousemove, mouseup, touchmove, and touchend event listeners
-    document.removeEventListener('mousemove', onMove);
-    document.removeEventListener('mouseup', onEnd);
-    document.removeEventListener('touchmove', onMove);
-    document.removeEventListener('touchend', onEnd);
-}
-
-// Initialize draggable images
+// Initialize Konva on page load
 document.addEventListener('DOMContentLoaded', () => {
-    // No additional initialization needed here unless there are other setup tasks
+    initializeKonva();
+
+    // Add a click listener to the stage to handle clicks on empty space
+    const canvas = document.querySelector('.gameCanvas');
+    const stage = canvas.__konvaStage;
+    if (stage) {
+        stage.on('click', function(e) {
+            // Deselect if the click was on empty space
+            if (e.target === stage) {
+                deselectImage();
+            }
+        });
+    }
 });

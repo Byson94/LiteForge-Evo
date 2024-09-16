@@ -2,25 +2,32 @@ async function ExportTheGame() {
     // Initialize CodeMirror editor if not already initialized
     ScriptEditorClicked();
 
-    function getAllImagesData() {
+    function getAllKonvaObjectsData() {
         const canvas = document.querySelector('.gameCanvas');
-        const images = canvas.querySelectorAll('img');
+        const stage = canvas.__konvaStage; // Retrieve the Konva stage from the canvas element
+        if (!stage) {
+            console.error('Konva stage not found.');
+            return [];
+        }
+
+        const layers = stage.find('Layer');
         const imageDataArray = [];
 
-        images.forEach(img => {
-            const rect = img.getBoundingClientRect();
-            const canvasRect = canvas.getBoundingClientRect();
-            
-            const left = rect.left - canvasRect.left;
-            const top = rect.top - canvasRect.top;
-            
-            imageDataArray.push({
-                id: img.id,
-                src: img.src,
-                left: left,
-                top: top,
-                width: img.offsetWidth,
-                height: img.offsetHeight
+        layers.forEach(layer => {
+            layer.find('Image').forEach(image => {
+                const id = image.id();
+                const src = image.image().src;
+                const pos = image.position();
+                const size = image.size();
+                
+                imageDataArray.push({
+                    id: id,
+                    src: src,
+                    left: pos.x,
+                    top: pos.y,
+                    width: size.width,
+                    height: size.height
+                });
             });
         });
 
@@ -38,7 +45,7 @@ async function ExportTheGame() {
 
     async function createDownloadableFile() {
         const zip = new JSZip();
-        const imageData = getAllImagesData();
+        const imageData = getAllKonvaObjectsData();
         const editorCode = getEditorCode();
 
         // Add JavaScript code to the ZIP
@@ -98,5 +105,5 @@ async function ExportTheGame() {
 
     // Trigger the file creation and download
     await createDownloadableFile();
-    SceneEditorClicked()
+    SceneEditorClicked();
 }

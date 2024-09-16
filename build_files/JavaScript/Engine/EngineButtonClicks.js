@@ -20,6 +20,14 @@ function VisualScriptEditorClicked() {
     initializeBlockyEditor();
 }
 
+function SpriteEditorClicked() {
+    document.getElementById('EditSprites').style.display = 'block';
+}
+
+function CloseTheSpriteEditorClicked() {
+    document.getElementById('EditSprites').style.display = 'none';
+}
+
 function newProject() {
     window.location.href = "Engine.html";
 }
@@ -68,6 +76,7 @@ function MenuExportButtonClicked() {
 
 // Exporting the game to the users computer
 function ExportToPCButtonClicked() {
+    VisualScriptEditorClicked()
     SaveToLocalStorage()
     SceneEditorClicked()
     ExportTheGame()

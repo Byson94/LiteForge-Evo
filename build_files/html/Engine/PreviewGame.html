@@ -1,8 +1,3 @@
-<!--
-This file uses the library "Blockly" developed by Google
-More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE"
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +5,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/styles.css">
     <title>Preview Game</title>
+    <script src="../../../libraries/konva/konva.min.js"></script>
     <style>
         /* General styling */
         * {
@@ -26,7 +22,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         /* Game canvas styling */
         .gameCanvas {
             position: absolute;
-            background-color: #b6b6b6;
+            background-color: #D1D1D1;
             border: 2px solid #222;
             overflow: hidden;
             z-index: 100;
@@ -34,8 +30,10 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
             display: flex;
             align-items: center;
             justify-content: center;
-            left: calc(50vh);
+            left: calc(50% - 275px); /* Centering 550px width */
             top: 10vh;
+            width: 550px;
+            height: 550px;
         }
 
         /* Console styling */
@@ -91,7 +89,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
                 width: 100vw;
                 height: calc(100vh - 50px);
                 position: absolute;
-                left: calc(50vh - 41vh);
+                left: 0;
                 top: 25vh;
             }
 
@@ -115,21 +113,13 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
             }
         }
 
-        @media (min-width: 601px) {
-            .gameCanvas {
-                width: 550px;
-                height: 550px;
-            }
-
-            .console {
-                width: 50vw; /* Adjust console width for larger screens */
-                height: 100vh; /* Full viewport height */
-                top: 0;
-                right: 0;
-                font-size: 14px; /* Default font size */
-                display: flex;
-                flex-direction: column;
-            }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            margin-top: 20px;
+            display: block;
+            z-index: 9999;
         }
     </style>
 </head>
@@ -141,11 +131,105 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
     </div>
 
     <script>
+        let stage, layer;
+    
+        function initializeKonva() {
+            const canvasElement = document.querySelector('.gameCanvas');
+    
+            // Ensure the canvasElement is found
+            if (!canvasElement) {
+                console.error('Canvas element with class "gameCanvas" not found.');
+                return;
+            }
+    
+            // Assign an ID to the canvas element if it doesn't already have one
+            if (!canvasElement.id) {
+                canvasElement.id = 'gameCanvas';
+            }
+    
+            // Create Konva stage
+            stage = new Konva.Stage({
+                container: 'gameCanvas', // Use ID for container
+                width: canvasElement.offsetWidth,
+                height: canvasElement.offsetHeight,
+            });
+    
+            // Create Konva layer
+            layer = new Konva.Layer();
+            stage.add(layer);
+        }
+    
+        function loadGameData() {
+            // Retrieve data from local storage
+            const gameDataJSON = localStorage.getItem('gameData');
+            if (!gameDataJSON) {
+                console.error('No game data found in local storage.');
+                return;
+            }
+
+            try {
+                // Parse the JSON data
+                const gameData = JSON.parse(gameDataJSON);
+                const sprites = gameData.spriteData;
+                const JSCode = gameData.JsCode;
+                const BlocklyCode = gameData.blocklyCode;
+
+                // Initialize Konva
+                initializeKonva();
+
+                // Add sprites to the Konva canvas
+                sprites.forEach(sprite => {
+                    if (sprite.src) { // Only process if the source URL is available
+                        const img = new Image();
+                        img.src = sprite.src;
+
+                        img.onload = () => {
+                            const konvaImage = new Konva.Image({
+                                image: img,
+                                id: sprite.id,
+                                x: sprite.left,
+                                y: sprite.top,
+                                width: sprite.width,
+                                height: sprite.height,
+                                offsetX: sprite.width / 2,
+                                offsetY: sprite.height / 2,
+                                draggable: false // Make undraggable
+                            });
+
+                            // Add Konva image to the layer and draw it
+                            layer.add(konvaImage);
+                            layer.draw();
+                        };
+                    }
+                });
+
+                // Check if JSCode is a string and contains code
+                if (typeof JSCode === 'string' && JSCode.trim()) {
+                    eval(JSCode);
+                } else {
+                    console.warn('Invalid or empty JSCode. (Dont worry if you didnt add any code here)');
+                }
+
+                // Check if BlocklyCode is a string and contains code
+                if (typeof BlocklyCode === 'string' && BlocklyCode.trim()) {
+                    eval(BlocklyCode);
+                } else {
+                    console.warn('Invalid or empty BlocklyCode. (Dont worry if you didnt add any code here)');
+                }
+
+            } catch (e) {
+                console.error('Error loading game data:', e);
+            }
+        }
+    
+        // Load game data when the document is ready
+        document.addEventListener('DOMContentLoaded', loadGameData);
+    
         // Function to resize canvas and manage console visibility
         function resizeElements() {
             const consoleElement = document.getElementById('consoleOutput');
             const canvasElement = document.querySelector('.gameCanvas');
-
+    
             let newWidth, newHeight;
             if (window.innerWidth <= 600) {
                 newWidth = window.innerWidth;
@@ -156,141 +240,28 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
                 newHeight = 550;
                 consoleElement.style.display = 'flex';
             }
-
+    
             // Apply the new dimensions to the canvas
             canvasElement.style.width = `${newWidth}px`;
             canvasElement.style.height = `${newHeight}px`;
-
+    
             // Scale canvas content
             scaleCanvasContent(newWidth, newHeight);
         }
-
+    
         // Function to scale canvas content based on new canvas size
         function scaleCanvasContent(newWidth, newHeight) {
-            const canvasElement = document.querySelector('.gameCanvas');
-            const scaleX = newWidth / 550; // Original width
-            const scaleY = newHeight / 550; // Original height
-            const scale = Math.min(scaleX, scaleY); // Maintain aspect ratio
+            const scaleX = newWidth / 550; // Original canvas width
+            const scaleY = newHeight / 550; // Original canvas height
+            const scale = Math.min(scaleX, scaleY); // Keep aspect ratio
 
-            // Apply scaling to the canvas content
-            canvasElement.style.transform = `scale(${scale})`;
-            canvasElement.style.transformOrigin = 'top left'; // Ensure scaling happens from the top-left corner
-            canvasElement.style.width = `${550 * scale}px`; // Adjust width after scaling
-            canvasElement.style.height = `${550 * scale}px`; // Adjust height after scaling
+            // Apply the scale to the Konva stage
+            stage.width(550 * scale);  // Original width * scale
+            stage.height(550 * scale); // Original height * scale
+            stage.scale({ x: scale, y: scale });  // Scale the stage and all its content
+
+            stage.batchDraw(); // Redraw the stage to apply the scaling
         }
-
-        // Function to append logs to the console
-        (function() {
-            const consoleOutput = document.getElementById('consoleOutput');
-
-            function appendLog(message, type) {
-                const logBox = document.createElement('div');
-                logBox.className = message.length >= 30 ? 'log-box-big' : 'log-box';
-                logBox.style.color = type === 'error' ? 'red' : 'inherit';
-
-                const logContent = document.createElement('div');
-                logContent.textContent = message;
-
-                logBox.appendChild(logContent);
-                consoleOutput.appendChild(logBox);
-
-                // Automatically scroll to the bottom to show the latest message
-                consoleOutput.scrollTop = consoleOutput.scrollHeight;
-            }
-
-            // Override console methods
-            console.log = function(message) {
-                appendLog(message, 'log');
-            };
-
-            console.error = function(message) {
-                appendLog(message, 'error');
-            };
-
-            console.warn = function(message) {
-                appendLog(message, 'warn');
-            };
-        })();
-
-        // Function to retrieve and use the stored game data
-        function loadGameData() {
-            // Retrieve data from local storage
-            const gameDataJSON = localStorage.getItem('gameData');
-            if (!gameDataJSON) {
-                console.error('No game data found in local storage.');
-                return;
-            }
-
-            // Parse the JSON data
-            const gameData = JSON.parse(gameDataJSON);
-
-            // Retrieve image data and recreate images
-            const images = gameData.imageData;
-            const canvas = document.querySelector('.gameCanvas');
-            if (!canvas) {
-                console.error('Canvas element not found.');
-                return;
-            }
-
-            // Clear any existing images
-            canvas.innerHTML = '';
-
-            // Get canvas dimensions
-            const canvasWidth = canvas.offsetWidth;
-            const canvasHeight = canvas.offsetHeight;
-
-            images.forEach(image => {
-                const img = new Image();
-                img.src = image.src;
-
-                // Ensure images are positioned relative to the canvas
-                img.style.position = 'absolute';
-                img.style.left = `${(image.left / 550) * canvasWidth}px`; // Scale positioning
-                img.style.top = `${(image.top / 550) * canvasHeight}px`; // Scale positioning
-                img.style.width = `${(image.width / 550) * canvasWidth}px`; // Scale size
-                img.style.height = `${(image.height / 550) * canvasHeight}px`; // Scale size
-                img.id = image.id; // Set the ID of the image
-                
-                canvas.appendChild(img);
-            });
-
-            // Retrieve and execute JavaScript code and Blockly code separately
-            const jsCode = gameData.jsCode || '';
-            const blocklyCode = gameData.blocklyCode || '';
-            const comboCode = `${blocklyCode}\n\n${jsCode}`;
-
-            // Execute Both Functions Using "new Function()"
-            if (comboCode) {
-                try {
-                    console.log('Running the Codes...');
-                    const runBlocklyCode = new Function(comboCode);
-                    runBlocklyCode();
-                } catch (error) {
-                    console.error('Error executing the codes:', error);
-                }
-            }
-        }
-
-        // Call the function to load and use the data
-        loadGameData();
-
-        // Run the resize function on initial load and on resize
-        resizeElements();
-        window.addEventListener('resize', resizeElements);
-
-        document.addEventListener('keydown', function(event) {
-        // Check if the Control key is pressed along with the "C" key
-        const layoutElement = document.getElementById('consoleOutput');
-        
-        if (event.ctrlKey && event.key === 'c') { 
-            // Toggle visibility between 'visible' and 'hidden'
-            if (layoutElement.style.visibility === 'hidden') {
-            layoutElement.style.visibility = 'visible';
-            } else {
-            layoutElement.style.visibility = 'hidden';
-            }
-        }
-        });
     </script>    
 </body>
 </html>

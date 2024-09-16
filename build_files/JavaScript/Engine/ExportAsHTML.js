@@ -1,29 +1,41 @@
 async function ExportAsHTML() {
-    VisualScriptEditorClicked()
-    // Function to extract image data from the canvas
-    function getAllImagesData() {
-        const canvas = document.querySelector('.gameCanvas');
-        const images = canvas.querySelectorAll('img');
-        const imageDataArray = [];
+    VisualScriptEditorClicked();
 
-        images.forEach(img => {
-            const rect = img.getBoundingClientRect();
-            const canvasRect = canvas.getBoundingClientRect();
-            
-            const left = rect.left - canvasRect.left;
-            const top = rect.top - canvasRect.top;
-            
-            imageDataArray.push({
-                id: img.id,
-                src: img.src,  // This will be used to fetch the image data
-                left: left,
-                top: top,
-                width: img.offsetWidth,
-                height: img.offsetHeight
+    function isElectron() {
+        // Checks for Electron's presence
+        return navigator.userAgent.toLowerCase().includes('electron');
+    }
+    // Function to extract Konva sprite data from the canvas
+    function getAllKonvaObjectsData() {
+        const canvas = document.querySelector('.gameCanvas');
+        const stage = canvas.__konvaStage; // Access Konva stage from canvas
+        if (!stage) {
+            console.error('Konva stage not found.');
+            return [];
+        }
+
+        const layers = stage.find('Layer');
+        const spriteDataArray = [];
+
+        layers.forEach(layer => {
+            layer.find('Image').forEach(image => {
+                const id = image.id();
+                const src = image.image().src;
+                const pos = image.position();
+                const size = image.size();
+                
+                spriteDataArray.push({
+                    id: id,
+                    src: src,
+                    left: pos.x,
+                    top: pos.y,
+                    width: size.width,
+                    height: size.height
+                });
             });
         });
 
-        return imageDataArray;
+        return spriteDataArray;
     }
 
     function getEditorCode() {
@@ -36,89 +48,115 @@ async function ExportAsHTML() {
     }
 
     const zip = new JSZip();
-    
-    const imageData = getAllImagesData(); // Extract image data
+
+    const spriteData = getAllKonvaObjectsData(); // Extract Konva sprite data
     const editorCode = getEditorCode(); // Extract editor code
 
     // Add script.js
     zip.file("script.js", editorCode);
 
     // Add scriptBlockly.js with the current code from Blockly
-    zip.file("scriptBlockly.js", currentCode); // currentCode is the Blockly-generated JS code
+    zip.file("scriptBlockly.js", currentCode);
 
     const gameData = {
-        images: imageData,
+        sprites: spriteData,
         jsCode: "Stored in script.js and scriptBlockly.js"
     };
     zip.file("gameData.json", JSON.stringify(gameData, null, 2));
 
-    // HTML content
+    // HTML content with Konva canvas and sprites
     const htmlContent = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>My Game</title>
-        <style>
-            body {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-                background-color: #000;
-            }
-            .gameCanvas {
-                width: 550px;
-                height: 550px;
-                border: 1px solid black;
-                position: relative;
-                background-color: rgb(194, 194, 194);
-            }
-            img {
-                position: absolute;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="gameCanvas"></div>
-        <script src="script.js"></script>
-        <script src="scriptBlockly.js"></script>
-        <script>
-            fetch('gameData.json')
-                .then(response => response.json())
-                .then(data => {
-                    const canvas = document.querySelector('.gameCanvas');
-                    data.images.forEach(imgData => {
-                        const img = document.createElement('img');
-                        img.id = imgData.id;
-                        img.src = 'sprites/' + imgData.id + '.png'; // Path to the images in the sprites folder
-                        img.style.left = imgData.left + 'px';
-                        img.style.top = imgData.top + 'px';
-                        img.style.width = imgData.width + 'px';
-                        img.style.height = imgData.height + 'px';
-                        canvas.appendChild(img);
-                    });
-                })
-                .catch(error => console.error('Error loading game data:', error));
-        </script>
-    </body>
-    </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+        }
+        .gameCanvas {
+            width: 550px;
+            height: 550px;
+            border: 1px solid black;
+            background-color: rgb(194, 194, 194);
+        }
+    </style>
+</head>
+<body>
+    <!-- Ensure the ID is set to 'container' -->
+    <div class="gameCanvas" id="gameCanvas"></div>
+    <script src="Konva.min.js"></script>
+    <script>
+        const stage = new Konva.Stage({
+            container: '.gameCanvas',
+            width: 550,
+            height: 550,
+        });
+
+        fetch('gameData.json')
+            .then(response => response.json())
+            .then(data => {
+
+                const layer = new Konva.Layer();
+                stage.add(layer);
+
+                data.sprites.forEach(spriteData => {
+                    const img = new Image();
+                    img.src = 'sprites/' + spriteData.id + '.png';
+                    img.onload = () => {
+                        const konvaImg = new Konva.Image({
+                            id: spriteData.id,
+                            image: img,
+                            x: spriteData.left,
+                            y: spriteData.top,
+                            width: spriteData.width,
+                            height: spriteData.height
+                        });
+                        layer.add(konvaImg);
+                        layer.draw();
+                    };
+                });
+
+                stage.draw();
+            })
+            .catch(error => console.error('Error loading game data:', error));
+    </script>
+    <script src="script.js"></script>
+    <script src="scriptBlockly.js"></script>
+</body>
+</html>
     `;
-    
+
     zip.file("index.html", htmlContent);
 
-    // Add images to sprites folder
+    // Add Konva.min.js to the ZIP depending on the environment
+    let konvaPath = isElectron() ? '../../../libraries/konva/Konva.min.js' : '/libraries/konva/Konva.min.js';
+    
+    try {
+        const response = await fetch(konvaPath);
+        const blob = await response.blob();
+        zip.file("Konva.min.js", blob);
+    } catch (error) {
+        console.error(`Error fetching Konva.min.js:`, error);
+    }
+
+    // Add sprites to sprites folder
     const spritesFolder = zip.folder("sprites");
-    const promises = imageData.map(async (data) => {
+    const promises = spriteData.map(async (data) => {
         try {
             const response = await fetch(data.src);
             const blob = await response.blob();
             const filename = `${data.id}.png`;
             spritesFolder.file(filename, blob);
         } catch (error) {
-            console.error(`Error fetching image with ID ${data.id}:`, error);
+            console.error(`Error fetching sprite with ID ${data.id}:`, error);
         }
     });
 
@@ -151,5 +189,5 @@ async function ExportAsHTML() {
     });
 
     console.log('Game exported as GameHTML.zip.');
-    SceneEditorClicked()
+    SceneEditorClicked();
 }

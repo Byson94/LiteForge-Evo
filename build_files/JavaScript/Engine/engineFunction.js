@@ -121,7 +121,6 @@ function addRectangleBox(name, spriteId) {
 
 // Function to update cursor styles and outline
 function updateCursorAndOutline(image, isDragging) {
-    changeSelectedObjectText()
     if (isDragging) {
         document.body.style.cursor = 'grabbing'; // Change cursor to 'grabbing' during drag
     } else if (selectedId === image.id()) {
@@ -138,6 +137,7 @@ function updateCursorAndOutline(image, isDragging) {
         image.stroke(null); // Remove outline from other images
     }
     image.getLayer().batchDraw(); // Redraw the layer to apply changes
+    changeSelectedObjectText()
 }
 
 // Function to reset cursor style
@@ -147,6 +147,7 @@ function resetCursor() {
 
 // Function to handle deselection of an image
 function deselectImage() {
+    changeSelectedObjectText()
     if (selectedId) {
         const stage = document.querySelector('.gameCanvas').__konvaStage;
         const layer = stage.findOne('Layer');
@@ -160,10 +161,12 @@ function deselectImage() {
         selectedId = null; // Clear the selected ID
         resetCursor(); // Reset cursor when deselecting
     }
+    changeSelectedObjectText()
 }
 
 // Function to create and add a sprite to the game canvas
 function addSpriteToCanvas(file, name) {
+    changeSelectedObjectText()
     const canvas = document.querySelector('.gameCanvas');
     const stage = canvas.__konvaStage; // Retrieve the Konva stage from the canvas element
 
@@ -206,6 +209,8 @@ function addSpriteToCanvas(file, name) {
         konvaImage.on('mouseover', function() {
             if (selectedId === null || selectedId === konvaImage.id()) {
                 updateCursorAndOutline(konvaImage, false);
+                changeSelectedObjectText()
+                changeSelectedObjectText()
             }
         });
 
@@ -213,18 +218,21 @@ function addSpriteToCanvas(file, name) {
         konvaImage.on('mouseout', function() {
             if (selectedId !== konvaImage.id()) {
                 resetCursor();
+                changeSelectedObjectText()
             }
         });
 
         // Handle dragstart
         konvaImage.on('dragstart', function() {
             updateCursorAndOutline(konvaImage, true);
+            changeSelectedObjectText()
         });
 
         // Handle dragend
         konvaImage.on('dragend', function() {
             resetCursor();
             updateCursorAndOutline(konvaImage, false);
+            changeSelectedObjectText()
         });
 
         // Handle click event to select the image
@@ -238,6 +246,7 @@ function addSpriteToCanvas(file, name) {
             // Select the clicked image
             selectedId = konvaImage.id(); // Save the selected item's ID
             updateCursorAndOutline(konvaImage, false); // Update the outline
+            changeSelectedObjectText()
         });
     };
 
@@ -247,6 +256,7 @@ function addSpriteToCanvas(file, name) {
 
 // Initialize Konva on page load
 document.addEventListener('DOMContentLoaded', () => {
+    changeSelectedObjectText()
     initializeKonva();
 
     // Add a click listener to the stage to handle clicks on empty space

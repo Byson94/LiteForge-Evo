@@ -175,6 +175,7 @@ function setEditorContent(jsCode) {
 
 // Function to create images and add rectangle boxes from JSON
 async function createImagesFromJSON(zip, images) {
+    changeSelectedObjectText()
     const stage = document.querySelector('.gameCanvas').__konvaStage;
     const layer = stage.findOne('Layer');
 
@@ -205,26 +206,30 @@ async function createImagesFromJSON(zip, images) {
                             konvaImage.on('mouseover', function() {
                                 if (selectedImageId === null || selectedImageId === konvaImage.id()) {
                                     document.body.style.cursor = 'grab'; // Change cursor to 'grab' when hovering over the image
+                                    changeSelectedObjectText()
                                 }
                             });
 
                             konvaImage.on('mouseout', function() {
                                 if (selectedImageId !== konvaImage.id()) {
+                                    changeSelectedObjectText()
                                     document.body.style.cursor = 'auto'; // Reset cursor to default when not hovering
+                                    changeSelectedObjectText()
                                 }
                             });
 
                             konvaImage.on('dragmove', function() {
                                 document.body.style.cursor = 'grabbing'; // Change cursor to 'grabbing' during drag
+                                changeSelectedObjectText()
                             });
 
                             konvaImage.on('dragend', function() {
                                 document.body.style.cursor = 'auto'; // Reset cursor to default when dragging ends
+                                changeSelectedObjectText()
                             });
 
                             // Handle click event to select the image
                             konvaImage.on('click', function(e) {
-                                changeSelectedObjectText()
                                 e.cancelBubble = true; // Prevent click event from propagating to the stage
 
                                 // Deselect previous selection
@@ -235,6 +240,7 @@ async function createImagesFromJSON(zip, images) {
                                 konvaImage.stroke('red'); // Highlight the selected image with red outline
                                 konvaImage.strokeWidth(5); // Adjust outline thickness
                                 konvaImage.getLayer().batchDraw(); // Redraw the layer to apply changes
+                                changeSelectedObjectText()
                             });
 
                             layer.add(konvaImage);
@@ -253,6 +259,7 @@ async function createImagesFromJSON(zip, images) {
     } else {
         console.error('Konva stage or layer not found.');
     }
+    changeSelectedObjectText()
 }
 
 // Function to remove sprite by ID
@@ -271,6 +278,7 @@ function removeSpriteById(spriteId) {
     } else {
         console.error('Konva stage or layer not found.');
     }
+    changeSelectedObjectText()
 }
 
 // Function to create rectangle boxes from image data
@@ -308,6 +316,7 @@ function createRectangleBoxes(images) {
     } else {
         console.error('Object panel element not found.');
     }
+    changeSelectedObjectText()
 }
 
 // Function to deselect the currently selected image
@@ -328,4 +337,5 @@ function deselectImage() {
     } else {
         console.error('Konva stage or layer not found.');
     }
+    changeSelectedObjectText()
 }

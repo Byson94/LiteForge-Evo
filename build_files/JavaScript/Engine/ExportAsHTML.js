@@ -2,10 +2,9 @@ async function ExportAsHTML() {
     VisualScriptEditorClicked();
 
     function isElectron() {
-        // Checks for Electron's presence
         return navigator.userAgent.toLowerCase().includes('electron');
     }
-    // Function to extract Konva sprite data from the canvas
+
     function getAllKonvaObjectsData() {
         const canvas = document.querySelector('.gameCanvas');
         const stage = canvas.__konvaStage; // Access Konva stage from canvas
@@ -23,7 +22,7 @@ async function ExportAsHTML() {
                 const src = image.image().src;
                 const pos = image.position();
                 const size = image.size();
-                
+
                 spriteDataArray.push({
                     id: id,
                     src: src,
@@ -49,8 +48,8 @@ async function ExportAsHTML() {
 
     const zip = new JSZip();
 
-    const spriteData = getAllKonvaObjectsData(); // Extract Konva sprite data
-    const editorCode = getEditorCode(); // Extract editor code
+    const spriteData = getAllKonvaObjectsData();
+    const editorCode = getEditorCode();
 
     // Add script.js
     zip.file("script.js", editorCode);
@@ -64,7 +63,7 @@ async function ExportAsHTML() {
     };
     zip.file("gameData.json", JSON.stringify(gameData, null, 2));
 
-    // HTML content with Konva canvas and sprites
+    // HTML content with Konva canvas, SAT.js, and sprites
     const htmlContent = `
 <!DOCTYPE html>
 <html lang="en">
@@ -90,12 +89,12 @@ async function ExportAsHTML() {
     </style>
 </head>
 <body>
-    <!-- Ensure the ID is set to 'container' -->
-    <div class="gameCanvas" id="gameCanvas"></div>
+    <div class="gameCanvas"></div>
     <script src="Konva.min.js"></script>
+    <script src="SAT.js"></script> <!-- Include SAT.js -->
     <script>
         const stage = new Konva.Stage({
-            container: '.gameCanvas',
+            container: document.querySelector('.gameCanvas'),
             width: 550,
             height: 550,
         });
@@ -103,9 +102,10 @@ async function ExportAsHTML() {
         fetch('gameData.json')
             .then(response => response.json())
             .then(data => {
-
                 const layer = new Konva.Layer();
                 stage.add(layer);
+
+                const sprites = {};
 
                 data.sprites.forEach(spriteData => {
                     const img = new Image();
@@ -121,10 +121,33 @@ async function ExportAsHTML() {
                         });
                         layer.add(konvaImg);
                         layer.draw();
+
+                        // Save the sprite reference for collision detection
+                        sprites[spriteData.id] = konvaImg;
                     };
                 });
 
                 stage.draw();
+
+                // Collision detection logic using SAT.js
+                function detectCollisions() {
+                    const colliders = Object.values(sprites).map(sprite => {
+                        return new SAT.Box(new SAT.Vector(sprite.x(), sprite.y()), sprite.width(), sprite.height()).toPolygon();
+                    });
+
+                    for (let i = 0; i < colliders.length; i++) {
+                        for (let j = i + 1; j < colliders.length; j++) {
+                            if (SAT.testPolygonPolygon(colliders[i], colliders[j])) {
+                                console.log('Collision detected between:', colliders[i], colliders[j]);
+                                alert('success!');
+                            }
+                        }
+                    }
+                }
+
+                // Check collisions every second
+                setInterval(detectCollisions, 1000);
+
             })
             .catch(error => console.error('Error loading game data:', error));
     </script>
@@ -145,6 +168,17 @@ async function ExportAsHTML() {
         zip.file("Konva.min.js", blob);
     } catch (error) {
         console.error(`Error fetching Konva.min.js:`, error);
+    }
+
+    // Add SAT.js to the ZIP depending on the environment
+    let satPath = isElectron() ? '../../../libraries/Sat/SAT.js' : '/libraries/Sat/SAT.js';
+    
+    try {
+        const response = await fetch(satPath);
+        const blob = await response.blob();
+        zip.file("SAT.js", blob);
+    } catch (error) {
+        console.error(`Error fetching SAT.js:`, error);
     }
 
     // Add sprites to sprites folder

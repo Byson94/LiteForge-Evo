@@ -132,55 +132,53 @@
     </div>
 
     <script>
+        let collisionCheckInterval = 1000; // Default interval (1 second)
         let stage, layer;
+        let satPolygons = {};
+        let collisionMap = {}; // Store collision information
+
+        function updateSATPolygon(spriteId) {
+            const konvaImage = stage.findOne(`#${spriteId}`);
+            if (konvaImage) {
+                const polygon = convertKonvaToSAT(konvaImage);
+                satPolygons[spriteId] = polygon;
+            }
+        }
 
         function initializeKonva() {
             const canvasElement = document.querySelector('.gameCanvas');
-
-            // Ensure the canvasElement is found
             if (!canvasElement) {
                 console.error('Canvas element with class "gameCanvas" not found.');
                 return;
             }
-
-            // Assign an ID to the canvas element if it doesn't already have one
             if (!canvasElement.id) {
                 canvasElement.id = 'gameCanvas';
             }
-
-            // Create Konva stage
             stage = new Konva.Stage({
-                container: 'gameCanvas', // Use ID for container
+                container: 'gameCanvas',
                 width: canvasElement.offsetWidth,
                 height: canvasElement.offsetHeight,
             });
-
-            // Create Konva layer
             layer = new Konva.Layer();
             stage.add(layer);
         }
 
         function loadGameData() {
-            // Retrieve data from local storage
             const gameDataJSON = localStorage.getItem('gameData');
             if (!gameDataJSON) {
                 console.error('No game data found in local storage.');
                 return;
             }
-
             try {
-                // Parse the JSON data
                 const gameData = JSON.parse(gameDataJSON);
                 const sprites = gameData.spriteData;
                 const JSCode = gameData.JsCode;
                 const BlocklyCode = gameData.blocklyCode;
 
-                // Initialize Konva
                 initializeKonva();
 
-                // Add sprites to the Konva canvas
                 sprites.forEach(sprite => {
-                    if (sprite.src) { // Only process if the source URL is available
+                    if (sprite.src) {
                         const img = new Image();
                         img.src = sprite.src;
 
@@ -194,28 +192,30 @@
                                 height: sprite.height,
                                 offsetX: sprite.width / 2,
                                 offsetY: sprite.height / 2,
-                                draggable: false // Make undraggable
                             });
 
-                            // Add Konva image to the layer and draw it
                             layer.add(konvaImage);
                             layer.draw();
+
+                            updateSATPolygon(sprite.id);
+
+                            konvaImage.on('dragmove transform', () => {
+                                updateSATPolygon(sprite.id);
+                            });
                         };
                     }
                 });
 
-                // Check if JSCode is a string and contains code
                 if (typeof JSCode === 'string' && JSCode.trim()) {
                     eval(JSCode);
                 } else {
-                    console.warn('Invalid or empty JSCode. (Dont worry if you didnt add any code here)');
+                    console.warn('Invalid or empty JSCode.');
                 }
 
-                // Check if BlocklyCode is a string and contains code
                 if (typeof BlocklyCode === 'string' && BlocklyCode.trim()) {
                     eval(BlocklyCode);
                 } else {
-                    console.warn('Invalid or empty BlocklyCode. (Dont worry if you didnt add any code here)');
+                    console.warn('Invalid or empty BlocklyCode.');
                 }
 
             } catch (e) {
@@ -223,46 +223,76 @@
             }
         }
 
-        // Load game data when the document is ready
-        document.addEventListener('DOMContentLoaded', loadGameData);
+        function convertKonvaToSAT(konvaImage) {
+            const vertices = getKonvaVertices(konvaImage);
+            return new SAT.Polygon(new SAT.Vector(konvaImage.x(), konvaImage.y()), vertices);
+        }
 
-        // Function to resize canvas and manage console visibility
-        function resizeElements() {
-            const consoleElement = document.getElementById('consoleOutput');
-            const canvasElement = document.querySelector('.gameCanvas');
+        function getKonvaVertices(konvaImage) {
+            const vertices = [];
+            const width = konvaImage.width();
+            const height = konvaImage.height();
+            vertices.push(new SAT.Vector(-width / 2, -height / 2));
+            vertices.push(new SAT.Vector(width / 2, -height / 2));
+            vertices.push(new SAT.Vector(width / 2, height / 2));
+            vertices.push(new SAT.Vector(-width / 2, height / 2));
+            return vertices;
+        }
 
-            let newWidth, newHeight;
-            if (window.innerWidth <= 600) {
-                newWidth = window.innerWidth;
-                newHeight = window.innerHeight - 50; // Height minus console height
-                consoleElement.style.display = 'flex';
-            } else {
-                newWidth = 550;
-                newHeight = 550;
-                consoleElement.style.display = 'flex';
+        function checkCollisions() {
+            const ids = Object.keys(satPolygons);
+            collisionMap = {}; // Reset collision map
+
+            for (let i = 0; i < ids.length; i++) {
+                for (let j = i + 1; j < ids.length; j++) {
+                    const poly1 = satPolygons[ids[i]];
+                    const poly2 = satPolygons[ids[j]];
+
+                    if (SAT.testPolygonPolygon(poly1, poly2)) {
+                        if (!collisionMap[ids[i]]) {
+                            collisionMap[ids[i]] = new Set();
+                        }
+                        if (!collisionMap[ids[j]]) {
+                            collisionMap[ids[j]] = new Set();
+                        }
+                        collisionMap[ids[i]].add(ids[j]);
+                        collisionMap[ids[j]].add(ids[i]);
+                    }
+                }
             }
-
-            // Apply the new dimensions to the canvas
-            canvasElement.style.width = `${newWidth}px`;
-            canvasElement.style.height = `${newHeight}px`;
-
-            // Scale canvas content
-            scaleCanvasContent(newWidth, newHeight);
         }
 
-        // Function to scale canvas content based on new canvas size
-        function scaleCanvasContent(newWidth, newHeight) {
-            const scaleX = newWidth / 550; // Original canvas width
-            const scaleY = newHeight / 550; // Original canvas height
-            const scale = Math.min(scaleX, scaleY); // Keep aspect ratio
-
-            // Apply the scale to the Konva stage
-            stage.width(550 * scale);  // Original width * scale
-            stage.height(550 * scale); // Original height * scale
-            stage.scale({ x: scale, y: scale });  // Scale the stage and all its content
-
-            stage.batchDraw(); // Redraw the stage to apply the scaling
+        function objectsCollidedTogether(spriteName1, spriteName2) {
+            if (!collisionMap[spriteName1] || !collisionMap[spriteName2]) {
+                return false; 
+            }
+            return collisionMap[spriteName1].has(spriteName2);
         }
-    </script>    
+
+        function setCollisionCheckInterval(newInterval) {
+            if (typeof newInterval === 'number' && newInterval > 0) {
+                collisionCheckInterval = newInterval;
+                // Restart the interval with the new value
+                clearInterval(collisionInterval);
+                collisionInterval = setInterval(checkCollisions, collisionCheckInterval);
+            } else {
+                console.error('Invalid interval value. It must be a positive number.');
+            }
+        }
+
+        let collisionInterval = setInterval(checkCollisions, collisionCheckInterval);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGameData();
+            // Set the collision check interval to 1 second (1000 milliseconds)
+            setCollisionCheckInterval(1000); // 1 second
+
+            // Example check to ensure sprites are defined before checking collision
+            setTimeout(() => {
+                // Collision check logic can be added here if needed
+            }, 2000);
+});
+    </script>
+
 </body>
 </html>

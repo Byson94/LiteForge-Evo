@@ -21,11 +21,13 @@ function VisualScriptEditorClicked() {
 }
 
 function SpriteEditorClicked() {
-    document.getElementById('EditSprites').style.display = 'block';
-}
-
-function CloseTheSpriteEditorClicked() {
-    document.getElementById('EditSprites').style.display = 'none';
+    if (document.getElementById('EditSprites').style.display === 'none') {
+        updateAllValues()
+        document.getElementById('EditSprites').style.display = 'block';
+    } else {
+        updateAllValues()
+        document.getElementById('EditSprites').style.display = 'none';
+    }
 }
 
 function newProject() {

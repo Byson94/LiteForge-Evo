@@ -241,6 +241,7 @@ async function createImagesFromJSON(zip, images) {
                                 konvaImage.strokeWidth(5); // Adjust outline thickness
                                 konvaImage.getLayer().batchDraw(); // Redraw the layer to apply changes
                                 changeSelectedObjectText()
+                                updateAllValues()
                             });
 
                             layer.add(konvaImage);
@@ -260,6 +261,7 @@ async function createImagesFromJSON(zip, images) {
         console.error('Konva stage or layer not found.');
     }
     changeSelectedObjectText()
+    updateAllValues()
 }
 
 // Function to remove sprite by ID
@@ -317,6 +319,7 @@ function createRectangleBoxes(images) {
         console.error('Object panel element not found.');
     }
     changeSelectedObjectText()
+    updateAllValues()
 }
 
 // Function to deselect the currently selected image
@@ -338,4 +341,5 @@ function deselectImage() {
         console.error('Konva stage or layer not found.');
     }
     changeSelectedObjectText()
+    updateAllValues()
 }

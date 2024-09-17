@@ -138,6 +138,7 @@ function updateCursorAndOutline(image, isDragging) {
     }
     image.getLayer().batchDraw(); // Redraw the layer to apply changes
     changeSelectedObjectText()
+    updateAllValues()
 }
 
 // Function to reset cursor style
@@ -162,6 +163,7 @@ function deselectImage() {
         resetCursor(); // Reset cursor when deselecting
     }
     changeSelectedObjectText()
+    updateAllValues()
 }
 
 // Function to create and add a sprite to the game canvas
@@ -210,7 +212,7 @@ function addSpriteToCanvas(file, name) {
             if (selectedId === null || selectedId === konvaImage.id()) {
                 updateCursorAndOutline(konvaImage, false);
                 changeSelectedObjectText()
-                changeSelectedObjectText()
+                updateAllValues()
             }
         });
 
@@ -219,6 +221,7 @@ function addSpriteToCanvas(file, name) {
             if (selectedId !== konvaImage.id()) {
                 resetCursor();
                 changeSelectedObjectText()
+                updateAllValues()
             }
         });
 
@@ -247,6 +250,7 @@ function addSpriteToCanvas(file, name) {
             selectedId = konvaImage.id(); // Save the selected item's ID
             updateCursorAndOutline(konvaImage, false); // Update the outline
             changeSelectedObjectText()
+            updateAllValues()
         });
     };
 

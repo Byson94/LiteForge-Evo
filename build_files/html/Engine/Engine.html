@@ -63,9 +63,31 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
     <div id="layout-1">
         <div id="EditSprites" style="display: none;">
             <h2 style="text-align: center; padding-top: 20px;">Edit sprites</h2>
-            <p id="selectedSpriteShower" style="color: red; text-align: center;">No object selected. Please select one to continue!</p>
-            <button type="button" onclick="CloseTheSpriteEditorClicked()" id="CloseSpriteEditor">Close</button>
+            <p id="selectedSpriteShower" style="color: red; text-align: center;">No object selected!</p>
+            
+            <p style="position: relative; top: 4%; text-align: center;">
+                x <input type="number" id="spriteXInput" value="0" onchange="updateSpriteX()" style="width: 100px;">
+            </p>
+        
+            <p style="position: relative; top: 5%; text-align: center;">
+                y <input type="number" id="spriteYInput" value="0" onchange="updateSpriteY()" style="width: 100px;">
+            </p>
+
+            <p style="position: relative; top: 6%; left: -7.5%; text-align: center;">
+                Width <input type="number" id="spriteWidthInput" value="50" onchange="updateSpriteWidth()" style="width: 100px;">
+            </p>
+        
+            <p style="position: relative; top: 7%; left: -9%; text-align: center;">
+                Height <input type="number" id="spriteHeightInput" value="50" onchange="updateSpriteHeight()" style="width: 100px;">
+            </p>
+
+            <p style="position: relative; top: 8%; text-align: center;">
+                z
+                <button id="moveSpriteUp" style="width: 50px;">&#9650;</button>
+                <button id="moveSpriteDown" style="width: 50px;">&#9660;</button>
+            </p>
         </div>
+        
         <div class="banner">
             <label for="toggleObjectpanel" class="toggleObject"></label>
             <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">⯈</button>
@@ -179,26 +201,12 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
                 }
             }
         </script>
-        
-        <script>
-            function changeSelectedObjectText() {
-                const selectedImageShowerText = document.getElementById('selectedSpriteShower');
-                
-                if (selectedId !== null) {
-                    document.getElementById('selectedSpriteShower').style.color = 'green';
-                    selectedImageShowerText.textContent = 'Object selected: ' + selectedId;
-                } else {
-                    document.getElementById('selectedSpriteShower').style.color = 'red';
-                    selectedImageShowerText.textContent = 'No object selected. Please select one to continue!';
-                };
-            };
-        </script>
 
         <!-- Konva 2d renderer... -->
         <script>
             function initializeKonva() {
                 const canvas = document.querySelector('.gameCanvas');
-                const stage = new Konva.Stage({
+                stage = new Konva.Stage({
                     container: canvas,
                     width: canvas.clientWidth,
                     height: canvas.clientHeight
@@ -216,5 +224,8 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         <script src="../../JavaScript/Engine/PreviewGame.js"></script>
         <script src="../../JavaScript/Engine/ImportGameLFG.js"></script>   
         <script src="../../JavaScript/Engine/engineFunction.js"></script>
+
+        <!-- Simple Codes -->
+        <script src="../../JavaScript/Engine/Simple function handlers/changeSpriteValues.js"></script>
 </body>
 </html>

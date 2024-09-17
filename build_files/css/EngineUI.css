@@ -389,7 +389,7 @@ img {
     top: 60px;
     background-color: #333333;
     transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-    z-index: 2;
+    z-index: 200;
     opacity: 0;
     visibility: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);

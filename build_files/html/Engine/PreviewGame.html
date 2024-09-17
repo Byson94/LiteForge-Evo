@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../../css/styles.css">
     <title>Preview Game</title>
     <script src="../../../libraries/konva/konva.min.js"></script>
+    <script src="../../../libraries/Sat/SAT.js"></script> <!-- Include SAT.js -->
     <style>
         /* General styling */
         * {
@@ -132,33 +133,33 @@
 
     <script>
         let stage, layer;
-    
+
         function initializeKonva() {
             const canvasElement = document.querySelector('.gameCanvas');
-    
+
             // Ensure the canvasElement is found
             if (!canvasElement) {
                 console.error('Canvas element with class "gameCanvas" not found.');
                 return;
             }
-    
+
             // Assign an ID to the canvas element if it doesn't already have one
             if (!canvasElement.id) {
                 canvasElement.id = 'gameCanvas';
             }
-    
+
             // Create Konva stage
             stage = new Konva.Stage({
                 container: 'gameCanvas', // Use ID for container
                 width: canvasElement.offsetWidth,
                 height: canvasElement.offsetHeight,
             });
-    
+
             // Create Konva layer
             layer = new Konva.Layer();
             stage.add(layer);
         }
-    
+
         function loadGameData() {
             // Retrieve data from local storage
             const gameDataJSON = localStorage.getItem('gameData');
@@ -221,15 +222,15 @@
                 console.error('Error loading game data:', e);
             }
         }
-    
+
         // Load game data when the document is ready
         document.addEventListener('DOMContentLoaded', loadGameData);
-    
+
         // Function to resize canvas and manage console visibility
         function resizeElements() {
             const consoleElement = document.getElementById('consoleOutput');
             const canvasElement = document.querySelector('.gameCanvas');
-    
+
             let newWidth, newHeight;
             if (window.innerWidth <= 600) {
                 newWidth = window.innerWidth;
@@ -240,15 +241,15 @@
                 newHeight = 550;
                 consoleElement.style.display = 'flex';
             }
-    
+
             // Apply the new dimensions to the canvas
             canvasElement.style.width = `${newWidth}px`;
             canvasElement.style.height = `${newHeight}px`;
-    
+
             // Scale canvas content
             scaleCanvasContent(newWidth, newHeight);
         }
-    
+
         // Function to scale canvas content based on new canvas size
         function scaleCanvasContent(newWidth, newHeight) {
             const scaleX = newWidth / 550; // Original canvas width

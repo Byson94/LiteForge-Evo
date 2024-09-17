@@ -1,8 +1,9 @@
 # LiteForge-Evo
 LiteForge-Evo is an engine that can be used for creating games and animations.
+[LiteForge-Evo](https://byson94.github.io/LiteForge-Evo/)
 
 # Make your first game!
-Check out https://github.com/Byson94/LiteForge-Evo/wiki/Getting-Started to make your own game!
+Check out [THE WIKI](https://github.com/Byson94/LiteForge-Evo/wiki/Getting-Started) to make your own game!
 
 ## Third-party libraries used:
 1. CodeMirror

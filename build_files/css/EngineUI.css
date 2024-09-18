@@ -43,8 +43,9 @@ body {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         overflow: hidden;
         transform-origin: top left;
-        transform: scale(0.8);
+        transform: scale(0.7);
     }
+
     }
 
 @media (max-width: 480px) {
@@ -60,7 +61,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     overflow: hidden;
     transform-origin: top left;
-    transform: scale(0.6);
+    transform: scale(0.5);
 }
 }
 
@@ -579,7 +580,7 @@ img {
 }
 
 #EditSprites {
-    height: 100vh;
+    height: 100%;
     width: 30%;
     background: linear-gradient(135deg, #2a2d30, #3d4044);
     position: fixed;
@@ -637,6 +638,40 @@ img {
 
 #EditSprites button:hover {
     background: #2980b9;
+}
+
+#EditSprites #CloseObjectEditPanel {
+    all: initial;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin: 0.1px;
+    border: none;
+    top: 5%;
+    right: 10px;
+    border-radius: 4px;
+    background: #db3434;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-align: center;
+}
+
+#EditSprites #CloseObjectEditPanel:hover {
+    background: #ff8282;
+}
+
+@media (max-width: 755px) {
+    #EditSprites {
+        width: 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    #EditSprites {
+        width: 60%;
+    }
 }
 
 .NewObjectPanel {
@@ -713,3 +748,4 @@ img {
 .NewObjectPanel #NewSpriteButton:hover {
     background-color: #8000ff;
 }
+

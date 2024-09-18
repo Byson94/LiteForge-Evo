@@ -30,6 +30,10 @@ function SpriteEditorClicked() {
     }
 }
 
+function CloseObjectEditPanel() {
+    document.getElementById('EditSprites').style.display = 'none';
+}
+
 function NewObjectButtonClicked() {
     document.getElementById('NewObjectPanel_1').style.display = 'block';
 }
@@ -37,6 +41,8 @@ function NewObjectButtonClicked() {
 function CloseNewObjectPanel() {
     document.getElementById('NewObjectPanel_1').style.display = 'none';
 }
+
+
 
 function newProject() {
     window.location.href = "Engine.html";

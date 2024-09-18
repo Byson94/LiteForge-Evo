@@ -108,8 +108,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
     overflow-y: auto;
 }
-
-.slide #NewSpriteButton {
+.slide #NewObjectButton {
     position: absolute;
     bottom: 10px;
     left: 10px;
@@ -121,7 +120,7 @@ body {
     width: calc(100% - 20px);
 }
 
-.slide #NewSpriteButton:hover {
+.slide #NewObjectButton:hover {
     background-color: #8000ff;
 }
 
@@ -551,10 +550,6 @@ img {
     background: linear-gradient(135deg, #2a2d30, #3d4044);
     position: fixed;
     z-index: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     padding: 20px;
     top: 8%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
@@ -564,7 +559,7 @@ img {
     color: #ecf0f1;
     font-family: Arial, sans-serif;
     overflow-y: auto;
-    text-align: center; /* Center text within elements */
+    text-align: center;
 }
 
 #EditSprites h2 {
@@ -608,4 +603,79 @@ img {
 
 #EditSprites button:hover {
     background: #2980b9;
+}
+
+.NewObjectPanel {
+    display: none;
+    height: calc(100% + 1%);
+    width: 100vw;
+    background: linear-gradient(135deg, #2a2d30, #3d4044);
+    position: fixed;
+    z-index: 3000;
+    padding: 20px;
+    top: -1%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+    border-bottom: 1px solid #2c3e50;
+    backdrop-filter: blur(10px);
+    color: #ecf0f1;
+    font-family: Arial, sans-serif;
+    overflow-y: auto;
+}
+
+.NewObjectPanel #CloseCreateNewObjectPanel {
+    text-align: center;
+    position: sticky;
+    top: 100%;
+    left: calc(50vw - 50px);
+    background: linear-gradient(135deg, rgb(50, 50, 50), rgb(90, 20, 90));
+    border-radius: 6px;
+    padding: 8px 16px; 
+    color: #e0e0e0;
+    font-size: 14px;
+    font-weight: normal; 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3); 
+    transition: background 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    width: 100px;
+}
+
+.NewObjectPanel #CloseCreateNewObjectPanel:active {
+    background: linear-gradient(135deg, rgb(50, 50, 50), rgb(90, 20, 90)); 
+    transform: scale(0.95);
+}
+
+
+.NewObjectPanel h2 {
+    text-align: center; 
+    position: relative; 
+    font-family: 'Arial', sans-serif; 
+    font-size: 28px; 
+    font-style: oblique; 
+    font-weight: bolder;
+    color: #333; 
+    background: linear-gradient(135deg, #b1b1b1, #ffffff); 
+    background-clip: text; 
+    font-style: bold;
+    -webkit-text-fill-color: transparent; 
+    margin: 20px 0; 
+    padding: 10px 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.NewObjectPanel #NewSpriteButton {
+    position: absolute;
+    top: 18%;
+    left: 6%;
+    height: 40px;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+}
+
+.NewObjectPanel #NewSpriteButton:hover {
+    background-color: #8000ff;
 }

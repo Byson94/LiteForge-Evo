@@ -65,27 +65,31 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
             <h2 style="text-align: center; padding-top: 20px;">Edit sprites</h2>
             <p id="selectedSpriteShower" style="color: red; text-align: center;">No object selected!</p>
             
-            <p style="position: relative; top: 4%; text-align: center;">
-                x <input type="number" id="spriteXInput" value="0" onchange="updateSpriteX()" style="width: 100px;">
+            <p style="position: relative; top: 4%;">
+                X <input type="number" id="spriteXInput" value="0" onchange="updateSpriteX()" style="width: 100px;">
             </p>
         
-            <p style="position: relative; top: 5%; text-align: center;">
-                y <input type="number" id="spriteYInput" value="0" onchange="updateSpriteY()" style="width: 100px;">
+            <p style="position: relative; top: 5%;">
+                Y <input type="number" id="spriteYInput" value="0" onchange="updateSpriteY()" style="width: 100px;">
             </p>
 
-            <p style="position: relative; top: 6%; left: -4.5%; text-align: center;">
-                Width <input type="number" id="spriteWidthInput" value="50" onchange="updateSpriteWidth()" style="width: 100px;">
-            </p>
-        
-            <p style="position: relative; top: 7%; left: -5.5%; text-align: center;">
-                Height <input type="number" id="spriteHeightInput" value="50" onchange="updateSpriteHeight()" style="width: 100px;">
-            </p>
-
-            <p style="position: relative; top: 8%; text-align: center;">
-                z
+            <p style="position: relative; top: 6%;">
+                Z
                 <button id="moveSpriteUp" style="width: 50px;">&#9650;</button>
                 <button id="moveSpriteDown" style="width: 50px;">&#9660;</button>
             </p>
+        
+            <p style="position: relative; top: 7%;">
+                H <input type="number" id="spriteHeightInput" value="0" onchange="updateSpriteHeight()" style="width: 100px;">
+            </p>
+
+            <p style="position: relative; top: 8%;">
+                W <input type="number" id="spriteWidthInput" value="0" onchange="updateSpriteWidth()" style="width: 100px;">
+            </p>
+
+            <h3 style="position: relative; top: 9%; padding-left: 20px;">
+                <button id="SpriteProperties" onclick="SpritePropertiesClicked()" style="width: 100px;">Properties</button>
+            </h3>
         </div>
         
         <div class="banner">
@@ -101,7 +105,13 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
             <div class="resizer"></div>
             <h2>Object Panel</h2>
             <button type="button" onclick="SpriteEditorClicked()" id="SpriteEditButton">E</button>
-            <button type="button" onclick="NewSpritebuttonclicked()" id="NewSpriteButton">NewSprite</button>
+            <button type="button" onclick="NewObjectButtonClicked()" id="NewObjectButton">New Object</button>
+        </div>
+        <div class="NewObjectPanel" id="NewObjectPanel_1">
+            <h2 style="text-align: center; position: relative;">Create a new object</h2>
+            <img src="../../../icon/Sprite_logo.png" style="width: 50px; height: 50px;" draggable="false">
+            <button type="button" onclick="NewSpritebuttonclicked()" id="NewSpriteButton">New Sprite</button>
+            <button type="button" onclick="CloseNewObjectPanel()" id="CloseCreateNewObjectPanel">Close</button>
         </div>
         <div class="gameCanvas">
             <!-- Sprites will be added here -->

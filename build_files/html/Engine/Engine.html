@@ -162,55 +162,64 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
     <script src="../../JavaScript/Engine/ExportAsHTML.js"></script>
     <script src="../../JavaScript/Engine/EngineButtonClicks.js"></script>
 
-        <script>
-            // Initialize CodeMirror editor only when Script Editor is clicked
-            let codeMirrorEditor = null;
-            let editorInitialized = false;
-
-            function loadCodeEditorTheme() {
+    <script>
+        // Initialize CodeMirror editor only when Script Editor is clicked
+        let codeMirrorEditor = null;
+        let editorInitialized = false;
+    
+        function loadCodeEditorTheme() {
             CodeEditorTheme = localStorage.getItem('editorTheme');
-
+    
             if (!CodeEditorTheme) {
                 CodeEditorTheme = '3024-night';
             }
         }
-
-            loadCodeEditorTheme()
-
-            function initializeEditor() {
-                if (editorInitialized === false) {
-                    codeMirrorEditor = CodeMirror(document.getElementById('editor'), {
-                        mode: 'javascript',
-                        lineNumbers: true,
-                        theme: CodeEditorTheme,
-                        indentUnit: 4,
-                        tabSize: 4,
-                        autofocus: true,
-                        extraKeys: {"Ctrl-Space": "autocomplete"}, // Autocomplete shortcut
-                        autoCloseBrackets: true, // Enable auto-closing of brackets
-                        hintOptions: {
-                            // Configure hint options if needed (not yet)
-                        },
-                        styleActiveLine: true,
-                        matchBrackets: true
-                    });
-
-                    codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
-
-                    codeMirrorEditor.setValue(`// Write your JavaScript code here`);
-                    editorInitialized = true;
-                }
+    
+        loadCodeEditorTheme()
+    
+        function initializeEditor() {
+            if (editorInitialized === false) {
+                codeMirrorEditor = CodeMirror(document.getElementById('editor'), {
+                    mode: 'javascript',
+                    lineNumbers: true,
+                    theme: CodeEditorTheme,
+                    indentUnit: 4,
+                    tabSize: 4,
+                    autofocus: true,
+                    extraKeys: {
+                        // Removed Ctrl-Space to avoid conflicts
+                    },
+                    autoCloseBrackets: true, // Enable auto-closing of brackets
+                    hintOptions: {
+                        // Configure hint options if needed (not yet)
+                    },
+                    styleActiveLine: true,
+                    matchBrackets: true
+                });
+    
+                codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
+    
+                codeMirrorEditor.setValue(`// Write your JavaScript code here`);
+                editorInitialized = true;
+    
+                // Automatically trigger autocomplete while typing
+                codeMirrorEditor.on('inputRead', function(cm, change) {
+                    if (change.text[0] !== undefined) {
+                        CodeMirror.commands.autocomplete(cm, null, { completeSingle: false });
+                    }
+                });
             }
-
-            function getEditorCode() {
-                if (codeMirrorEditor) {
-                    return codeMirrorEditor.getValue();
-                } else {
-                    console.error('CodeMirror editor instance is not initialized.');
-                    return '';
-                }
+        }
+    
+        function getEditorCode() {
+            if (codeMirrorEditor) {
+                return codeMirrorEditor.getValue();
+            } else {
+                console.error('CodeMirror editor instance is not initialized.');
+                return '';
             }
-        </script>
+        }
+    </script>    
 
         <!-- Konva 2d renderer... -->
         <script>

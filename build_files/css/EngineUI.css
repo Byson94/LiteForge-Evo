@@ -674,10 +674,21 @@ img {
     }
 }
 
+@media (max-width: 360px) {
+
+#layout-1 #PreviewGameButton {
+    left: 243px;
+}
+
+#layout-1 #MenuButton {
+    left: -228px;
+}
+}
+
 .NewObjectPanel {
     display: none;
     height: calc(100% + 1%);
-    width: 100vw;
+    width: 100%;
     background: linear-gradient(135deg, #2a2d30, #3d4044);
     position: fixed;
     z-index: 3000;
@@ -748,4 +759,40 @@ img {
 .NewObjectPanel #NewSpriteButton:hover {
     background-color: #8000ff;
 }
+
+@media (max-width: 900px) {
+.NewObjectPanel #SpriteObjectLogoICON {
+        position: absolute;
+        left: 3%;
+    }
+
+.NewObjectPanel #NewSpriteButton {
+        left: 12%;
+    }
+}
+
+@media (max-width: 530px) {
+    .NewObjectPanel #SpriteObjectLogoICON {
+            position: absolute;
+            left: 3%;
+        }
+    
+    .NewObjectPanel #NewSpriteButton {
+            left: 18%;
+        }
+    }
+
+@media (max-width: 342px) {
+    .NewObjectPanel #SpriteObjectLogoICON {
+            position: absolute;
+            top: 24%;
+            left: 3%;
+        }
+    
+    .NewObjectPanel #NewSpriteButton {
+            top: 25%;
+            left: 25%;
+        }
+    }
+
 

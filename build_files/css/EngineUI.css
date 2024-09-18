@@ -30,6 +30,40 @@ body {
     overflow: hidden;
 }
 
+@media (max-width: 768px) {
+    .gameCanvas {
+        background-color: #b6b6b6;
+        width: 550px;
+        height: 550px;
+        position: absolute;
+        top: 25%;
+        left: 20vw;
+        transform: translate(-50%, -50%);
+        border: 5px solid black;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        transform-origin: top left;
+        transform: scale(0.8);
+    }
+    }
+
+@media (max-width: 480px) {
+.gameCanvas {
+    background-color: #b6b6b6;
+    width: 550px;
+    height: 550px;
+    position: absolute;
+    top: 25%;
+    left: 7vw;
+    transform: translate(-50%, -50%);
+    border: 5px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    transform-origin: top left;
+    transform: scale(0.6);
+}
+}
+
 .draggable {
     width: 100px;
     height: 100px;

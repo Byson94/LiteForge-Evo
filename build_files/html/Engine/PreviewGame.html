@@ -20,7 +20,6 @@
             overflow: hidden; /* Prevents body from scrolling */
         }
 
-        /* Game canvas styling */
         .gameCanvas {
             position: absolute;
             background-color: #D1D1D1;
@@ -87,32 +86,41 @@
         /* Responsive adjustments */
         @media (max-width: 600px) {
             .gameCanvas {
-                width: 100vw;
-                height: calc(100vh - 50px);
-                position: absolute;
-                left: 0;
-                top: 25vh;
-            }
-
-            .console {
-                width: 100vw;
-                height: 50px; /* Height for the console on smaller screens */
-                bottom: 0;
-                right: 0;
-                font-size: 12px; /* Smaller font size */
-                display: flex;
-                flex-direction: column;
-            }
-
-            .console .log-box,
-            .console .log-box-big {
-                padding: 10px;
-            }
-
-            .console .log-box-big {
-                padding: 30px 10px;
-            }
+            position: absolute;
+            background-color: #D1D1D1;
+            border: 2px solid #222;
+            overflow: hidden;
+            z-index: 100;
+            transform-origin: top left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            left: 7vw; 
+            top: 10vh;
+            width: 550px;
+            height: 550px;
+            transform: scale(0.6)
         }
+    }
+
+        @media (max-width: 400px) {
+            .gameCanvas {
+            position: absolute;
+            background-color: #D1D1D1;
+            border: 2px solid #222;
+            overflow: hidden;
+            z-index: 100;
+            transform-origin: top left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            left: 7vw; 
+            top: 10vh;
+            width: 550px;
+            height: 550px;
+            transform: scale(0.5)
+        }
+    }
 
         iframe {
             width: 100%;

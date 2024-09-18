@@ -202,6 +202,21 @@ async function createImagesFromJSON(zip, images) {
                                 draggable: true // Make draggable
                             });
 
+                            // Handle click or touch event to select the image
+                            konvaImage.on('click touchstart', function(e) {
+                                // Prevent the event from propagating to the stage
+                                e.cancelBubble = true;
+
+                                // Deselect previous selection
+                                deselectImage();
+
+                                // Select the clicked image
+                                selectedId = konvaImage.id(); // Save the selected item's ID
+                                updateCursorAndOutline(konvaImage, false); // Update the outline
+                                changeSelectedObjectText();
+                                updateAllValues();
+                            });
+
                             // Add event listeners to the konvaImage
                             konvaImage.on('mouseover', function() {
                                 if (selectedImageId === null || selectedImageId === konvaImage.id()) {

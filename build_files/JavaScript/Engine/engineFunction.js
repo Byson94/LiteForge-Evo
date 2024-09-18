@@ -207,6 +207,21 @@ function addSpriteToCanvas(file, name) {
         layer.add(konvaImage);
         layer.draw();
 
+        // Handle click or touch event to select the image
+        konvaImage.on('click touchstart', function(e) {
+            // Prevent the event from propagating to the stage
+            e.cancelBubble = true;
+
+            // Deselect previous selection
+            deselectImage();
+
+            // Select the clicked image
+            selectedId = konvaImage.id(); // Save the selected item's ID
+            updateCursorAndOutline(konvaImage, false); // Update the outline
+            changeSelectedObjectText();
+            updateAllValues();
+        });
+
         // Handle mouseover
         konvaImage.on('mouseover', function() {
             if (selectedId === null || selectedId === konvaImage.id()) {

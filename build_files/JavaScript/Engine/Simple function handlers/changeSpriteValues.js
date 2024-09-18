@@ -32,6 +32,7 @@ function updateSpriteWidth() {
         if (sprite) {
             const newWidth = parseFloat(document.getElementById('spriteWidthInput').value);
             sprite.width(newWidth);
+            sprite.offsetX(newWidth / 2); 
             sprite.getLayer().batchDraw();
         }
     }
@@ -43,6 +44,7 @@ function updateSpriteHeight() {
         if (sprite) {
             const newHeight = parseFloat(document.getElementById('spriteHeightInput').value);
             sprite.height(newHeight);
+            sprite.offsetY(newHeight / 2);
             sprite.getLayer().batchDraw();
         }
     }

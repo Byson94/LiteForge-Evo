@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="../../icon/LFE_logo.png" type="image/png"><title>Games Showcase</title><style>body{background-color:#272727;color:#fff;font-family:Arial,sans-serif;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:20px}.game-item{background-color:#222;border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.5);overflow:hidden;margin:20px;max-width:550px;width:100%;transition:transform .3s ease}.game-item iframe{width:100%;height:550px;border:none}.game-item h4{margin:10px;text-align:center}.back-button{position:fixed;bottom:20px;background-color:#333;color:#fff;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;font-size:1rem;text-align:center;text-decoration:none;left:calc(50% - 60px)}.back-button:hover{background-color:#555}</style></head><body><div class="game-item" id="gameItem"><iframe src="https://itch.io/embed-upload/11510690?color=333333" allowfullscreen></iframe><h4>DVD Animation - 1st Animation Made</h4></div><a href="mainMenu.html" class="back-button">Back to Engine</a><script>function updateScale() {
+    const gameItem = document.getElementById('gameItem');
+    const screenWidth = window.innerWidth;
+
+    // Define breakpoints and scale factors
+    let scale;
+    if (screenWidth >= 1200) {
+        scale = 0.8; // For large screens
+    } else if (screenWidth >= 768) {
+        scale = 0.6; // For medium screens
+    } else {
+        scale = 0.4; // For small screens
+    }
+
+    // Apply scale transform
+    gameItem.style.transform = `scale(${scale})`;
+}
+
+// Initial scale update
+updateScale();
+
+// Update scale on window resize
+window.addEventListener('resize', updateScale);</script></body></html>
+
+<!-- Minified html -->

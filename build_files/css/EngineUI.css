@@ -794,4 +794,111 @@ img {
         }
     }
 
-
+    .SpriteManagementAnimations {
+        display: none;
+        height: calc(100% + 1%);
+        width: 100%;
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+        position: fixed;
+        z-index: 4000;
+        padding: 20px;
+        top: 0;
+        left: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        border-radius: 12px;
+        backdrop-filter: blur(8px);
+        color: #ecf0f1;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        border: 1px solid #2c3e50;
+    }
+    
+    .SpriteManagementAnimations #AddFraneButton {
+        height: 45px;
+        background-color: #3498db;
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        width: 300px;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    .SpriteManagementAnimations #AddFraneButton:hover {
+        background-color: #2980b9;
+        transform: scale(1.01);
+    }
+    
+    .SpriteManagementAnimations #CloseSpriteManagementPanel {
+        position: absolute;
+        width: 35px;
+        height: 35px;
+        top: 15px;
+        right: 15px;
+        border-radius: 30%;
+        background: #e74c3c;
+        color: #ffffff;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+    
+    .SpriteManagementAnimations #CloseSpriteManagementPanel:hover {
+        background: #c0392b;
+    }
+    
+    .frameDisplayArea {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+        background: #34495e;
+        border-radius: 8px;
+        padding: 10px;
+    }
+    
+    .frameDisplayArea .frame {
+        width: 100px;
+        height: 100px;
+        background-color: #2c3e50;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ecf0f1;
+        font-size: 14px;
+        overflow: hidden;
+    }
+    
+    .addFrameSection {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .addFrameSection h3 {
+        margin: 0;
+    }
+    
+    .addFrameSection label {
+        font-size: 14px;
+    }
+    
+    .addFrameSection input {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #95a5a6;
+        background: #ffffff;
+        color: #2c3e50;
+        font-size: 16px;
+    }
+    

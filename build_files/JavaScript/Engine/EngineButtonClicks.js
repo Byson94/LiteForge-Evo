@@ -30,6 +30,16 @@ function SpriteEditorClicked() {
     }
 }
 
+function SpritePropertiesClicked() {
+    if (selectedId) {
+    document.getElementById('SpriteManagementPanel').style.display = 'block';
+    }
+}
+
+function CloseSpriteManagementPanel() {
+    document.getElementById('SpriteManagementPanel').style.display = 'none'
+}
+
 function CloseObjectEditPanel() {
     document.getElementById('EditSprites').style.display = 'none';
 }

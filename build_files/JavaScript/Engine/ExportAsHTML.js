@@ -160,7 +160,7 @@ async function ExportAsHTML() {
     zip.file("index.html", htmlContent);
 
     // Add Konva.min.js to the ZIP depending on the environment
-    let konvaPath = isElectron() ? '../../../libraries/konva/Konva.min.js' : '/libraries/konva/Konva.min.js';
+    let konvaPath = isElectron() ? '../../../libraries/konva/konva.min.js' : '../../../libraries/konva/konva.min.js';
     
     try {
         const response = await fetch(konvaPath);
@@ -171,7 +171,7 @@ async function ExportAsHTML() {
     }
 
     // Add SAT.js to the ZIP depending on the environment
-    let satPath = isElectron() ? '../../../libraries/Sat/SAT.js' : '/libraries/Sat/SAT.js';
+    let satPath = isElectron() ? '../../../libraries/Sat/SAT.js' : '../../../libraries/Sat/SAT.js';
     
     try {
         const response = await fetch(satPath);

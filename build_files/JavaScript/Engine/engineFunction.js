@@ -1,4 +1,5 @@
 function NewSpritebuttonclicked() {
+    document.getElementById('NewObjectPanel_1').style.display = 'none';
     if (typeof window.require !== 'undefined') {
         // Electron environment
         const { dialog } = require('@electron/remote');

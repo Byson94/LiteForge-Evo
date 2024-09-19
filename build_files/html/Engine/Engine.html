@@ -112,9 +112,27 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         <div class="NewObjectPanel" id="NewObjectPanel_1">
             <h2 style="text-align: center; position: relative;">Create a new object</h2>
             <img id="SpriteObjectLogoICON" src="../../../icon/Sprite_logo.png" style="width: 50px; height: 50px;" draggable="false">
-            <button type="button" onclick="NewSpritebuttonclicked()" id="NewSpriteButton">New Sprite</button>
+            <button type="button" onclick="NewSpritebuttonclicked()" id="NewSpriteButton">Add a Sprite</button>
             <button type="button" onclick="CloseNewObjectPanel()" id="CloseCreateNewObjectPanel">Close</button>
         </div>
+
+        <div class="SpriteManagementAnimations" id="SpriteManagementPanel" style="display: none;">
+            <button type="button" onclick="AddFramebuttonclicked()" id="AddFraneButton">Add Frame</button>
+            <button type="button" onclick="CloseSpriteManagementPanel()" id="CloseSpriteManagementPanel">X</button>
+            <h1>This feature is not complete!</h1>
+
+            <div class="frameDisplayArea">
+                <!-- Frames will be dynamically added here -->
+            </div>
+
+            <!-- Add Frame Section -->
+            <div class="addFrameSection">
+                <h3>Add Frame Duration</h3>
+                <label for="frameDuration">Frame Duration (ms)</label>
+                <input type="number" id="frameDuration" value="100">
+            </div>
+        </div>
+            
         <div class="gameCanvas">
             <!-- Sprites will be added here -->
         </div>
@@ -199,7 +217,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
                     matchBrackets: true
                 });
     
-                codeMirrorEditor.getWrapperElement().style.height = '550px'; // Set desired height here
+                codeMirrorEditor.getWrapperElement().style.height = '560px';
     
                 codeMirrorEditor.setValue(`// Write your JavaScript code here`);
                 editorInitialized = true;

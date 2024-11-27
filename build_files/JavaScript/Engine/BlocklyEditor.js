@@ -85,6 +85,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
               <block type="any_key_pressed"></block>
               <block type="specific_key_pressed"></block>
               <block type="wait"></block>
+              <block type="create_object"></block>
               <block type="procedures_defnoreturn"></block>
               <block type="procedures_defreturn"></block>
               <block type="procedures_callnoreturn"></block>

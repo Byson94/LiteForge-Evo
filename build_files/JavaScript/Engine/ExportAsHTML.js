@@ -93,6 +93,8 @@ async function ExportAsHTML() {
     <script src="Konva.min.js"></script>
     <script src="SAT.js"></script> <!-- Include SAT.js -->
     <script>
+        import * as lfjs from './lfjs/api.js'
+
         const stage = new Konva.Stage({
             container: document.querySelector('.gameCanvas'),
             width: 550,
@@ -159,7 +161,7 @@ async function ExportAsHTML() {
 
     zip.file("index.html", htmlContent);
 
-    // Add Konva.min.js to the ZIP depending on the environment
+    // Add Konva.min.js to the ZIP
     let konvaPath = isElectron() ? '../../../libraries/konva/konva.min.js' : '../../../libraries/konva/konva.min.js';
     
     try {
@@ -170,7 +172,7 @@ async function ExportAsHTML() {
         console.error(`Error fetching Konva.min.js:`, error);
     }
 
-    // Add SAT.js to the ZIP depending on the environment
+    // Add SAT.js to the ZIP
     let satPath = isElectron() ? '../../../libraries/Sat/SAT.js' : '../../../libraries/Sat/SAT.js';
     
     try {
@@ -179,6 +181,17 @@ async function ExportAsHTML() {
         zip.file("SAT.js", blob);
     } catch (error) {
         console.error(`Error fetching SAT.js:`, error);
+    }
+
+    // Add lfjs api to the ZIP
+    let lfjsPath = isElectron ? '../../../lfjs/api.js' : '../../../lfjs/api.js';
+
+    try {
+        const response = await fetch(lfjsPath);
+        const blob = await response.blob();
+        zip.file("lfjs/api.js", blob);
+    } catch (error) {
+        console.error(`Error fetching LFJS:`, error);
     }
 
     // Add sprites to sprites folder

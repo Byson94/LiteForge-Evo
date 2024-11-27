@@ -52,8 +52,41 @@ Blockly.common.defineBlocksWithJsonArray([
       }
     ],
     "colour": 230,
-    "tooltip": "Waits for a specified number of milliseconds before executing the contained code."
+    "tooltip": "Waits for a specified number of milliseconds before executing the contained code.",
+    "previousStatement": null,
+    "nextStatement": null
   },
+
+  {
+    "type": "create_object",
+    "message0": "Create object %1 size w%2, h%3",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "OBJECT_TYPE",
+        "options": [
+          ["Cube", "cube"],
+          ["Sphere", "sphere"],
+          ["Cylinder", "cylinder"]
+        ]
+      },
+      {
+        "type": "field_number",
+        "name": "H_VALUE",
+        "value": 100
+      },
+      {
+        "type": "field_number",
+        "name": "W_VALUE",
+        "value": 100
+      }
+    ],
+    "colour": 230,
+    "tooltip": "Creates a new object based on the selected type.",
+    "helpUrl": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },  
 
   {
     "type": "if_game_started",
@@ -291,5 +324,49 @@ javascript.javascriptGenerator.forBlock['delete_object'] = function(block) {
   var code = `\n`;
   code += `delete object_${object};\n`;
   
+  return code;
+};
+javascript.javascriptGenerator.forBlock['create_object'] = function(block) {
+  const objectType = block.getFieldValue('OBJECT_TYPE');
+  const objectWSize = block.getFieldValue('W_VALUE');
+  const objectHSize = block.getFieldValue('H_VALUE');
+
+  let code = '';  // Initialize the code variable
+
+  // Determine the object type and create the corresponding Konva shape
+  if (objectType === 'cube') {
+    // Create a 'cube' using a rectangle (as a 2D approximation of a cube)
+    code = `const cube = new Konva.Rect({
+      x: 100, 
+      y: 100, 
+      width: ${objectWSize}, 
+      height: ${objectHSize}, 
+      fill: "blue", 
+      draggable: true 
+    });
+    layer.add(cube);`;
+  } else if (objectType === 'sphere') {
+    // Create a 'sphere' using a circle (as a 2D approximation of a sphere)
+    code = `const sphere = new Konva.Circle({
+      x: 100, 
+      y: 100, 
+      radius: ${objectWSize / 2},  // Assuming W_VALUE is diameter, so divide by 2 to get the radius
+      fill: "red", 
+      draggable: true 
+    });
+    layer.add(sphere);`;
+  } else if (objectType === 'cylinder') {
+    // Create a 'cylinder' using an ellipse (as a 2D approximation of a cylinder)
+    code = `const cylinder = new Konva.Ellipse({
+      x: 100, 
+      y: 100, 
+      radiusX: ${objectWSize / 2},  // Assuming W_VALUE is the full width of the cylinder
+      radiusY: ${objectHSize / 2},  // Assuming H_VALUE is the full height of the cylinder
+      fill: "green", 
+      draggable: true 
+    });
+    layer.add(cylinder);`;
+  }
+
   return code;
 };

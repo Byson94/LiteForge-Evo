@@ -140,7 +140,11 @@
         <h3>Console</h3>
     </div>
 
-    <script>
+    <script type="module">
+        // import lfjs (custom api)
+        import * as lfjs from '../../../lfjs/api.js'
+        window.lfjs = lfjs;
+
         let collisionCheckInterval = 1000; // Default interval (1 second)
         let stage, layer;
         let satPolygons = {};
@@ -173,79 +177,78 @@
         }
 
         function loadGameData() {
-    const gameDataJSON = localStorage.getItem('gameData');
-    if (!gameDataJSON) {
-        console.error('No game data found in local storage.');
-        return;
-    }
-    try {
-        const gameData = JSON.parse(gameDataJSON);
-        const sprites = gameData.spriteData;
-        const JSCode = gameData.JsCode;
-        const BlocklyCode = gameData.blocklyCode;
-
-        initializeKonva();
-
-        sprites.forEach(sprite => {
-            if (sprite.src) {
-                const img = new Image();
-                img.src = sprite.src;
-
-                img.onload = () => {
-                    const konvaImage = new Konva.Image({
-                        image: img,
-                        id: sprite.id,
-                        x: sprite.left,
-                        y: sprite.top,
-                        width: sprite.width,
-                        height: sprite.height,
-                        offsetX: sprite.width / 2,
-                        offsetY: sprite.height / 2,
-                        draggable: false // Initially not draggable
-                    });
-
-                    layer.add(konvaImage);
-                    layer.draw();
-
-                    updateSATPolygon(sprite.id);
-
-                    // Attach an event listener to update SAT polygon on drag/transform
-                    konvaImage.on('dragmove transform', () => {
-                        updateSATPolygon(sprite.id);
-                    });
-                };
+            const gameDataJSON = localStorage.getItem('gameData');
+            if (!gameDataJSON) {
+                console.warn('No game data found in local storage.');
+                return;
             }
-        });
-
-        // Debugging logs
-        console.log('Evaluating JSCode:', JSCode);
-        if (typeof JSCode === 'string' && JSCode.trim()) {
             try {
-                eval(JSCode);
+                const gameData = JSON.parse(gameDataJSON);
+                const sprites = gameData.spriteData;
+                const JSCode = gameData.JsCode;
+                const BlocklyCode = gameData.blocklyCode;
+
+                initializeKonva();
+                lfjs.initAPI();
+
+                sprites.forEach(sprite => {
+                    if (sprite.src) {
+                        const img = new Image();
+                        img.src = sprite.src;
+
+                        img.onload = () => {
+                            const konvaImage = new Konva.Image({
+                                image: img,
+                                id: sprite.id,
+                                x: sprite.left,
+                                y: sprite.top,
+                                width: sprite.width,
+                                height: sprite.height,
+                                offsetX: sprite.width / 2,
+                                offsetY: sprite.height / 2,
+                                draggable: false // Initially not draggable
+                            });
+
+                            layer.add(konvaImage);
+                            layer.draw();
+
+                            updateSATPolygon(sprite.id);
+
+                            // Attach an event listener to update SAT polygon on drag/transform
+                            konvaImage.on('dragmove transform', () => {
+                                updateSATPolygon(sprite.id);
+                            });
+                        };
+                    }
+                });
+
+                if (typeof BlocklyCode === 'string' && BlocklyCode.trim()) {
+                    try {
+                        eval(BlocklyCode, {lfjs: lfjs,});
+                    } catch (e) {
+                        console.error('Error evaluating BlocklyCode:', e);
+                    }
+                } else {
+                    console.warn('Invalid or empty BlocklyCode.');
+                }
+
+                if (typeof JSCode === 'string' && JSCode.trim()) {
+                    try {
+                        eval(JSCode, {lfjs: lfjs});
+                    } catch (e) {
+                        console.error('Error evaluating JSCode:', e);
+                    }
+                } else {
+                    console.warn('Invalid or empty JSCode.');
+                }
+
+                layer.draw()
+                localStorage.removeItem('gameData');
+
             } catch (e) {
-                console.error('Error evaluating JSCode:', e);
+                console.error('Error loading game data:', e);
             }
-        } else {
-            console.warn('Invalid or empty JSCode.');
         }
-
-        // Debugging logs
-        console.log('Evaluating BlocklyCode:', BlocklyCode);
-        if (typeof BlocklyCode === 'string' && BlocklyCode.trim()) {
-            try {
-                eval(BlocklyCode);
-            } catch (e) {
-                console.error('Error evaluating BlocklyCode:', e);
-            }
-        } else {
-            console.warn('Invalid or empty BlocklyCode.');
-        }
-
-    } catch (e) {
-        console.error('Error loading game data:', e);
-    }
-}
-
 
         function convertKonvaToSAT(konvaImage) {
             const vertices = getKonvaVertices(konvaImage);

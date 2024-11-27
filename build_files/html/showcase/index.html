@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../../icon/LFE_logo.png" type="image/png">
+    <link rel="stylesheet" href="showcase.css">
+    <title>Games Showcase</title>
+</head>
+<body>
+    <div class="game-item" id="gameItem">
+        <div id="Item-1">
+            <iframe src="https://itch.io/embed-upload/11510690?color=333333" allowfullscreen></iframe>
+            <h4>DVD Animation - 1st Animation Made</h4>
+        </div>
+        <div id="Item-2">
+            <iframe src="https://itch.io/embed-upload/11510690?color=333333" allowfullscreen></iframe>
+            <h4>DVD Animation - 1st Animation Made</h4>
+        </div>
+        <div id="Item-3">
+            <iframe src="https://itch.io/embed-upload/11510690?color=333333" allowfullscreen></iframe>
+            <h4>DVD Animation - 1st Animation Made</h4>
+        </div>
+    </div>
+    <a href="../main/" class="back-button">Back to Engine</a>
+    <script>
+        function updateScale() {
+            const gameItem = document.getElementById('gameItem');
+            const screenWidth = window.innerWidth;
+
+            // Define breakpoints and scale factors
+            let scale;
+            if (screenWidth >= 1200) {
+                scale = 0.8; // For large screens
+            } else if (screenWidth >= 768) {
+                scale = 0.6; // For medium screens
+            } else {
+                scale = 0.4; // For small screens
+            }
+
+            // Apply scale transform
+            gameItem.style.transform = `scale(${scale})`;
+        }
+
+        // Initial scale update
+        updateScale();
+
+        // Update scale on window resize
+        window.addEventListener('resize', updateScale);
+    </script>
+</body>
+</html>

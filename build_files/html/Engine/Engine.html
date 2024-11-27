@@ -100,7 +100,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         
         <div class="banner">
             <label for="toggleObjectpanel" class="toggleObject"></label>
-            <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">⯈</button>
+            <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">></button>
             <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
             <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
             <button type="button" onclick="MenuButtonClicked()" id="MenuButton">☰</button>
@@ -144,7 +144,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
 
     <div id="layout-2" style="display: none;">
         <div class="banner">
-            <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">⯈</button>
+            <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">></button>
             <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
             <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
             <button type="button" onclick="MenuButtonClicked()" id="MenuButton">☰</button>
@@ -157,7 +157,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
 
     <div id="layout-3" style="display: none;">
         <div class="banner">
-            <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">⯈</button>
+            <button type="button" onclick="previewGameClicked()" id="PreviewGameButton">></button>
             <button type="button" onclick="ScriptEditorClicked()" id="ScriptEditorButton">Script Editor</button>
             <button type="button" onclick="SceneEditorClicked()" id="SceneEditorButton">Scene Editor</button>
             <button type="button" onclick="MenuButtonClicked()" id="MenuButton">☰</button>
@@ -210,10 +210,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
                     indentUnit: 4,
                     tabSize: 4,
                     autofocus: true,
-                    extraKeys: {
-                        // Removed Ctrl-Space to avoid conflicts
-                    },
-                    autoCloseBrackets: true, // Enable auto-closing of brackets
+                    autoCloseBrackets: true,
                     hintOptions: {
                         // Configure hint options if needed (not yet)
                     },
@@ -221,7 +218,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
                     matchBrackets: true
                 });
     
-                codeMirrorEditor.getWrapperElement().style.height = '560px';
+                codeMirrorEditor.getWrapperElement().style.height = '520px';
     
                 codeMirrorEditor.setValue(`// Write your JavaScript code here`);
                 editorInitialized = true;

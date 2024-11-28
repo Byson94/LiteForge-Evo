@@ -1,4 +1,4 @@
-async function ExportAsHTML() {
+async function ExportAsHTML(previousUIState) {
     VisualScriptEditorClicked();
 
     function isElectron() {
@@ -236,5 +236,11 @@ async function ExportAsHTML() {
     });
 
     console.log('Game exported as GameHTML.zip.');
-    SceneEditorClicked();
+    if (previousUIState === "sceneEditor") {
+        SceneEditorClicked();
+    } else if (previousUIState === "scriptEditor") {
+        ScriptEditorClicked();
+    } else if (previousUIState === "visualEditor") {
+        VisualScriptEditorClicked();
+    }
 }

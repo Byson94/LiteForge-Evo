@@ -14,7 +14,6 @@
             font-family: Arial, sans-serif;
         }
 
-        /* Loading background overlay */
         #loadingOverlay {
             position: fixed;
             top: 0;
@@ -37,10 +36,10 @@
     <!-- Text in the grey background -->
     <div id="loadingOverlay">Loading the engine...</div>
 
-    <script src="build_files/JavaScript/renderer.js"></script>
+    <script src="Engine/JavaScript/renderer.js"></script>
     <script>
         // Going to the engines mainmenu
-        window.location.href = 'build_files/html/main/';
+        window.location.href = 'Engine/html/main/';
         
         // Removing the loading scene background
         window.addEventListener('load', function () {

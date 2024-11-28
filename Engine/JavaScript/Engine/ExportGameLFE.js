@@ -1,4 +1,4 @@
-async function ExportTheGame() {
+async function ExportTheGame(previousUIState) {
     // Initialize CodeMirror editor if not already initialized
     ScriptEditorClicked();
 
@@ -105,5 +105,11 @@ async function ExportTheGame() {
 
     // Trigger the file creation and download
     await createDownloadableFile();
-    SceneEditorClicked();
+    if (previousUIState === "sceneEditor") {
+        SceneEditorClicked();
+    } else if (previousUIState === "scriptEditor") {
+        ScriptEditorClicked();
+    } else if (previousUIState === "visualEditor") {
+        VisualScriptEditorClicked();
+    }
 }

@@ -1,23 +1,44 @@
+// current UI state
+let uiState = 0;
+window.uiState = uiState;
+
+// check current UI state
+function currentUIState() {
+    if (uiState === 0) {
+        return "sceneEditor"
+    } else if (uiState === 1) {
+        return "scriptEditor"
+    } else if (uiState === 2) {
+        return "visualEditor"
+    }
+}
+
 // Layout switching functions
 function ScriptEditorClicked() {
+    MenuExportButtonClicked(true)
     document.getElementById('layout-1').style.display = 'none';
     document.getElementById('layout-3').style.display = 'none';
     document.getElementById('layout-2').style.display = 'block';
     initializeEditor();
+    uiState = 1;
 }
 
 function SceneEditorClicked() {
+    MenuExportButtonClicked(true)
     document.getElementById('layout-2').style.display = 'none';
     document.getElementById('layout-3').style.display = 'none';
     document.getElementById('layout-1').style.display = 'block';
+    uiState = 0;
 }
 
 function VisualScriptEditorClicked() {
+    MenuExportButtonClicked(true)
     document.getElementById('layout-1').style.display = 'none';
     document.getElementById('layout-2').style.display = 'none';
     document.getElementById('layout-3').style.display = 'block';
     // window.location.href="../../html/Engine/BlockyEditor.html"
     initializeBlockyEditor();
+    uiState = 2;
 }
 
 function SpriteEditorClicked() {
@@ -87,30 +108,37 @@ function QuitButtonClicked() {
 }
 
 // Clicked export button
-function MenuExportButtonClicked() {
+function MenuExportButtonClicked(hideExport) {
     exportButton = document.querySelector('.ExportingTheGame')
-    if (exportButton) {
-        if (exportButton.style.display === 'none') {
-            exportButton.style.display = 'block';
-        } else {
-            exportButton.style.display = 'none';
-        }
+    if (hideExport === true) {
+        exportButton.style.display = 'none';
     } else {
-        console.error('ExportButton element in Menu Bar is not found')
+        exportButton = document.querySelector('.ExportingTheGame')
+        if (exportButton) {
+            if (exportButton.style.display === 'none') {
+                exportButton.style.display = 'block';
+            } else {
+                exportButton.style.display = 'none';
+            }
+        } else {
+            console.error('ExportButton element in Menu Bar is not found')
+        }
     }
 }
 
 // Exporting the game to the users computer
 function ExportToPCButtonClicked() {
-    VisualScriptEditorClicked()
-    SaveToLocalStorage()
-    SceneEditorClicked()
-    ExportTheGame()
+    let previousUIState = currentUIState;
+    VisualScriptEditorClicked();
+    SaveToLocalStorage();
+    SceneEditorClicked();
+    ExportTheGame(previousUIState);
 }
 
 // Exporting the game to HTML
 function ExportToHTMLButtonClicked() {
-    ExportAsHTML()
+    let previousUIState = currentUIState;
+    ExportAsHTML(previousUIState);
 }
 
 // Importing the game from the users computer

@@ -2,6 +2,7 @@ let selectedImageId = null; // Variable to store the ID of the currently selecte
 
 // Function to handle importing game data
 async function ImportTheGameClicked() {
+    let previousUIState = currentUIState();
     ScriptEditorClicked(); 
 
     if (typeof window.require !== 'undefined') {
@@ -45,6 +46,13 @@ async function ImportTheGameClicked() {
         });
 
         fileInput.click();
+    }
+    if (previousUIState === "sceneEditor") {
+        SceneEditorClicked();
+    } else if (previousUIState === "scriptEditor") {
+        ScriptEditorClicked();
+    } else if (previousUIState === "visualEditor") {
+        VisualScriptEditorClicked();
     }
 }
 

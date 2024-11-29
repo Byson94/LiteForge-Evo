@@ -15,6 +15,7 @@
     </div>
 
     <div class="content">
+        <h2 style="text-decoration: underline;">Theme</h2>
         <div class="engine-theme-selector">
             <label for="engine-theme-select">Engine Theme:</label>
             <select id="engine-theme-select">
@@ -28,24 +29,88 @@
                 <option value="3024-day">3024 Day</option>
                 <option value="dracula">Dracula</option>
             </select>
-        </div>
-        <div class="plugin-selector" style="display: none;">
+        </div>       
+        <h2 style="text-decoration: underline;">Plugin</h2>
+        <div class="plugin-selector">
             <label for="plugin-url">Engine Plugin (url):</label>
-            <input id="plugin-url-input">
+            <input id="plugin-url-input" type="file" accept=".js" style="display: none;">
+            <div id="plugin-selector">
+                <button id="custom-file-button">Choose File</button>
+                <span id="plugin-file-name">No file selected</span>
+            </div>
+        </div>
+        
+        <p style="font-weight: 900; text-decoration: underline; color: yellow;">Warning:</p>
+        <p style="color: yellow;"> Never use plugins from untrusted sources. They may be malicious and can potentially cause harm to your system or compromise the safety of others.</p> 
     </div>
 
+    <!-- Plugin manager -->
+    <script type="module" src="../../../Plugin manager/load.js"></script>
+    <script type="module" src="../../../Plugin manager/sanitizer.js"></script>
+
     <script>
+        document.getElementById('custom-file-button').addEventListener('click', function () {
+            
+            document.getElementById('plugin-url-input').click();
+        });
+
+        document.getElementById('plugin-url-input').addEventListener('change', function () {
+            const file = this.files[0];
+
+            if (file) {
+                
+                document.getElementById('plugin-file-name').textContent = file.name;
+            } else {
+                
+                document.getElementById('plugin-file-name').textContent = "No file selected";
+            }
+        });
+
+        document.getElementById('plugin-url-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                console.log("Selected file:", file);
+
+                if (file.type === "application/javascript" || file.name.endsWith(".js")) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const fileContent = e.target.result;
+
+                        
+                        saveToCookie(file.name, fileContent);
+                    };
+
+                    reader.readAsText(file);
+                } else {
+                    alert("Please select a valid .js file");
+                }
+            } else {
+                alert("No file selected");
+            }
+        });
+
+        function saveToCookie(fileName, content) {
+            const encodedContent = encodeURIComponent(content);
+            
+            document.cookie = `engine_plugin=${encodedContent}; SameSite=Lax; path=/; max-age=3600`;
+            
+            console.log("File content saved to cookie successfully!");
+        }
+
         function BackButtonClicked() {
             savePluginURL();
             window.location.href = "../main/";
         }
 
         function savePluginURL() {
-            const url = document.getElementById('plugin-url-input').value
+            const file = document.getElementById('plugin-url-input').files[0]; 
+            const fileName = file ? file.name : '';  
             const currentTheme = localStorage.getItem('EngineDATA') ? JSON.parse(localStorage.getItem('EngineDATA')).editorTheme : null;
 
             const data = { 
-                'EngineURL': url, 
+                'EngineURL': fileName,  
                 'editorTheme': currentTheme
             };
 
@@ -74,9 +139,9 @@
                     document.getElementById('theme-select').value = data.editorTheme;
                 }
 
-                
                 if (data.EngineURL) {
-                    document.getElementById('plugin-url-input').value = data.EngineURL;
+                    
+                    document.getElementById('plugin-file-name').textContent = `Selected Plugin: ${data.EngineURL}`;
                 }
             }
         }

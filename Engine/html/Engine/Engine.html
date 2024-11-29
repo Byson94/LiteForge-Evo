@@ -26,12 +26,17 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         let engineState;
     </script>
 
+        <!-- Plugin manager -->
+        <script type="module" src="../../../Plugin manager/load.js"></script>
+        <script type="module" src="../../../Plugin manager/sanitizer.js"></script>
+
     <!-- CodeMirror CSS -->
     <link rel="stylesheet" href="../../../libraries/codemirror/codemirror.min.css">
     <link rel="stylesheet" href="../../../libraries/codemirror/theme/3024-night.css">
     <link rel="stylesheet" href="../../../libraries/codemirror/theme/3024-day.css">
     <link rel="stylesheet" href="../../../libraries/codemirror/theme/dracula.css">
     <link rel="stylesheet" href="../../../libraries/codemirror/addons/show-hint.css">
+    <link rel="stylesheet" href="../../../libraries/codemirror/addons/lint.css">
 
     <!-- Blocky -->
     <script src="../../../libraries/blockly/blockly.min.js"></script>
@@ -178,6 +183,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
     <script src="../../../libraries/codemirror/addons/javascript-hint.js"></script>
     <script src="../../../libraries/codemirror/addons/active-line.js"></script>
     <script src="../../../libraries/codemirror/addons/mark-selection.js"></script>
+    <script src="../../../libraries/codemirror/addons/lint.js"></script>
 
     <!-- Ensure script files are included in the correct order -->
     <script src="../../JavaScript/Engine/BlocklyEditor.js"></script>
@@ -214,8 +220,11 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
                     tabSize: 4,
                     autofocus: true,
                     autoCloseBrackets: true,
+                    gutters: ["CodeMirror-lint-markers"],
+                    lint: true,
                     hintOptions: {
-                        // Configure hint options if needed (not yet)
+                        completeSingle: false, 
+                        hint: CodeMirror.hint.javascript,
                     },
                     styleActiveLine: true,
                     matchBrackets: true
@@ -229,6 +238,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
                 // Automatically trigger autocomplete while typing
                 codeMirrorEditor.on('inputRead', function(cm, change) {
                     if (change.text[0] !== undefined) {
+                        // Trigger autocomplete
                         CodeMirror.commands.autocomplete(cm, null, { completeSingle: false });
                     }
                 });

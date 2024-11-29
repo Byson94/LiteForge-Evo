@@ -124,3 +124,25 @@ body {
     border-color: #007bff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
 }
+#plugin-url-input {
+    display: none; 
+}
+
+#custom-file-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#custom-file-button:hover {
+    background-color: #0056b3;
+}
+
+#plugin-file-name {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #ffffff;
+}

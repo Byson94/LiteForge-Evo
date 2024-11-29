@@ -1,40 +1,36 @@
-let savedData = localStorage.getItem("EngineDATA");
+import { checkIfSafe } from "./sanitizer.js"; 
 
-if (savedData) {
-    let data = JSON.parse(savedData);
-    let loadURL = data.EngineURL;
-
-    // Create an iframe element
-    let iframe = document.createElement("iframe");
-    iframe.style.display = "none"; // Hide the iframe
-    iframe.src = loadURL;
+function getCookie(name) {
+    const nameEq = name + "=";  
+    const cookies = document.cookie.split(';');  
     
-    iframe.onload = function() {
-        try {
-            // When the iframe has loaded, get its content
-            let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-
-            // Extract all scripts in the iframe
-            let scripts = iframeDocument.getElementsByTagName('script');
-            let jsCode = '';
-
-            for (let script of scripts) {
-                if (script.src) {
-                    // If it's an external script, you can get the URL
-                    console.log(`External script: ${script.src}`);
-                } else {
-                    // Inline script: Extract the content
-                    jsCode += script.innerText || script.textContent;
-                }
-            }
-
-            // Now jsCode holds the JS code of the iframe
-            console.log("Extracted JS code:", jsCode);
-        } catch (error) {
-            console.error("Error accessing iframe content:", error);
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();  
+        if (cookie.indexOf(nameEq) === 0) {
+            return decodeURIComponent(cookie.substring(nameEq.length));  
         }
-    };
+    }
+    
+    return null;  
+}
 
-    // Append the iframe to the body
-    document.body.appendChild(iframe);
+function injectScript(content) {
+    let result = checkIfSafe(content)
+    if (result === false) {
+        console.error("Aborted loading the plugin due to suspicious code")
+        return
+    }
+    const scriptElement = document.createElement('script');  
+    scriptElement.type = 'text/javascript';  
+    scriptElement.textContent = content;  
+    document.head.appendChild(scriptElement);  
+}
+
+let cookieValue = getCookie('engine_plugin');
+
+if (cookieValue) {
+    injectScript(cookieValue);
+    console.log("Script injected successfully.");
+} else {
+    console.log("Cookie not found.");
 }

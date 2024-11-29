@@ -150,7 +150,7 @@
         let satPolygons = {};
         let collisionMap = {}; // Store collision information
 
-        function updateSATPolygon(spriteId) {
+        function updateSATPolygon(spriteId, stage) {
             const konvaImage = stage.findOne(`#${spriteId}`);
             if (konvaImage) {
                 const polygon = convertKonvaToSAT(konvaImage);
@@ -188,8 +188,9 @@
                 const JSCode = gameData.JsCode;
                 const BlocklyCode = gameData.blocklyCode;
 
-                initializeKonva();
-                lfjs.initAPI();
+                var konvaArray = lfjs.initKonva();
+                var layer = konvaArray.layer;
+                var stage = konvaArray.stage;
 
                 sprites.forEach(sprite => {
                     if (sprite.src) {
@@ -212,7 +213,7 @@
                             layer.add(konvaImage);
                             layer.draw();
 
-                            updateSATPolygon(sprite.id);
+                            updateSATPolygon(sprite.id, stage);
 
                             // Attach an event listener to update SAT polygon on drag/transform
                             konvaImage.on('dragmove transform', () => {

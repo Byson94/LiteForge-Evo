@@ -4,6 +4,7 @@ function openInNewWindow(url) {
 }
 
 function previewGameClicked() {
+        let previousUIState = currentUIState();
         // Initialize CodeMirror editor if not already initialized
         ScriptEditorClicked();
     
@@ -55,6 +56,14 @@ function previewGameClicked() {
         };
 
         localStorage.setItem('gameData', JSON.stringify(data));
+
+        if (previousUIState === "sceneEditor") {
+            SceneEditorClicked();
+        } else if (previousUIState === "scriptEditor") {
+            ScriptEditorClicked();
+        } else if (previousUIState === "visualEditor") {
+            VisualScriptEditorClicked();
+        }
     
     // Open the specified HTML file in a new window
     openInNewWindow('../../html/Engine/PreviewGame.html');

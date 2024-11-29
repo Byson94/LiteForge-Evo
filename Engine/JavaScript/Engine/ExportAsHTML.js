@@ -92,14 +92,13 @@ async function ExportAsHTML(previousUIState) {
     <div class="gameCanvas"></div>
     <script src="Konva.min.js"></script>
     <script src="SAT.js"></script> <!-- Include SAT.js -->
-    <script>
+    <script type="module">
         import * as lfjs from './lfjs/api.js'
+        window.lfjs = lfjs;
 
-        const stage = new Konva.Stage({
-            container: document.querySelector('.gameCanvas'),
-            width: 550,
-            height: 550,
-        });
+        var konvaArray = lfjs.initKonva();
+        var layer = konvaArray.layer;
+        var stage = konvaArray.stage;
 
         fetch('gameData.json')
             .then(response => response.json())
@@ -153,8 +152,17 @@ async function ExportAsHTML(previousUIState) {
             })
             .catch(error => console.error('Error loading game data:', error));
     </script>
-    <script src="script.js"></script>
-    <script src="scriptBlockly.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const script1 = document.createElement('script');
+            script1.src = 'script.js';
+            document.body.appendChild(script1);
+
+            const script2 = document.createElement('script');
+            script2.src = 'scriptBlockly.js';
+            document.body.appendChild(script2);
+        });
+    </script>
 </body>
 </html>
     `;

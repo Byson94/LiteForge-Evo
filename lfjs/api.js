@@ -3,15 +3,21 @@
 // Initializing konva
 const gameCanvasDisplayed = document.querySelector('.gameCanvas');
 
-var stage = new Konva.Stage({
-	container: gameCanvasDisplayed,
-	width: gameCanvasDisplayed.offsetWidth, 
-	height: gameCanvasDisplayed.offsetHeight
-  });
-  
-  var layer = new Konva.Layer();
-  
-  stage.add(layer);
+var stage;
+var layer;
+export function initKonva() {
+    stage = new Konva.Stage({
+        container: gameCanvasDisplayed,
+        width: gameCanvasDisplayed.offsetWidth, 
+        height: gameCanvasDisplayed.offsetHeight
+      });
+      
+      layer = new Konva.Layer();
+      
+      stage.add(layer);
+      let returningVal = { layer, stage };
+      return returningVal;      
+}
 
 // Konva initialized, now other setps
 function createShape(obj, x, y, w0r, h0r, id) {

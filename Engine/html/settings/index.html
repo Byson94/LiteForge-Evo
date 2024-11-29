@@ -11,11 +11,10 @@
 <body>
     <div class="banner" id="banner1">
         <h1>Settings</h1>
-        <button onclick="BackButtonClicked()">→</button>
+        <button onclick="BackButtonClicked()">></button>
     </div>
 
     <div class="content">
-        <!-- Swapped positions of the theme selectors -->
         <div class="engine-theme-selector">
             <label for="engine-theme-select">Engine Theme:</label>
             <select id="engine-theme-select">
@@ -30,34 +29,68 @@
                 <option value="dracula">Dracula</option>
             </select>
         </div>
+        <div class="plugin-selector" style="display: none;">
+            <label for="plugin-url">Engine Plugin (url):</label>
+            <input id="plugin-url-input">
     </div>
 
     <script>
-        // Function to handle back button click
         function BackButtonClicked() {
+            savePluginURL();
             window.location.href = "../main/";
         }
 
-        // Function to save selected code editor theme to localStorage
-        function saveCodeEditorTheme(theme) {
-            localStorage.setItem('editorTheme', theme);
+        function savePluginURL() {
+            const url = document.getElementById('plugin-url-input').value
+            const currentTheme = localStorage.getItem('EngineDATA') ? JSON.parse(localStorage.getItem('EngineDATA')).editorTheme : null;
+
+            const data = { 
+                'EngineURL': url, 
+                'editorTheme': currentTheme
+            };
+
+            localStorage.setItem('EngineDATA', JSON.stringify(data));  
         }
 
-        // Function to load saved code editor theme from localStorage
+        function saveCodeEditorTheme(theme) {
+            const currentURL = localStorage.getItem('EngineDATA') ? JSON.parse(localStorage.getItem('EngineDATA')).EngineURL : null;
+
+            const data = { 
+                'EngineURL': currentURL,  
+                'editorTheme': theme
+            };
+
+            localStorage.setItem('EngineDATA', JSON.stringify(data));  
+        }
+
         function loadCodeEditorTheme() {
-            const savedTheme = localStorage.getItem('editorTheme');
-            if (savedTheme) {
-                document.getElementById('theme-select').value = savedTheme;
+            const savedData = localStorage.getItem('EngineDATA');
+            
+            if (savedData) {
+                const data = JSON.parse(savedData);
+
+                
+                if (data.editorTheme) {
+                    document.getElementById('theme-select').value = data.editorTheme;
+                }
+
+                
+                if (data.EngineURL) {
+                    document.getElementById('plugin-url-input').value = data.EngineURL;
+                }
             }
         }
 
-        // Event listener for code editor theme selection change
         document.getElementById('theme-select').addEventListener('change', function() {
-            saveCodeEditorTheme(this.value);
+            saveCodeEditorTheme(this.value);  
         });
 
-        // Load saved code editor theme when the page loads
-        window.onload = loadCodeEditorTheme;
+        document.getElementById('plugin-url-input').addEventListener('change', function() {
+            savePluginURL();  
+        });
+
+        window.onload = loadCodeEditorTheme;  
+
     </script>
 </body>
 </html>

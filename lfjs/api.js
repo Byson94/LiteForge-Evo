@@ -5,7 +5,7 @@ const gameCanvasDisplayed = document.querySelector('.gameCanvas');
 
 var stage;
 var layer;
-export function initKonva() {
+function initKonva() {
     stage = new Konva.Stage({
         container: gameCanvasDisplayed,
         width: gameCanvasDisplayed.offsetWidth, 
@@ -20,7 +20,7 @@ export function initKonva() {
 }
 
 // Konva initialized, now other setps
-function createShape(obj, x, y, w0r, h0r, id) {
+function drawShape(obj, x, y, w0r, h0r, id) {
     if (obj === "circle") {
         let circle = new Konva.Circle({
             x: x, 
@@ -63,4 +63,4 @@ function createShape(obj, x, y, w0r, h0r, id) {
     }
 }
 
-export { createShape }
+export { drawShape, initKonva }

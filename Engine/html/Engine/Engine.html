@@ -192,12 +192,15 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
         let editorInitialized = false;
     
         function loadCodeEditorTheme() {
-            CodeEditorTheme = localStorage.getItem('editorTheme');
-    
-            if (!CodeEditorTheme) {
-                CodeEditorTheme = '3024-night';
+            const savedData = localStorage.getItem('EngineDATA');
+            
+            if (savedData) {
+                const data = JSON.parse(savedData);
+
+                CodeEditorTheme = data.editorTheme || '3024-night';
             }
         }
+
     
         loadCodeEditorTheme()
     

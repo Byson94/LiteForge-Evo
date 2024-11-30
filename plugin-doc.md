@@ -60,13 +60,18 @@ When writing your plugin, make sure **none of the following patterns** appear in
 
 ---
 
-### **4. Registering the Plugin**
+### **4. Understanding engine html**
+- **Understanding the engines html structure** is crutial for developing a good plugin, here you can find some engine specific html.
+  #### **Main menu**:
+  - **New project button**: id = new-project-button
+
+### **5. Registering the Plugin**
 
 Once your plugin code is written, you need to register it with the engine. You can just go to the engine settings and then import your plugin. But make sure that the plugin is safe and follows the guidelines.
 
 ---
 
-### **5. Testing the Plugin**
+### **6. Testing the Plugin**
 
 Before releasing or sharing your plugin:
 - **Test for security**: Ensure that none of the flagged patterns are used. You can write unit tests or use static code analysis tools to detect unsafe code.
@@ -75,7 +80,7 @@ Before releasing or sharing your plugin:
 
 ---
 
-### **6. Example Directory Structure**
+### **7. Example Directory Structure**
 
 There is no directory structure needed for the plugins as it works unpon a single js file. But if you want to organize your code, you can use the following structure:
 

@@ -37,6 +37,7 @@
             <div id="plugin-selector">
                 <button id="custom-file-button">Choose File</button>
                 <span id="plugin-file-name">No file selected</span>
+                <p style="display: none;" id="plugin-loading">Loading...</p>
             </div>
         </div>
         
@@ -79,7 +80,7 @@
                         const fileContent = e.target.result;
 
                         
-                        saveToCookie(file.name, fileContent);
+                        saveToIndexedDB(file.name, fileContent);
                     };
 
                     reader.readAsText(file);
@@ -91,17 +92,56 @@
             }
         });
 
-        function saveToCookie(fileName, content) {
-            const encodedContent = encodeURIComponent(content);
-            
-            document.cookie = `engine_plugin=${encodedContent}; SameSite=Lax; path=/; max-age=3600`;
-            
-            console.log("File content saved to cookie successfully!");
+        function iselectron() {
+            return typeof process !== 'undefined' && process.versions && process.versions.electron !== undefined;
+        }
+
+        function saveToIndexedDB(fileName, content) {
+            if (iselectron()) {
+                window.myApi.saveToIndexedDB(fileName, content)
+                .then(() => {
+                    console.log("Data successfully saved to IndexedDB!");
+                })
+                .catch((error) => {
+                    console.error("Error saving data to IndexedDB:", error);
+                });
+            } else {
+                const pluginLoading = document.getElementById('plugin-loading');
+                pluginLoading.style.display = 'block';
+                const request = indexedDB.open('LiteForgeDB', 2);
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains('plugins')) {
+                        db.createObjectStore('plugins', { keyPath: 'pluginjs' });
+                    }
+                };
+
+                request.onsuccess = (event) => {
+                    const db = event.target.result;
+                    const transaction = db.transaction('plugins', 'readwrite');
+                    const store = transaction.objectStore('plugins');
+
+                    store.put({ 'pluginjs': 'pluginjs', content });
+
+                    transaction.oncomplete = () => {
+                        console.log("File content saved to IndexedDB successfully!");
+                        pluginLoading.style.display = 'none';
+                    };
+
+                    transaction.onerror = (event) => {
+                        console.error("Error saving file content to IndexedDB:", event.target.error);
+                    };
+                };
+
+                request.onerror = (event) => {
+                    console.error("Error opening IndexedDB:", event.target.error);
+                };
+            }
         }
 
         function BackButtonClicked() {
             savePluginURL();
-            window.location.href = "../main/";
+            window.location.href = "../main/index.html";
         }
 
         function savePluginURL() {

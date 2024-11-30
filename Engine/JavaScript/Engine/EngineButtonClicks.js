@@ -104,7 +104,7 @@ function MenuButtonClicked() {
 
 // Quitting the engine
 function QuitButtonClicked() {
-    window.location.href = '../../html/main/';
+    window.location.href = '../../html/main/index.html';
 }
 
 // Clicked export button

@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, globalShortcut } = require('electron');
 const path = require('path');
 
 let mainWindow;
@@ -20,11 +20,17 @@ function createWindow() {
   // Hide the menu bar
   mainWindow.setMenu(null);
 
-  // Optional: Open DevTools for debugging
-  // mainWindow.webContents.openDevTools();
-
   mainWindow.on('closed', function () {
     mainWindow = null;
+  });
+
+  // Register a global shortcut for opening DevTools
+  app.whenReady().then(() => {
+    globalShortcut.register('Control+Shift+I', () => {
+      if (mainWindow) {
+        mainWindow.webContents.toggleDevTools();
+      }
+    });
   });
 }
 
@@ -40,4 +46,9 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+app.on('will-quit', () => {
+  // Unregister all shortcuts when the app quits
+  globalShortcut.unregisterAll();
 });

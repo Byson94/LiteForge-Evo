@@ -6,7 +6,8 @@
   "author": "Byson",
   "version": "0.1.0",
   "dependencies": {
-    "@electron/remote": "^2.0.8"
+    "@electron/remote": "^2.0.8",
+    "idb": "^8.0.0"
   },
   "scripts": {
     "start": "electron main.js",

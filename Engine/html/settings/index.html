@@ -7,9 +7,6 @@
     <link rel="icon" href="../../../icon/LFE_logo.png" type="image/png">
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="stylesheet" href="settings.css">
-        <!-- Prelaoding the plugins -->
-        <link rel="preload" href="../../../Plugin manager/load.js" as="script">
-        <link rel="preload" href="../../../Plugin manager/sanitizer.js" as="script">
 </head>
 <body>
     <div class="banner" id="banner1">
@@ -45,7 +42,7 @@
         </div>
         
         <p style="font-weight: 900; text-decoration: underline; color: yellow;">Warning:</p>
-        <p style="color: yellow;"> Never use plugins from untrusted sources. They may be malicious and can potentially cause harm to your system or compromise the safety of others.</p> 
+        <p style="color: yellow;"> Never use plugins from untrusted sources. They may be malicious and can potentially cause harm to your system or compromise the safety of others. <a href="https://byson94.github.io/LiteForge-Evo-plugins/">You can get official plugins here</a></p> 
     </div>
 
     <!-- Plugin manager -->
@@ -82,6 +79,8 @@
                     reader.onload = function(e) {
                         const fileContent = e.target.result;
 
+                        localStorage.removeItem("engine-plugin-DAT");
+                        sessionStorage.removeItem("pluginjs")
                         
                         saveToIndexedDB(file.name, fileContent);
                     };

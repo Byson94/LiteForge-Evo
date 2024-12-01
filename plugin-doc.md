@@ -65,13 +65,16 @@ When writing your plugin, make sure **none of the following patterns** appear in
   #### **Main menu**:
   - **New project button**: id = new-project-button
 
-### **5. Registering the Plugin**
+### **5. LFPL API**
+Please visit [here](https://github.com/Byson94/LiteForge-Evo/blob/main/LFPL.md) 
+
+### **6. Registering the Plugin**
 
 Once your plugin code is written, you need to register it with the engine. You can just go to the engine settings and then import your plugin. But make sure that the plugin is safe and follows the guidelines.
 
 ---
 
-### **6. Testing the Plugin**
+### **7. Testing the Plugin**
 
 Before releasing or sharing your plugin:
 - **Test for security**: Ensure that none of the flagged patterns are used. You can write unit tests or use static code analysis tools to detect unsafe code.
@@ -80,7 +83,7 @@ Before releasing or sharing your plugin:
 
 ---
 
-### **7. Example Directory Structure**
+### **8. Example Directory Structure**
 
 There is no directory structure needed for the plugins as it works unpon a single js file. But if you want to organize your code, you can use the following structure:
 

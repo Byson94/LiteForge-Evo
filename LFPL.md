@@ -31,7 +31,7 @@ lfpl.ssload(false); // Explicitly disabling is not required, as this is the defa
 ```
 
 ### **lfpl.loadAsset**:
-The `lfpl.loadAsset` function is used to load assets (such as HTML, CSS, or JavaScript) into the page dynamically using JavaScript. This allows for injecting custom content or styles into the page without reloading.
+The `lfpl.loadAsset` function is used to load assets (such as HTML or CSS) into the page dynamically using JavaScript. This allows for injecting custom content or styles into the page without reloading.
 
 - **Usage**:
   - `lfpl.loadAsset(code, language)` allows you to inject code (HTML, CSS, or JavaScript) into the page.

@@ -222,20 +222,24 @@
                     }
                 });
 
-                if (typeof BlocklyCode === 'string' && BlocklyCode.trim() && typeof JSCode === 'string' && JSCode.trim()) {
+                if (typeof BlocklyCode === 'string' && typeof JSCode === 'string') {
                     try {
                         // Combine both BlocklyCode and JSCode into a new function and execute them
                         new Function('BlocklyCode', 'JSCode', 'lfjs', `
-                            // Executing BlocklyCode
-                            ${BlocklyCode}
-                            // Executing JSCode
-                            ${JSCode}
+                            // If BlocklyCode is not empty, execute it
+                            if (BlocklyCode.trim()) {
+                                ${BlocklyCode}
+                            }
+                            // If JSCode is not empty, execute it
+                            if (JSCode.trim()) {
+                                ${JSCode}
+                            }
                         `)(BlocklyCode, JSCode, lfjs);
                     } catch (e) {
                         console.error('Error evaluating combined code:', e);
                     }
                 } else {
-                    console.warn('Invalid or empty BlocklyCode or JSCode.');
+                    console.warn('Invalid BlocklyCode or JSCode.');
                 }
 
                 layer.draw()

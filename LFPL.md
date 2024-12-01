@@ -2,11 +2,14 @@
 
 ## Introduction
 
-LFPL (LiteForge Plugin Language) is the plugin API for LiteForge-Evo, designed to provide a simple configuration for interacting with the engine. The API allows plugin developers to write clean and efficient code that interacts seamlessly with the LiteForge-Evo engine. The documentation provides an overview of the key functions in LFPL.
+LFPL (LiteForge Plugin Loader) is the plugin API for LiteForge-Evo, designed to provide a simple configuration for interacting with the engine. The API allows plugin developers to write clean and efficient code that interacts seamlessly with the LiteForge-Evo engine. The documentation provides an overview of the key functions in LFPL.
 
 ## Table of Contents
-1. [lfpl.ssload](#lfplssload)
-2. [lfpl.loadAsset](#lfplloadasset)
+1. [Lfpl SSload](#lfplssload)
+2. [Lfpl loadAsset](#lfplloadasset)
+3. [Lfpl Version](#lfplversion)
+4. [Lfpl Engine Version](#lfplengineversion)
+5. [Lfpl Remove Previous Asset](#lfplremovepreviousasset)
 
 ## Content
 
@@ -59,3 +62,76 @@ const htmlCode = `
 lfpl.loadAsset(htmlCode, "html");
 ```
 This code block demonstrates how to use `lfpl.loadAsset` to inject both CSS and HTML into a webpage.
+
+### **lfpl.version**:
+The `lfpl.version()` property provides information about the current version of LiteForge Plugin Loader (LFPL).
+
+- **Uses**:
+  - `lfpl.version` returns the version number of the LFPL as a string so it can be used to tell the user that the supported version is this and your lfpl version is this.
+
+**Example**:
+```js
+let lfplVersion = lfpl.version();
+```
+
+### **lfpl.engineVersion**:
+The `lfpl.engineVersion()` property provides information about the current version of the game engine.
+
+- **Uses**:
+  - `lfpl.engineVersion` returns the version number of the game engine as a string so it can be used to know if the current engine version is the desired one.
+
+**Example**:
+```js
+let engineVersion = lfpl.engineVersion();
+```
+
+### **lfpl.removePreviousAsset**:
+The `lfpl.removePreviousAsset()` function removes the previously loaded asset (HTML or CSS) from the page. This function is useful when dynamically injecting assets and ensuring that only the most recent assets are present, avoiding duplicates.
+
+- **Usage**:
+  - `lfpl.removePreviousAsset(language)` removes the previously injected asset based on the provided language (`css` or `html`).
+  - This function **does not automatically** remove previous assets when injecting new content. You must explicitly call `removePreviousAsset()` to clean up the old asset before injecting new ones.
+  - This function is useful when switching themes or dynamically loading different content, ensuring only one asset of the same type (CSS or HTML) is present at a time.
+
+- **Parameters**:
+  - `language` (string): The type of asset to remove (`css` or `html`). If no asset is found for the specified language, the function will log a message stating that no asset is available to remove.
+    - **Valid Values**: `css`, `html`
+
+- **Example**:
+```js
+// Inject CSS, then remove the previous one before injecting a new CSS asset
+const cssCode1 = `
+body {
+  background-color: blue;
+}
+`;
+lfpl.loadAsset(cssCode1, "css");
+
+lfpl.removePreviousAsset("css"); // Remove the previously loaded CSS asset
+
+// Inject a new CSS, remove the previous one
+const cssCode2 = `
+body {
+  background-color: green;
+}
+`;
+lfpl.loadAsset(cssCode2, "css");
+
+// Inject HTML, then remove the previous one before injecting new HTML content
+const htmlCode1 = `
+<div>Old HTML content</div>
+`;
+lfpl.loadAsset(htmlCode1, "html");
+
+// Here, we remove the previously injected HTML content before injecting the new one
+lfpl.removePreviousAsset("html");
+
+// Inject new HTML, removing the old content
+const htmlCode2 = `
+<div>New HTML content</div>
+`;
+lfpl.loadAsset(htmlCode2, "html");
+
+// After this, if you call removePreviousAsset("html") again, it will log:
+// "No previous html asset to remove." as htmlCode2 is the last injected HTML.
+```

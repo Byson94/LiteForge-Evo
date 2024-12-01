@@ -11,6 +11,11 @@ function ssload(value) {
     }
 }
 
+let injectedAssets = {
+    css: null,
+    html: null
+};
+
 function loadAsset(code, language) {
     if (language === "css") {
         try {
@@ -18,6 +23,9 @@ function loadAsset(code, language) {
             styleElement.type = 'text/css';
             styleElement.textContent = code;
             document.head.appendChild(styleElement);
+            
+            // Store the reference to the injected CSS
+            injectedAssets.css = styleElement;
             console.log("CSS asset injected successfully.");
         } catch (error) {
             console.error("Error injecting CSS:", error);
@@ -27,6 +35,9 @@ function loadAsset(code, language) {
             const container = document.createElement('div');
             container.innerHTML = code;
             document.body.appendChild(container);
+            
+            // Store the reference to the injected HTML container
+            injectedAssets.html = container;
             console.log("HTML asset injected successfully.");
         } catch (error) {
             console.error("Error injecting HTML:", error);
@@ -36,5 +47,26 @@ function loadAsset(code, language) {
     }
 }
 
+function removePreviousAsset(language) {
+    if (language === "css" && injectedAssets.css) {
+        document.head.removeChild(injectedAssets.css);
+        console.log("Previous CSS asset removed.");
+        injectedAssets.css = null; 
+    } else if (language === "html" && injectedAssets.html) {
+        document.body.removeChild(injectedAssets.html);
+        console.log("Previous HTML asset removed.");
+        injectedAssets.html = null; 
+    } else {
+        console.log(`No previous ${language} asset to remove.`);
+    }
+}
 
-export { ssload, loadAsset };
+function version() {
+    return "1.2.0";
+}
+
+function engineVersion() {
+    return "v0.2.0 alpha"
+}
+
+export { ssload, loadAsset, version, engineVersion, removePreviousAsset };

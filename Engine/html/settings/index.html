@@ -36,6 +36,7 @@
             <input id="plugin-url-input" type="file" accept=".js" style="display: none;">
             <div id="plugin-selector">
                 <button id="custom-file-button">Choose File</button>
+                <button id="removePlugin" onclick="removePlugin()">Remove</button>
                 <span id="plugin-file-name">No file selected</span>
                 <p style="display: none;" id="plugin-loading">Loading...</p>
             </div>
@@ -50,6 +51,61 @@
     <script type="module" src="../../../Plugin manager/sanitizer.js"></script>
 
     <script>
+        function removePlugin() {
+            let userConfirmed = confirm("Are you sure that you want to remove the plugin? this action is irreversable!");
+
+            if (!userConfirmed) {
+                console.log("Plugin removal cancelled by user.");
+                return; 
+            }
+
+            const pluginLoading = document.getElementById('plugin-loading');
+            pluginLoading.style.display = 'block';
+
+            // Open IndexedDB and remove the plugin data
+            const request = indexedDB.open('LiteForgeDB', 2);
+
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains('plugins')) {
+                    db.createObjectStore('plugins', { keyPath: 'pluginjs' });
+                }
+            };
+
+            request.onsuccess = (event) => {
+                const db = event.target.result;
+                const transaction = db.transaction('plugins', 'readwrite');
+                const store = transaction.objectStore('plugins');
+
+                const deleteRequest = store.delete('pluginjs'); 
+
+                deleteRequest.onsuccess = () => {
+                    console.log("Plugin data successfully removed from IndexedDB.");
+                    pluginLoading.style.display = 'none';
+                };
+
+                deleteRequest.onerror = (event) => {
+                    console.error("Error removing plugin data from IndexedDB:", event.target.error);
+                    pluginLoading.style.display = 'none';
+                };
+            };
+
+            request.onerror = (event) => {
+                console.error("Error opening IndexedDB for plugin cleanup:", event.target.error);
+                pluginLoading.style.display = 'none';
+            };
+
+            // Reset UI state
+            document.getElementById('plugin-file-name').textContent = "No file selected";
+            sessionStorage.removeItem("pluginjs"); 
+
+            localStorage.removeItem("engine-plugin-DAT");
+            localStorage.removeItem("EngineDATA");
+
+            console.log("Plugin cleanup process complete.");
+            location.reload();
+        }
+
         document.getElementById('custom-file-button').addEventListener('click', function () {
             
             document.getElementById('plugin-url-input').click();
@@ -83,6 +139,8 @@
                         sessionStorage.removeItem("pluginjs")
                         
                         saveToIndexedDB(file.name, fileContent);
+
+                        location.reload();
                     };
 
                     reader.readAsText(file);

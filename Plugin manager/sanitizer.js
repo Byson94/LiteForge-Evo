@@ -10,6 +10,7 @@ const unsafePatterns = [
     { pattern: /document\.write\s*\([^\)]*\)/, replacement: '' }, 
     { pattern: /document\.cookie\s*=\s*[^\n]*/, replacement: '' }, 
     { pattern: /localStorage\s*\.[a-zA-Z0-9]+\s*=\s*[^\n]*/, replacement: '' }, 
+    { pattern: /sessionStorage\s*\.[a-zA-Z0-9]+\s*=\s*[^\n]*/, replacement: '' }, 
     { pattern: /FileReader\s*\([^\)]*\)/, replacement: '' }, 
     { pattern: /WebSocket\s*\([^\)]*\)/, replacement: '' }, 
     { pattern: /localStorage\.setItem\s*\([^\)]*\)/, replacement: '' }, 

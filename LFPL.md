@@ -10,6 +10,9 @@ LFPL (LiteForge Plugin Loader) is the plugin API for LiteForge-Evo, designed to 
 3. [Lfpl Version](#lfplversion)
 4. [Lfpl Engine Version](#lfplengineversion)
 5. [Lfpl Remove Previous Asset](#lfplremovepreviousasset)
+6. [Lfpl data storing](#lfpl-data-storing)
+    - [Lfpl localStorageAPI](#lfpllocalStorageAPI)
+    - [Lfpl sessionStorageAPI](#lfplsessionStorageAPI)
 
 ## Content
 
@@ -134,4 +137,45 @@ lfpl.loadAsset(htmlCode2, "html");
 
 // After this, if you call removePreviousAsset("html") again, it will log:
 // "No previous html asset to remove." as htmlCode2 is the last injected HTML.
+```
+
+### LFPL data storing
+For security lfpl offers a custom storage api to save data to localStorage and sessionStorage.
+
+#### **lfpl.localStorageAPI**
+This provides 4 tools to save data to localStorage. They are *save*, *remove*, *get*, and *clear*.
+
+**Example**:
+```js
+const data = {
+  val1 = "Important-Value",
+  val2 = "Another-value"
+} // data object to save NOTEL ONLY OBJECTS CAN BE SAVED TO LOCALSTORAGE API
+
+lfpl.localStorageAPI.save(data);
+
+let savedDat = lfpl.localStorageAPI.get(); // gets all data
+let specificKey = lfpl.localStorageAPI.get(val1); // gets only specific data
+
+lfpl.localStorageAPI.remove(val1); // removes val1
+lfpl.localStorageAPI.clear(); // clears all data
+```
+
+#### **lfpl.sessionStorageAPI**
+This also provides 4 tools to save data to sessionStorage. They are *save*, *remove*, *get*, and *clear*.
+
+**Example**:
+```js
+const data = {
+  val1 = "Important-Value",
+  val2 = "Another-value"
+} // data object to save NOTEL ONLY OBJECTS CAN BE SAVED TO SESSIONSTORAGE API
+
+lfpl.sessionStorageAPI.save(data);
+
+let savedDat = lfpl.sessionStorageAPI.get(); // gets all data
+let specificKey = lfpl.sessionStorageAPI.get(val1); // gets only specific data
+
+lfpl.sessionStorageAPI.remove(val1); // removes val1
+lfpl.sessionStorageAPI.clear(); // clears all data
 ```

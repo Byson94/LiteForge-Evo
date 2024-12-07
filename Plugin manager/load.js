@@ -1,5 +1,5 @@
 import { checkIfSafe } from "./sanitizer.js";
-import * as lfpl from "./lfpl.js";
+import { lfpl } from "./lfpl.js";
 window.lfpl = lfpl;
 
 function loadFromIndexedDB(dbName, storeName, key) {

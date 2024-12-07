@@ -128,7 +128,7 @@ body {
     display: none; 
 }
 
-#custom-file-button {
+#custom-file-button, #removePlugin {
     padding: 8px 16px;
     background-color: #007bff;
     color: white;
@@ -139,6 +139,10 @@ body {
 
 #custom-file-button:hover {
     background-color: #0056b3;
+}
+
+#removePlugin:hover {
+    background-color: #b30000;
 }
 
 #plugin-file-name {

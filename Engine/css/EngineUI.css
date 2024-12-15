@@ -1,8 +1,3 @@
-/*
-This file uses the library "Blockly" developed by Google
-More detials can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE"
-*/
-
 /* General Styles */
 * {
     margin: 0;
@@ -132,7 +127,7 @@ body {
     height: calc(100% - 60px);
     width: 300px;
     position: fixed;
-    right: -300px; /* Adjust based on the width of the slide */
+    right: -300px;
     top: 60px;
     background-color: #333333;
     transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
@@ -248,15 +243,15 @@ img {
 }
 
 #layout-1 #PreviewGameButton {
-    left: 253px; /* Adjust as needed */
+    left: 253px;
 }
 
 #layout-2 #PreviewGameButton {
-    left: 283px; /* Adjust as needed */
+    left: 283px;
 }
 
 #layout-3 #PreviewGameButton {
-    left: 283px; /* Adjust as needed */
+    left: 283px;
 }
 
 #layout-1 #PreviewGameButton:hover,
@@ -280,15 +275,15 @@ img {
 }
 
 #layout-1 #SceneEditorButton {
-    left: -38px; /* Adjust as needed */
+    left: -38px;
 }
 
 #layout-2 #SceneEditorButton {
-    left: -88px; /* Adjust as needed */
+    left: -88px;
 }
 
 #layout-3 #SceneEditorButton {
-    left: -88px; /* Adjust as needed */
+    left: -88px;
 }
 
 #layout-1 #SceneEditorButton:hover,
@@ -312,15 +307,15 @@ img {
 }
 
 #layout-1 #ScriptEditorButton {
-    left: -31px; /* Adjust as needed */
+    left: -31px;
 }
 
 #layout-2 #ScriptEditorButton {
-    left: 79px; /* Adjust as needed */
+    left: 79px;
 }
 
 #layout-3 #ScriptEditorButton {
-    left: 79px; /* Adjust as needed */
+    left: 79px;
 }
 
 #layout-1 #ScriptEditorButton:hover,
@@ -344,15 +339,15 @@ img {
 }
 
 #layout-1 #VisualScriptEditorButton {
-    left: -54px; /* Adjust as needed */
+    left: -54px;
 }
 
 #layout-2 #VisualScriptEditorButton {
-    left: -24px; /* Adjust as needed */
+    left: -24px;
 }
 
 #layout-3 #VisualScriptEditorButton {
-    left: -24px; /* Adjust as needed */
+    left: -24px;
 }
 
 #layout-1 #VisualScriptEditorButton:hover,
@@ -378,15 +373,15 @@ img {
 }
 
 #layout-1 #MenuButton {
-    left: -235px; /* Adjust as needed */
+    left: -235px;
 }
 
 #layout-2 #MenuButton {
-    left: -205px; /* Adjust as needed */
+    left: -205px;
 }
 
 #layout-3 #MenuButton {
-    left: -205px; /* Adjust as needed */
+    left: -205px;
 }
 
 #layout-1 #MenuButton:hover,
@@ -428,18 +423,42 @@ img {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
     overflow-y: auto;
     transform: translateX(-300px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-/* Buttons */
-.menuSlide button{
-    height: 30px;
+.menuSlide h2 {
+    color: rgb(194, 104, 247);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.menuButtons {
+    margin-top: -20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 90%;
+}
+
+.menuSlide button {
+    padding: 10px 0;
     background-color: #666666;
     color: #ffffff;
     border: none;
     cursor: pointer;
-    height: 30px;
-    z-index: 4;
+    height: 35px;
     font-size: 16px;
+    width: 100%;
+    max-width: 250px;
+    padding: 10px 0;
+    border-radius: 4px;
+    transition: background-color 0.3s ease; 
 }
 
 .menuSlide #MenuExportButton:hover {
@@ -448,6 +467,10 @@ img {
 
 .menuSlide #MenuImportButton:hover {
     background-color: #9959be;
+}
+
+.menuSlide #MenuExtensionsButton:hover {
+    background-color: #5988be;
 }
 
 .menuSlide #MenuEngineQuitButton:hover {
@@ -507,11 +530,31 @@ img {
     background-color: #9959be;
 }
 
+.ExtensionPanel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 200px;
+    width: 400px;
+    background-color: #73ad8b;
+    z-index: 600;
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
 /* CodeMirror Styles */
 .CodeMirror {
     border: 1px solid #ddd;
-    height: 500px; /* Ensure it takes the full height of its parent */
-    width: 100%; /* Ensure it takes the full width of its parent */
+    height: 500px; 
+    width: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -520,7 +563,7 @@ img {
 /* Layout 2 Styles */
 #layout-2 .editor {
     position: absolute;
-    top: 10%; /* Adjust as needed to give more vertical space */
+    top: 10%;
     left: 0;
     right: 0;
     bottom: 0;
@@ -531,13 +574,13 @@ img {
 }
 
 #layout-2 .code {
-    flex-grow: 1; /* Allow the code section to grow and take available space */
+    flex-grow: 1;
     display: flex;
 }
 
 #layout-2 .editor-container {
-    flex-grow: 1; /* Ensure the editor container stretches to fill the height */
-    height: 800px; /* Make sure it takes full height */
+    flex-grow: 1;
+    height: 800px;
 }
 
 #layout-3 .banner {
@@ -546,7 +589,7 @@ img {
     display: flex;
     align-items: center;
     background-color: #f0f0f0;
-    z-index: 1000; /* Ensure the banner is on top */
+    z-index: 1000;
 }
 
 #layout-3 {

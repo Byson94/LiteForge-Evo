@@ -55,9 +55,17 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
     <!-- The menu sidebar -->
     <div class="menuSlide">
         <h2 style="color: rgb(194, 104, 247); text-align: center;">MENU</h2>
-        <button type="button" onclick="MenuExportButtonClicked()" id="MenuExportButton" style="position: absolute; width: 100%; top: 13%;">Export</button>
-        <button type="button" onclick="MenuImportButtonClicked()" id="MenuImportButton" style="position: absolute; width: 100%; top: 20%;">Import</button>
-        <button type="button" onclick="QuitButtonClicked()" id="MenuEngineQuitButton" style="position: absolute; width: 100%; top: 27%;">Quit The Engine</button>
+        <div class="menuButtons">
+            <button type="button" onclick="MenuExportButtonClicked()" id="MenuExportButton">Export</button>
+            <button type="button" onclick="MenuImportButtonClicked()" id="MenuImportButton">Import</button>
+            <button type="button" onclick="MenuExtensionButtonClicked()" id="MenuExtensionsButton">Extensions</button>
+            <button type="button" onclick="QuitButtonClicked()" id="MenuEngineQuitButton">Quit The Engine</button>
+        </div>
+    </div>    
+
+    <!-- The extensions panel -->
+    <div class="ExtensionPanel" style="display: none;">
+        <h1>Comming soon...</h1>
     </div>
 
     <!-- The exporting/importing panel -->
@@ -275,7 +283,7 @@ More details can be found on "LiteForge-Evo/Third-party libraries/Blocky LICENSE
             }
         </script>   
 
-        <script src="../../JavaScript/Engine/PreviewGame.js"></script>
+        <script src="../../JavaScript/Engine/PreviewGameInit.js"></script>
         <script src="../../JavaScript/Engine/ImportGameLFG.js"></script>   
         <script src="../../JavaScript/Engine/engineFunction.js"></script>
 

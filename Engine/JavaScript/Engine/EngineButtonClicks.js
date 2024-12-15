@@ -51,6 +51,16 @@ function SpriteEditorClicked() {
     }
 }
 
+function MenuExtensionButtonClicked() {
+    if (document.querySelector('.ExtensionPanel').style.display === 'none') {
+        updateAllValues()
+        document.querySelector('.ExtensionPanel').style.display = 'block';
+    } else {
+        updateAllValues()
+        document.querySelector('.ExtensionPanel').style.display = 'none';
+    }
+}
+
 function SpritePropertiesClicked() {
     if (selectedId) {
     document.getElementById('SpriteManagementPanel').style.display = 'block';

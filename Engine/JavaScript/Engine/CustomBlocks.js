@@ -90,7 +90,7 @@ Blockly.common.defineBlocksWithJsonArray([
 
   {
     "type": "if_game_started",
-    "message0": "If game started %1",
+    "message0": "If game loaded %1",
     "args0": [
       {
         "type": "input_statement",
@@ -111,7 +111,9 @@ Blockly.common.defineBlocksWithJsonArray([
       }
     ],
     "colour": 160,
-    "tooltip": "Triggers actions when any key is pressed."
+    "tooltip": "Triggers actions when any key is pressed.",
+    "previousStatement": null,
+    "nextStatement": null
   },
 
   {
@@ -139,7 +141,9 @@ Blockly.common.defineBlocksWithJsonArray([
       }
     ],
     "colour": 160,
-    "tooltip": "Triggers actions when a specific key is pressed."
+    "tooltip": "Triggers actions when a specific key is pressed.",
+    "previousStatement": null,
+    "nextStatement": null
   },
 
   {

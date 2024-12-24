@@ -18,6 +18,8 @@ const lfpl = {
         html: null
     },
 
+
+    // Allows to load custom html or css code to the extension
     loadAsset(code, language) {
         if (language === "css") {
             try {
@@ -68,6 +70,7 @@ const lfpl = {
         return "v0.2.0 alpha";
     },
 
+    // Since an extension accessing the localstorage and sessionstorage is too risk, we have API for that.
     localStorageAPI: {
         save(dat) {
             if (typeof dat === "object") {

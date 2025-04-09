@@ -1,3 +1,6 @@
+> NOTE: This game engine is depricated and no longer maintained. Expect bugs.
+> Made for experimental purposes only
+
 # LiteForge-Evo
 LiteForge-Evo is an engine that can be used for creating games and animations.
 
